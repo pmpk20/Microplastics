@@ -29,7 +29,7 @@ library(PostcodesioR)
 library(tidygeocoder)
 library(lubridate)
 library(tidyr)
-
+library(magrittr)
 
 
 #------------------------------
@@ -125,6 +125,7 @@ str(reverse_geo(lat = First10$Latitude[1],long = First10$Longitude[1]))
 
 First10$BID <- as.numeric(First10$BID)
 First10$Q14 <- recode(First10$Q14,'No'=0,'Yes'=1)
+colnames(First10)[which(names(First10)=="Q14")] <- "CV_Responses"
 
 
 
@@ -230,32 +231,49 @@ First10$Q12 <- ifelse(grepl("IM_4P", First10$Q12, fixed = TRUE)==TRUE,0,1)
 # ----------------------------------------------------------------------------------------------------------
 
 
-## Rename attitudinal scale variables:
+# ----------------------------------------------------------------------------------------------------------
+## Rename attitude scales to easily identify questions
 colnames(First10)[which(names(First10)=="Q31_1")] <- "ThreatToEnvironment"
 colnames(First10)[which(names(First10)=="Q31_2")] <- "ThreatToSelf"
 colnames(First10)[which(names(First10)=="Q31_3")] <- "ThreatTo10"
 colnames(First10)[which(names(First10)=="Q31_4")] <- "ThreatTo25"
 colnames(First10)[which(names(First10)=="Q31_5")] <- "ThreatTo50"
 
+
+# ----------------------------------------------------------------------------------------------------------
+## Rename the pandemic-displacement attitudinal scales
 colnames(First10)[which(names(First10)=="Q32_1")] <- "PandemicEnvironment"
 colnames(First10)[which(names(First10)=="Q32_2")] <- "PandemicMicroplastics"
+
+
 
 ## Make sure they are actual numbers:
 ## And code NA as zero
 First10[,c(22:28)] %<>% mutate_all(as.numeric)
 First10[,c(22:28)][is.na(First10[,c(22:28)])]<- 0
 
+
+# ----------------------------------------------------------------------------------------------------------
+## Code coronavirus question to 0,1
 colnames(First10)[which(names(First10)=="Q33")] <- "Coronavirus"
 First10$Coronavirus <- recode(First10$Coronavirus,"No"=0,"Yes"=1)
 
+
+
+# ----------------------------------------------------------------------------------------------------------
+## Code charity question to 0,1
 colnames(First10)[which(names(First10)=="Q34")] <- "Charity"
 First10$Charity <- recode(First10$Charity,"No"=0,"Yes"=1)
 
 
+# ----------------------------------------------------------------------------------------------------------
+## Code consequentiality question to 0,1
 colnames(First10)[which(names(First10)=="Q35")] <- "Consequential"
 First10$Consequential <- recode(First10$Consequential,"No"=0,"Yes"=1)
 
 
+# ----------------------------------------------------------------------------------------------------------
+## Categorise education levels
 colnames(First10)[which(names(First10)=="Q36")] <- "Education"
 First10$Education <- recode(First10$Education,
                             "1 - 4 Levels / CSEs / GCSEs, NVQ Level 1."=1,
@@ -264,19 +282,28 @@ First10$Education <- recode(First10$Education,
                             "Degree, Higher Degree, NVQ level 4-5, BTEC Higher Level, professional qualifications (e.g. teaching, nursing, accountancy)."=4)
 
 
+# ----------------------------------------------------------------------------------------------------------
+## Rename and code income as levels
 colnames(First10)[which(names(First10)=="Q37")] <- "Income"
-# First10$Income <- recode(First10$Income,
-#                          "Prefer not to say"=1,
-                         
+## Remove weird characters:
+First10$Income <- gsub(pattern = "Â£",replacement = "",First10$Income)
+First10$Income <- recode(First10$Income,
+                         " 1001- 1500 "=1250,
+                         " 2001 - 2500 "=2250,
+                         " 2501 - 3000 "=2750,
+                         " 3001 - 4000 "=3500,
+                         " 4001 - 5000 "=4500,
+                         " Prefer not to say "=2500)
 
+# ----------------------------------------------------------------------------------------------------------
+## Rename survey understanding (1-10) and change to numbers
 colnames(First10)[which(names(First10)=="Q38_1")] <- "Understanding"
 First10$Understanding %<>% as.numeric()
+
 
 # ----------------------------------------------------------------------------------------------------------
 ## Putting Choices And Attributes Together
 
-
-# 
 # ## Take all the respondent choices and change into a single vector
 Choices <- data.frame(Choice = c(t(
   data.frame(rep(First10[,18:21], times=1)))[,]))
@@ -286,23 +313,23 @@ First10_NoCE <- First10[,-c(18:21)]
 ## Combine the choices above with a `Task` variable and all the remaining data reshaped from long to wide
 Reshaped <- (data.frame(rep((1:4),times=nrow(First10)),
                         Choices,
-                        data.frame(apply(X = First10_NoCE,2,function(x) rep(x,each=4))),Zeroes))
+                        data.frame(apply(X = First10_NoCE,2,function(x) rep(x,each=4)))))
 colnames(Reshaped)[1:2] <- c("Task","Choice") ## Note: The `Task` variable refers to which number of choice tasks the respondent did.
 
 
 ## Add the right levels for each respondents choice 
 Reshaped<- rbind(
-  Reshaped %>% filter(Task==1 & Q9==0) %>% mutate(Zeroes=Q9_A_Values),
-  Reshaped %>% filter(Task==1 & Q9==1) %>% mutate(Zeroes=Q9_B_Values),
+  Reshaped %>% filter(Task==1 & Q9==0) %>% mutate(Q9_A_Values),
+  Reshaped %>% filter(Task==1 & Q9==1) %>% mutate(Q9_B_Values),
   
-  Reshaped %>% filter(Task==2 & Q10==0) %>% mutate(Zeroes=Q10_A_Values),
-  Reshaped %>% filter(Task==2 & Q10==1) %>% mutate(Zeroes=Q10_A_Values),
+  Reshaped %>% filter(Task==2 & Q10==0) %>% mutate(Q10_A_Values),
+  Reshaped %>% filter(Task==2 & Q10==1) %>% mutate(Q10_A_Values),
   
-  Reshaped %>% filter(Task==3 & Q11==0) %>% mutate(Zeroes=Q11_A_Values),
-  Reshaped %>% filter(Task==3 & Q11==1) %>% mutate(Zeroes=Q11_A_Values),
+  Reshaped %>% filter(Task==3 & Q11==0) %>% mutate(Q11_A_Values),
+  Reshaped %>% filter(Task==3 & Q11==1) %>% mutate(Q11_A_Values),
   
-  Reshaped %>% filter(Task==4 & Q12==0) %>% mutate(Zeroes=Q12_A_Values),
-  Reshaped %>% filter(Task==4 & Q12==1) %>% mutate(Zeroes=Q12_A_Values))
+  Reshaped %>% filter(Task==4 & Q12==0) %>% mutate(Q12_A_Values),
+  Reshaped %>% filter(Task==4 & Q12==1) %>% mutate(Q12_A_Values))
 
 
 # The text has to be numerical but need to consider the correct coding.
@@ -320,16 +347,23 @@ Reshaped$av_C <- rep(1,nrow(Reshaped)) ## Alternative C: Status Quo
 ## Add useful variables:
 Reshaped$ID <- seq.int(nrow(Reshaped)) # Unique identifier for each respondent and choice (Uniques: 30,063)
 Reshaped$Respondent <-rep(1:nrow(First10),each=length(unique(Reshaped$Task))) # unique identifier for each respondent (Uniques: 3407)
-Reshaped$Zeroes<- NULL
+
+# Reshaped$Zeroes<- NULL
 
 
 
 # ----------------------------------------------------------------------------------------------------------
 ## Exporting Data:
 
-write.csv(First10,file = paste0("First10_Transformed",Sys.Date(),".csv"))
-write.csv(Reshaped,file = paste0("Reshaped_Transformed",Sys.Date(),".csv"))
+write.csv(First10,file = paste0("First10_Transformed_",Sys.Date(),".csv"))
+write.csv(Reshaped,file = paste0("database_Transformed_",Sys.Date(),".csv"))
 
 
+## Next steps:
+### Estimate CE:
+#  source("Microplastics_First10_MNL_2022_05_03.R")
+### Estimate CV:
+# source("Microplastics_First10_CV_2022_05_03.R")
 
 
+# End Of Script ----------------------------------------------------------------------------------------------------------
