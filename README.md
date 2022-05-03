@@ -1,2 +1,2 @@
 # Microplastics
-Backup for [Funder] Microplastics survey work 2022.
+Backup for Microplastics survey work 2022.
