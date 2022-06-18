@@ -1,5 +1,5 @@
 #### DEFRA: Microplastics ####
-## Function: Imports and transforms the 648 from prolific
+## Function: Imports and transforms the 1101 from prolific
 ## Author: Dr Peter King (p.m.king@kent.ac.uk)
 ## Last change: 15/06/2022
 ## TODO: setup RENV
@@ -47,6 +47,7 @@ library(tidygeocoder)
 library(lubridate)
 library(tidyr)
 library(magrittr)
+library(readxl)
 
 
 #------------------------------
@@ -268,6 +269,10 @@ database <- database[,-which(names(database) %in%c("CVProtests", "CVProtestTexts
 database %<>%  mutate(across(where(is.numeric), ~replace_na(.x, 0)))
 
 
+# ----------------------------------------------------------------------------------------------------------
+## Recoding attributes:
+
+
 ## Recode Attribute Levels:
 database$Price_A <- recode(database$Price_A,'1'=0.00)
 database$Price_B <- recode(database$Price_B,'1'=0.50,'2'=1.00,"3"=2.50,"4"=5.00)
@@ -283,11 +288,38 @@ database$Emission_B <- recode(database$Emission_B,'1'=10,'2'=40,"3"=90)
 database$Emission_C <- recode(database$Emission_C,'1'=10,'2'=40,"3"=90)
 
 
+# ----------------------------------------------------------------------------------------------------------
+## Exporting data:
+
+
+
 ## Save all data:
 Date <- gsub(pattern = "-",replacement = "_",Sys.Date())
-write.csv(Combined_Trimmed,file = paste0("Microplastics_LongData_",Date,".csv"))
-write.csv(database,file = paste0("Microplastics_database_",Date,".csv"))
+write.csv(Combined_Trimmed,file = paste0("Microplastics_Order0_Long_",Date,".csv"))
+write.csv(database,file = paste0("Microplastics_Order0_Wide_",Date,".csv"))
 
+
+
+# ----------------------------------------------------------------------------------------------------------
+## Exporting anonymised data:
+
+
+AllWTP <- data.frame(read.csv("Microplastics_DataWithAllWTP_2022_06_16.csv"))
+WTP <- data.frame(read.csv("Microplastics_DataWithWTP_2022_06_16.csv"))
+Long <- data.frame(read.csv("Microplastics_Anonymised_LongFormat_2022_06_16.csv"))
+Wide <- data.frame(read.csv("Microplastics_Anonymised_2022_06_16.csv"))
+database <- data.frame(read.csv("Microplastics_database_2022_06_15.csv"))
+
+
+AllWTP$Order <- 0
+WTP$Order <- 0
+Long$Order <- 0
+Wide$Order <- 0
+database$Order <- 0
+
+
+## Order 0: CV then CE questions 
+Data$Order <- 0
 
 Data_Anonymised <- Data[, -which(
   names(Data) %in% c("VERSION","IP",
@@ -303,6 +335,13 @@ Data_Anonymised <- Data[, -which(
 )]
 
 write.csv(Data_Anonymised,file = paste0("Microplastics_Anonymised_",Date,".csv"))
+
+
+write.csv(AllWTP,file = paste0("Microplastics_Order0AllWTP_",Date,".csv"))
+write.csv(WTP,file = paste0("Microplastics_Order0CVWTP_",Date,".csv"))
+write.csv(Long,file = paste0("Microplastics_Order0_WideFormat_Anonymised_",Date,".csv"))
+write.csv(Wide,file = paste0("Microplastics_Order0_LongFormat_Anonymised_",Date,".csv"))
+write.csv(database,file = paste0("Microplastics_Order0_WideFormat_",Date,".csv"))
 
 
 ## Next steps:
