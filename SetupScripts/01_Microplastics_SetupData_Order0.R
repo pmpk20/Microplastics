@@ -375,7 +375,8 @@ combined_data_trimmed$Gender_Dummy <- ifelse(combined_data_trimmed$Gender_Female
                             0,
                             1)
 
-
+## Define a dummy for non-white respondents
+combined_data_trimmed$EthnicityDummy <- ifelse(combined_data_trimmed$Ethnicity==1,0,1)
 
 # ************************************************
 # Section 4: Putting Choices and Attributes Together ####
