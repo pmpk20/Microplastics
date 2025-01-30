@@ -5,15 +5,16 @@ All data, code, and outputs for the microplastics individual option prices paper
 Description: 
 - The anonymised survey data has 1564 obs.
 - I am in the process of organising all the scripts, outputs, and data
+- Anonymised data and numbered scripts now available
 
-ToDo:
-- Check SetupScripts/* compile as desired, retain only necessary
-- Work through all CVscripts to retain only EOP ones
-- Provide one input and one output Data rather than the current mix
+Process:
+- Run SetupScripts/ in numbered order
+- Work through all CVscripts, will number these later.
+- Create tables/figures
 
 Author:
 Dr Peter King (p.king1@leeds.ac.uk)
 
 Last Change:
-23/01/2025
+30/01/2025
 
