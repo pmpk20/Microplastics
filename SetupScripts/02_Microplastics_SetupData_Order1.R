@@ -1,10 +1,10 @@
 #### DEFRA: Microplastics ####
 ## Function: Imports and transforms the 1101 from prolific
 ## Author: Dr Peter King (p.m.king@kent.ac.uk)
-## Last change: 29/01/25
+## Last change: 30/01/25
 ## Notes:
 ## - Thanks gemini for adding comments
-
+## - Adding Variance[]bound and uncertainty
 
 # ************************************************
 # Replication Information: ####
@@ -322,6 +322,29 @@ combined_data_trimmed <- combined_data_trimmed %>%
 # Calculate Log bid to income ratio
 combined_data_trimmed <- combined_data_trimmed %>%
   dplyr::mutate(LogBidIncome = log((Income_Annual - Bid) / Income_Annual))
+
+
+
+## Recode variance from 1/2/3/4 (levels from survey) to
+## their interpretation as 0/1/3/5 points on the scale
+## then create upper/lower bounds
+combined_data_trimmed <- combined_data_trimmed %>%
+  mutate(
+    # First recode variance to theoretical bounds
+    variance_bound = case_when(
+      Variance == 4 ~ 5,
+      Variance == 3 ~ 3,
+      Variance == 2 ~ 1,
+      Variance == 1 ~ 0,
+      TRUE ~ NA_real_
+    ),
+    # Then create upper and lower bounds
+    VarianceLowerBound = MeanExpectedFuture + variance_bound,
+    VarianceUpperBound = MeanExpectedFuture - variance_bound,
+    # Half difference between bounds
+    Uncertainty = (VarianceLowerBound - VarianceUpperBound) / 2
+  ) %>%
+  dplyr::select(-variance_bound) 
 
 
 # ************************************************
