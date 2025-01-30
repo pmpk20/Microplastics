@@ -60,12 +60,22 @@ order1_long <-
 all_data_wide <- dplyr::bind_rows(order0_wide, order1_wide)
 
 
+all_data_wide$AgeDummy <- ifelse(all_data_wide$AgeBracket <= 
+                                           median(all_data_wide$AgeBracket), 
+                                         0,
+                                         1)
+
 # ************************************************
 # Section 3: Merge Long Data ####
 # ************************************************
 
 # Combine both dataframes by rows
 all_data_long <- dplyr::bind_rows(order0_long, order1_long)
+
+
+
+all_data_long$AgeDummy <- rep(x = all_data_wide$AgeDummy, each = 4)
+
 
 # ************************************************
 # Section 4: Export all Data ####
