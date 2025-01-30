@@ -162,10 +162,23 @@ combined_data_trimmed <- combined_data_trimmed %>%
     Education = q21,
     Income = q22,
     Understanding = q23,
-    WaterBills = q9,
-    CouncilTax = q10,
+    CV_WaterBills = q9,
+    WaterBills = q8,
+    CV_CouncilTax = q10,
     FreeText = q24
   )
+
+
+
+# Merge and recode CV question
+combined_data_trimmed <- combined_data_trimmed %>%
+  dplyr::mutate(
+    CV = dplyr::recode(
+      dplyr::coalesce(CV_WaterBills, CV_CouncilTax),
+      '1' = 1,
+      '2' = 0
+    )
+  ) 
 
 # Recode water bills
 combined_data_trimmed <- combined_data_trimmed %>%
@@ -197,15 +210,6 @@ combined_data_trimmed <- combined_data_trimmed %>%
     ))
   )
 
-# Merge and recode CV question
-combined_data_trimmed <- combined_data_trimmed %>%
-  dplyr::mutate(
-    CV = dplyr::recode(
-      dplyr::coalesce(WaterBills, CouncilTax),
-      '1' = 1,
-      '2' = 0
-    )
-  ) 
 
 
 # Recode sociodemographic questions
@@ -325,6 +329,16 @@ combined_data_trimmed <- combined_data_trimmed %>%
 
 
 
+
+
+
+
+
+
+
+
+
+
 ## Recode variance from 1/2/3/4 (levels from survey) to
 ## their interpretation as 0/1/3/5 points on the scale
 ## then create upper/lower bounds
@@ -345,6 +359,33 @@ combined_data_trimmed <- combined_data_trimmed %>%
     Uncertainty = (VarianceLowerBound - VarianceUpperBound) / 2
   ) %>%
   dplyr::select(-variance_bound) 
+
+
+## Transform Mean expected future
+combined_data_trimmed$MEF <- (combined_data_trimmed$MeanExpectedFuture + 5.001) / 10.002
+
+## Transform mean expected current
+combined_data_trimmed$MEC <-
+  (combined_data_trimmed$MeanExpectedCurrent + 5.001) / 10.002
+
+## Transform to Cameron (2005) measure
+combined_data_trimmed$var.cameron <- (0.5 * combined_data_trimmed$Uncertainty) ^ 2
+
+combined_data_trimmed$PaymentVehicle_Dummy <- ifelse(combined_data_trimmed$WaterBills == 0, 0, 1)
+
+combined_data_trimmed$Education_HigherEd <- ifelse(combined_data_trimmed$Education == 5,
+                                                   1, ## 1 = higher education
+                                                   0) ## 0 = all other
+
+combined_data_trimmed$Gender_Female <- ifelse(combined_data_trimmed$Gender == 0,
+                                              "Male",
+                                              "Female")
+
+combined_data_trimmed$Gender_Dummy <- ifelse(combined_data_trimmed$Gender_Female == "Female",
+                                             0,
+                                             1)
+
+
 
 
 # ************************************************
