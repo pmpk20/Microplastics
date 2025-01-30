@@ -32,7 +32,7 @@ here()
 # Import participant-level covariate data from Excel
 # WAS: kent_eapmicro_live_covariates_2022_06_15.xlsx
 participant_covariates <-
-  here("Data/Raw data",
+  here("Data/RawData",
        "kent_eapmicro_Order1_covariates_anonymised.csv") %>%
   fread() %>% 
   data.frame()
@@ -40,7 +40,7 @@ participant_covariates <-
 # Import discrete choice experiment (DCE) data from Excel
 # Was: kent_eapmicro_live_dce_2022_06_15.xlsx
 dce_data <-
-  here("Data/Raw data", 
+  here("Data/RawData", 
        "kent_eapmicro_Order1_dce_anonymised.csv") %>%
   fread() %>% 
   data.frame()
@@ -48,7 +48,7 @@ dce_data <-
 # Import timing data from Excel
 # Was: KENT_EAPMICRO_Live_pages_2022_06_15.xlsx
 timing_data <-
-  here("Data/Raw data", 
+  here("Data/RawData", 
        "KENT_EAPMICRO_Order1_pages_anonymised.csv") %>%
   fread() %>% 
   data.frame()
