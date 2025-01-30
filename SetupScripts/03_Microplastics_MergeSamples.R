@@ -65,6 +65,27 @@ all_data_wide$AgeDummy <- ifelse(all_data_wide$AgeBracket <=
                                          0,
                                          1)
 
+## Rename
+all_data_wide$SurveyCompletionTime <- all_data_wide$DURATION %>% as.numeric()
+
+
+## Add survey speeding data
+all_data_wide <-
+  all_data_wide %>%
+  mutate("Speeders_Survey_Threshold" =
+           median(SurveyCompletionTime) %>% multiply_by(0.48),
+         "Slowers_Survey_Threshold" =
+           median(SurveyCompletionTime) %>% multiply_by(1.48),
+         
+         
+         "Speeders_Survey_TestDummy" = ifelse(
+           SurveyCompletionTime <= Speeders_Survey_Threshold, 0, 1),
+         
+         "Slowers_Survey_TestDummy" = ifelse(
+           SurveyCompletionTime >= Slowers_Survey_Threshold, 0, 1)
+  )
+
+
 # ************************************************
 # Section 3: Merge Long Data ####
 # ************************************************
