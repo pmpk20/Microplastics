@@ -79,28 +79,29 @@ Data <- here("Data", "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
 
-# Select the specified columns
-Data_Filtered <- Data %>%
-  dplyr::select(
-    CV,
-    MEC,
-    MEF,
-    AgeDummy,
-    EthnicityDummy,
-    Gender_Dummy,
-    Charity,
-    Education_HigherEd,
-    Q16_ClimateCurrentEnvironment,
-    Q16_ClimateCurrentSelf,
-    Q16_MicroplasticsCurrentEnvironment,
-    Q16_MicroplasticsCurrentSelf,
-    Q16_MicroplasticsTen,
-    Q16_MicroplasticsTwentyFive,
-    Q16_MicroplasticsFifty,
-    Uncertainty,
-    LogBidIncome,
-    Income_Annual
-  )
+
+
+Data_Filtered <- Data %>% dplyr::select(c(
+  "CV",
+  "MEC",
+  "MEF", 
+  "AgeDummy",
+  "EthnicityDummy",
+  "Gender_Dummy",  
+  "Charity",
+  "Education_HigherEd",
+  "Q16_ClimateCurrentEnvironment",
+  "Q16_ClimateCurrentSelf",
+  "Q16_MicroplasticsCurrentEnvironment", 
+  "Q16_MicroplasticsCurrentSelf",
+  "Q16_MicroplasticsTen", 
+  "Q16_MicroplasticsTwentyFive", 
+  "Q16_MicroplasticsFifty", 
+  "Uncertainty",
+  "LogBidIncome",
+  "Income_Annual"
+))
+
 
 # ***********************************************************
 # Section 2: Define Functions ####
@@ -161,6 +162,23 @@ ModelOutput_Paper <- function(Estimates, Identifier) {
 }
 
 
+summary_function <- function(EOP) {
+  cbind(
+    "2.5%" = EOP %>% quantile(c(0.025)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
+    Median = EOP %>% median(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
+    Mean = EOP %>% mean(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
+    SD = EOP %>% sd(na.rm = TRUE) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
+    "97.5%" = EOP %>% quantile(c(0.975)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
+    "Percent" = (100/Data$Income_Annual*abs(EOP)) %>% 
+      mean(na.rm = TRUE) %>% 
+      round(2) %>% 
+      sprintf("%.2f", .) %>% 
+      paste0(., "%")
+  )
+}
+
+
+
 # ***********************************************************
 # Section 3: Simulator Function ####
 # ***********************************************************
@@ -189,90 +207,44 @@ Simulator <- function(data,
       data = d
     )
     
-    # Extract relevant coefficients
+    
     B0 <- stage_2$coefficients["LogBidIncome"] %>% as.numeric()
     Delta_0 <- stage_2$coefficients['I((predict(stage_1, type = "response") + MEC)/2)'] %>% as.numeric()
     Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
     
-    # Calculate means and variances from stage 1
-    Means <- I((predict(stage_1, type = "response") + d$MEC) / 2) %>% as.numeric()
-    Variances <- (betareg::predict(stage_1, type = "variance"))  %>% as.numeric()
     
-    # Define Y as gross annual income
-    Y <- d$Income_Annual %>% as.numeric()
+    Means <- c(I((predict(stage_1, type = "response") + Data$MEC)/2))
+    Variances <- (betareg::predict(stage_1, type = "variance"))
+    ## Define Y == gross monthly income * 12
+    Y <- Data$Income_Annual
+    A <-
+      ((Delta_0 * Means +
+          (Delta_1 * (0 - Variances))
+      )) %>% as.numeric()
+    ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
+    # EOP <- (Y - (Y*exp(- A / B0))) *
+    #   exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
     
-    # Calculate EOP
-    EOP <- (Y - (Y * exp(-((Delta_0 * Means + (Delta_1 * (0 - Variances)))/B0)))) *
-      exp(1/(2*B0^2))
+    EOP <- (d$Income_Annual - (d$Income_Annual * exp(-A / B0))) *
+      exp(0.5 * (B0^-2))
     
-    # Add fit statistics for stage 1 and stage 2
-    fit_stats <- c(
-      s1_AIC = AIC(stage_1),
-      s1_LogLik = stage_1$loglik,
-      s1_PseudoR2 = stage_1$pseudo.r.squared,
-      s2_AIC = AIC(stage_2),
-      s2_LogLik = logLik(stage_2),
-      s2_PseudoR2 = (1 - stage_2$deviance/stage_2$nulldev),
-      S2_EOP_Mean = EOP %>% mean(),
-      S2_EOP_SD = EOP %>% sd()
-    )
-    
-    # Return combined results from stages 1 and 2 along with fit statistics
-    return(
-      c(summary(stage_1)$coefficients$mean[, 1],
-        summary(stage_1)$coefficients$precision[, 1],
-        stage_2$coefficients,
-        summary(stage_1)$coefficients$mean[, 2],
-        summary(stage_1)$coefficients$precision[, 2],
-        summary(stage_2)$coefficients[, 2],
-        fit_stats)
-    )
+    return(EOP)
+
   }
   
-  # Perform bootstrap simulation
-  boot.results <- boot(
-    data = data,
-    statistic = boot.function,
-    R = R,
-    parallel = "snow"
-  )
+  # Run the bootstrap
+  boot.results <- boot(data = data,
+                       statistic = boot.function,
+                       R = R,
+                       parallel = "snow")
   
-  # Define length based on number of coefficients returned from the boot function
-  l <- length(boot.results$t0) - 8
+  # Extracting the results
+  # l <- length(boot.results$t0)
+  results <- boot.results$t0
   
-  # Extract and format results from the simulation
-  results <- cbind(
-    Estimate = boot.results$t0[1:(l / 2)],
-    `Std. Error` = boot.results$t[, (l / 2 + 1):l] %>% colMeans(),
-    `z value` = boot.results$t0[1:(l / 2)] / (boot.results$t[, (l / 2 + 1):l] %>% colMeans())
-  )
-  # Round and add p-values to the results
-  results_rounded <- results %>% round(3)
-  results_rounded_withP <- cbind(
-    results_rounded,
-    "P values" = results[, 3] %>% PvalueConverter()
-  ) %>% data.frame()
-  # Simplify the extraction of the fit statistics
-  fit_stats_means <- c(
-    S1_AIC = boot.results$t[, l + 1] %>% mean() %>% round(3),
-    S1_LogLik = boot.results$t[, l + 2] %>% mean() %>% round(3),
-    S1_PseudoR2 = boot.results$t[, l + 3] %>% mean() %>% round(3),
-    S2_AIC = boot.results$t[, l + 4] %>% mean() %>% round(3),
-    S2_LogLik = boot.results$t[, l + 5] %>% mean() %>% round(3),
-    S2_PseudoR2 = boot.results$t[, l + 6] %>% mean() %>% round(3),
-    S2_EOP_Mean = paste0("£",
-                         boot.results$t[, l + 7] %>% mean(na.rm = TRUE) %>% round(3),
-                         " (£",
-                         boot.results$t[, l + 8] %>% mean(na.rm = TRUE) %>% round(3),
-                         ")")
-    
-  )
-  
-  # Return list of formatted coefficient table and fit statistics.
-  return(list(
-    coefficients = results_rounded_withP,
-    fit_statistics = fit_stats_means
-  ))
+  ## Here just the raw data
+  results %>% return() 
+  # results %>% summary_function() %>% return()  
 }
 
 # ***********************************************************
@@ -303,102 +275,32 @@ Model1_stage1_formula <- as.formula(
     as.factor(Uncertainty)
 )
 
+
+
 # Define your formula for stage_1 and stage_2 models
 Model1_stage2_formula <- "-1 + LogBidIncome"
 
+
 # Call the simulator function
-Model1_simulation <- Simulator(
-  data = Data_Filtered,
-  formula_stage_1 = Model1_stage1_formula,
-  formula_stage_2 = Model1_stage2_formula,
-  R = R
-)
+Model1_simulation <- Simulator(data = Data_Filtered,
+                               formula_stage_1 = Model1_stage1_formula,
+                               formula_stage_2 = Model1_stage2_formula,
+                               R = 1000
+)  
 
-# First stage results
-Model1_simulation$coefficients %>% ModelOutput_Paper()
 
-# ***********************************************************
-# Section 5A: Stage One Outputs ####
-# ***********************************************************
+# *****************************
+# Section x: Export Data ####
+# *****************************
 
-# Combine first-stage results
-Output_S1 <- rbind(
-  Model1_simulation$coefficients %>%
-    ModelOutput_Paper() %>%
-    slice(1:(n() - 3)),
-  cbind(
-    "Estimate" = Model1_simulation$fit_statistics[1:3],
-    "Std..Error" = 0,
-    "z.value" = 0,
-    "P.values" = 0,
-    "Variable" = names(Model1_simulation$fit_statistics[1:3])
-  )
-)
+Data$EOP <- Model1_simulation
 
-# Consistent date format
-date_suffix <- format(Sys.Date(), "%Y_%m_%d")
-
-# Write results to text file in CVoutput folder
-Output_S1 %>%
+Data %>%
   data.frame() %>%
-  fwrite(
-    sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S1_factorUncertainty_", date_suffix, ".txt"))
-  )
+  fwrite(sep = ",",
+         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP.csv"))
 
 
-# ***********************************************************
-# Section 5B: Stage Two Outputs ####
-# ***********************************************************
-# Combine second-stage results
-Output_S2 <- rbind(
-  cbind(
-    "Variable" = c("α[((Y-OP))/Y]",
-                   "β (q* – E[q])",
-                   "β2 (0 – Var[q])"),
-    "Estimate" = Model1_simulation$coefficients %>%
-      ModelOutput(Identifier = 1) %>%
-      slice((n() - 2):n()) %>%
-      dplyr::select(Estimate)),
-  cbind(
-    "Variable" = names(Model1_simulation$fit_statistics[4:6]),
-    "Estimate" = Model1_simulation$fit_statistics[4:6]
-  )
-)
-# Write results to text file in CVoutput folder
-Output_S2 %>%
-  data.frame() %>%
-  fwrite(
-    sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S2_factorUncertainty_", date_suffix, ".txt"))
-  )
-# ***********************************************************
-# Section 5C: Combined Outputs ####
-# ***********************************************************
-
-# Combine all results into a single output
-Model_All <- Model1_simulation$coefficients %>%
-  ModelOutput(Identifier = 1)
-
-# Create diagnostic output
-Model_Diagnostics <- cbind(
-  "Variable" = names(Model1_simulation$fit_statistics),
-  "Estimate" = Model1_simulation$fit_statistics,
-  "Model" = 0
-) %>% data.frame()
-
-
-# Combine coefficients and fit statistics for a combined model output
-Output_S3 <- rbind(
-  Model_All, Model_Diagnostics
-)
-# Write the final combined output
-Output_S3 %>%
-  data.frame() %>%
-  fwrite(
-    sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S3_factorUncertainty_", date_suffix, ".txt"))
-  )
 
 
 # ***********************************************************
