@@ -1,0 +1,34 @@
+Variable,Estimate
+X.Intercept.,-1.777*** (0.243)
+AgeDummy,0.063 (0.048)
+EthnicityDummy,0.102 (0.067)
+Gender_Dummy,-0.046 (0.046)
+Charity,0.109* (0.05)
+Education_HigherEd,-0.002 (0.047)
+Speeders_Survey_TestDummy,-0.098 (0.129)
+Order,-0.041 (0.051)
+PaymentVehicle_Dummy,-0.003 (0.065)
+Consequentiality,0.016 (0.05)
+Coronavirus,0 (0.047)
+Understanding,0.054** (0.018)
+Q16_ClimateCurrentEnvironment,-0.031. (0.019)
+Q16_ClimateCurrentSelf,-0.014 (0.015)
+Q16_MicroplasticsCurrentEnvironment,0.089*** (0.02)
+Q16_MicroplasticsCurrentSelf,0.07*** (0.018)
+Q16_MicroplasticsTen,0.124*** (0.026)
+Q16_MicroplasticsTwentyFive,0.12*** (0.036)
+Q16_MicroplasticsFifty,-0.062* (0.027)
+X.Intercept..1,0.501*** (0.093)
+as.factor.Uncertainty.1,0.98*** (0.099)
+as.factor.Uncertainty.3,1.255*** (0.117)
+as.factor.Uncertainty.5,1.439*** (0.154)
+LogBidIncome,88.38*** (12.929)
+I..predict.stage_1..type....response.....MEC..2.,1.931*** (0.119)
+I.0...predict.stage_1..type....variance...,17.035*** (2.441)
+S1_AIC,-2601.449
+S1_LogLik,1323.725
+S1_PseudoR2,0.196
+S2_AIC,1581.164
+S2_LogLik,-787.582
+S2_PseudoR2,0.274
+S2_EOP_Mean,£331.678 (£212.369)
