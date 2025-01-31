@@ -104,7 +104,8 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "PaymentVehicle_Dummy",
   "Consequentiality",
   "Coronavirus",
-  "Understanding"
+  "Understanding",
+  "WaterBills"
 ))
 
 
@@ -356,7 +357,7 @@ Model_T1_Output %>%
 # S4: T2 Payment vehicle ####
 # ********************************************
 
-Data_T2 <- Data_Filtered %>% dplyr::filter(WaterBills != 0)
+Data_T2 <- Data_Filtered %>% dplyr::filter(PaymentVehicle_Dummy != 0)
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_T2 <- as.formula(
