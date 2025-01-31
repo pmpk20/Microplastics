@@ -10,19 +10,19 @@ Q16_MicroplasticsFifty,-0.057* (0.026)
 X.Intercept..1,0.655*** (0.113)
 as.factor.Uncertainty.1,0.983*** (0.099)
 as.factor.Uncertainty.3,1.261*** (0.117)
-as.factor.Uncertainty.5,1.418*** (0.154)
+as.factor.Uncertainty.5,1.418*** (0.155)
 AgeDummy,-0.148* (0.063)
 EthnicityDummy,-0.109 (0.09)
 Gender_Dummy,0.058 (0.062)
 Charity,-0.223*** (0.065)
 Education_HigherEd,-0.04 (0.064)
-LogBidIncome,88.023*** (12.931)
+LogBidIncome,88.023*** (12.96)
 I..predict.stage_1..type....response.....MEC..2.,1.816*** (0.119)
-I.0...predict.stage_1..type....variance...,14.175*** (2.391)
-S1_AIC,-2625.626
-S1_LogLik,1329.813
+I.0...predict.stage_1..type....variance...,14.175*** (2.39)
+S1_AIC,-2619.95
+S1_LogLik,1326.975
 S1_PseudoR2,0.181
-S2_AIC,1600.681
-S2_LogLik,-797.34
-S2_PseudoR2,0.265
-S2_EOP_Mean,£333.352 (£197.842)
+S2_AIC,1597.08
+S2_LogLik,-795.54
+S2_PseudoR2,0.266
+S2_EOP_Mean,£330.769 (£196.408)

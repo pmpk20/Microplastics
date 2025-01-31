@@ -1,0 +1,42 @@
+Variable,Estimate
+X.Intercept.,-1.459*** (0.143)
+AgeDummy,0.069 (0.047)
+EthnicityDummy,0.096 (0.067)
+Gender_Dummy,-0.047 (0.046)
+Charity,0.112* (0.05)
+Education_HigherEd,-0.006 (0.047)
+Q16_ClimateCurrentEnvironment,-0.028 (0.019)
+Q16_ClimateCurrentSelf,-0.017 (0.015)
+Q16_MicroplasticsCurrentEnvironment,0.092*** (0.02)
+Q16_MicroplasticsCurrentSelf,0.071*** (0.018)
+Q16_MicroplasticsTen,0.128*** (0.026)
+Q16_MicroplasticsTwentyFive,0.117** (0.036)
+Q16_MicroplasticsFifty,-0.06* (0.027)
+X.Intercept..1,0.497*** (0.093)
+as.factor.Uncertainty.1,0.98*** (0.098)
+as.factor.Uncertainty.3,1.268*** (0.116)
+as.factor.Uncertainty.5,1.422*** (0.154)
+LogBidIncome,91.195*** (13.52)
+AgeDummy.1,-0.14. (0.077)
+EthnicityDummy.1,-0.207. (0.108)
+Gender_Dummy.1,0.086 (0.075)
+Charity.1,0.336*** (0.086)
+Education_HigherEd.1,0.086 (0.077)
+Q16_ClimateCurrentEnvironment.1,0.085** (0.03)
+Q16_ClimateCurrentSelf.1,-0.038 (0.026)
+Q16_MicroplasticsCurrentEnvironment.1,0.011 (0.036)
+Q16_MicroplasticsCurrentSelf.1,0.084** (0.03)
+Q16_MicroplasticsTen.1,-0.131** (0.045)
+Q16_MicroplasticsTwentyFive.1,-0.003 (0.06)
+Q16_MicroplasticsFifty.1,0.102* (0.043)
+Consequentiality,0.205* (0.08)
+Understanding,-0.043. (0.025)
+I..predict.stage_1..type....response.....MEC..2.,0.816 (0.534)
+I.0...predict.stage_1..type....variance...,17.282*** (3.126)
+S1_AIC,-2602.983
+S1_LogLik,1318.491
+S1_PseudoR2,0.19
+S2_AIC,1516.03
+S2_LogLik,-741.015
+S2_PseudoR2,0.316
+S2_EOP_Mean,£16.008 (£120.895)
