@@ -217,8 +217,7 @@ Simulator <- function(data,
     Variances <- (betareg::predict(stage_1, type = "variance"))
     ## Define Y == gross monthly income * 12
     Y <- d$Income_Annual
-    A <-
-      ((Delta_0 * Means +
+    A <- ((Delta_0 * Means +
           (Delta_1 * (0 - Variances))
       )) %>% as.numeric()
     ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
@@ -286,7 +285,7 @@ Model1_stage2_formula <- "-1 + LogBidIncome"
 Model1_simulation <- Simulator(data = Data_Filtered,
                                formula_stage_1 = Model1_stage1_formula,
                                formula_stage_2 = Model1_stage2_formula,
-                               R = 1000
+                               R = R
 )  
 
 

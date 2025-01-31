@@ -208,7 +208,9 @@ Simulator <- function(data,
     
     # Define Y as gross annual income
     Y <- d$Income_Annual %>% as.numeric()
-    
+    A <- ((Delta_0 * Means +
+             (Delta_1 * (0 - Variances))
+    )) %>% as.numeric()
     # Calculate EOP
     EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))
     # EOP <- (Y - (Y * exp(-((Delta_0 * Means + (Delta_1 * (0 - Variances)))/B0)))) *
