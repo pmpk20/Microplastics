@@ -113,28 +113,31 @@
 
 
 ## Libraries here: -----------------------------------------------------------------
-## Setting up libraries in order of use in the script
+## Setting up all relevant libraries
+library(data.table)
+library(magrittr)
+library(dplyr)
 library(tidyverse)
 library(here)
-library(readxl)
+library(DCchoice)
 library(janitor)
-library(data.table)
 library(betareg)
 library(boot)
 library(AER)
 library(snow)
-library(speedglm)
-library(sessioninfo)
-library(magrittr)
-
+library(scales)
+library(survminer)
+library(ggplot2)
+library(ggtext)
+library(rstatix)
 
 # **********************************************************************************
 #### Section One: Prepare Data For Analysis ####
 # **********************************************************************************
 
-# here("SetupScripts/01_Microplastics_SetupData_Order0.R") %>% source()
-# here("SetupScripts/02_Microplastics_SetupData_Order1.R") %>% source()
-# here("SetupScripts/03_Microplastics_MergeSamples.R") %>% source()
+here("SetupScripts/01_Microplastics_SetupData_Order0.R") %>% source()
+here("SetupScripts/02_Microplastics_SetupData_Order1.R") %>% source()
+here("SetupScripts/03_Microplastics_MergeSamples.R") %>% source()
 
 
 # **********************************************************************************
