@@ -154,7 +154,15 @@ Data <-
 # *****************************
 
 
+## This addition shifts the scale to -10, +10
 Data$Mean_Change <- Data$MeanExpectedCurrent + Data$MeanExpectedFuture
+
+
+## You can preserve the -5,5 like this:
+# Data$Mean_Change <- Data$MeanExpectedCurrent
+
+
+## Old code
 # Data$Variance_ConfidenceAsSD <- ifelse(Data$Variance == 1, 0, 
 #                                        ifelse(Data$Variance == 2, 2, 
 #                                               ifelse(Data$Variance == 3, 6, 10))) %>% 
