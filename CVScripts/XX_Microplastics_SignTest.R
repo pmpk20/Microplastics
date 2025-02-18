@@ -6,6 +6,8 @@
 # - Here we simulate then plot EOP
 # - key difference is var[q] not 0-var[q]
 # - this affects stage_2, Delta_1, A, and EOP
+# - Now replacing return <- boot.results$t0 with
+# - - colmeans (one per person) or boot.results$t
 
 
 
@@ -218,7 +220,7 @@ Simulator <- function(data,
     # Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
     Delta_1 <- stage_2$coefficients['I(predict(stage_1, type = "variance"))'] %>% as.numeric()
     
-    Means <- c(I((predict(stage_1, type = "response") + Data$MEC)/2))
+    Means <- c(I((predict(stage_1, type = "response") + d$MEC)/2))
     Variances <- (betareg::predict(stage_1, type = "variance"))
     ## Define Y == gross monthly income * 12
     Y <- d$Income_Annual
@@ -229,7 +231,7 @@ Simulator <- function(data,
     ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
     # EOP <- (Y - (Y*exp(- A / B0))) *
     #   exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
-    EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))
+    EOP <- (Y - Y * exp(-A / B0) * exp(1 / (2 * B0 ^ 2)))
     
     # EOP <- (d$Income_Annual - (d$Income_Annual * exp(-A / B0))) *
     #   exp(0.5 * (B0^-2))
@@ -246,7 +248,9 @@ Simulator <- function(data,
   
   # Extracting the results
   # l <- length(boot.results$t0)
-  results <- boot.results$t0
+  # results <- boot.results$t0
+  
+  results <- boot.results$t %>% as.matrix() %>% Rfast::colmeans()
   
   ## Here just the raw data
   results %>% return() 
@@ -260,6 +264,9 @@ Simulator <- function(data,
 # Define number of bootstrap iterations
 # R <- 100
 R <- 1000
+
+## WATCH OUT VERY LARGE AND LONG RUNNING
+# R <- 100000
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
@@ -301,10 +308,11 @@ Model1_simulation <- Simulator(data = Data_Filtered,
 
 Data$EOP <- Model1_simulation
 
+## Changing to test2
 Data %>%
   data.frame() %>%
   fwrite(sep = ",",
-         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP_TEST.csv"))
+         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP_TEST1000.csv"))
 
 
 
@@ -388,6 +396,15 @@ Data$Income_Quartile <-
   as.numeric()
 
 
+## Summarise data
+Data %>%
+  group_by(Income_Quartile, Uncertainty) %>%
+  summarise(
+    Mean_EOP = paste0("£",mean(EOP, na.rm = TRUE) %>% round(2), " (£",
+                      sd(EOP, na.rm = TRUE) %>% round(2), ")")
+  ) %>% 
+  pivot_wider(names_from = Income_Quartile, values_from = Mean_EOP)
+
 
 # *****************************
 # PLOT MEAN VS VARIANCE BY INCOME ####
@@ -450,7 +467,7 @@ Figure_2 <- Data[, c("Mean_Change",
   geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
   
   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
-  scale_y_continuous(breaks = seq(-500, 1500, 250)) +
+  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
   
   # Colours and fills for Income Quintile
   scale_colour_manual(
@@ -493,7 +510,7 @@ Figure_2 <- Data[, c("Mean_Change",
     axis.title.y = TextSetup,
     legend.title = TextSetup
   ) +
-  coord_cartesian(ylim = c(-500, 1000))
+  coord_cartesian(ylim = c(320, 350))
 
 
 
@@ -501,7 +518,7 @@ Figure_2 <- Data[, c("Mean_Change",
 ggsave(
   Figure_2,
   device = "png",
-  filename = here("CVOutput", "Figure_2_Smooth_Income_EOP_TEST.png"),
+  filename = here("CVoutput", "Figure_2_Smooth_Income_EOP_TEST2.png"),
   width = 25,
   height = 15,
   units = "cm",
@@ -563,7 +580,7 @@ Figure_2B <- Data[, c("Mean_Change",
   geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
   
   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
-  scale_y_continuous(breaks = seq(-500, 1500, 250)) +
+  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
   
   # Colours and fills for Income Quintile
   scale_colour_manual(
@@ -608,7 +625,7 @@ Figure_2B <- Data[, c("Mean_Change",
     axis.title.y = TextSetup,
     legend.title = TextSetup
   ) +
-  coord_cartesian(ylim = c(-500, 1000))
+  coord_cartesian(ylim = c(310, 360))
 
 
 
@@ -616,7 +633,7 @@ Figure_2B <- Data[, c("Mean_Change",
 ggsave(
   Figure_2B,
   device = "png",
-  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_TEST.png"),
+  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_TEST2.png"),
   width = 25,
   height = 15,
   units = "cm",

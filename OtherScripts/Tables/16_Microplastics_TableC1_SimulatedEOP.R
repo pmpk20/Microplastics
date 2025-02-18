@@ -625,7 +625,7 @@ SummaryTable$Variable <-  c(
 SummaryTable %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("Data", "EOP_SummaryTable_2001.txt"))
+         here("Data", "Microplastics_TableC1_SimulatedEOP.txt"))
 ## formally _1710 version which didn't have % income
 
 
