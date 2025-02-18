@@ -1,11 +1,12 @@
 #### Microplastics: IOP Paper ####
 ## Function: In-text specification
 ## Author: PK
-## Last change: 31/01/25
+## Last change: 18/02/25
 # Changes:
 # - using factor uncertainty instead
 # - new code to output the combined table
 # - new code to report median (SD) of EOP
+# - replace data$MEC with d$MEC line 217
 
 
 
@@ -213,7 +214,7 @@ Simulator <- function(data,
     Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
     
     
-    Means <- c(I((predict(stage_1, type = "response") + Data$MEC)/2))
+    Means <- c(I((predict(stage_1, type = "response") + d$MEC)/2))
     Variances <- (betareg::predict(stage_1, type = "variance"))
     ## Define Y == gross monthly income * 12
     Y <- d$Income_Annual
@@ -253,7 +254,7 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 100
-R <- 1000
+R <- 100000
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
