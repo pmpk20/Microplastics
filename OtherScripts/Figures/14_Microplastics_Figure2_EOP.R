@@ -1,10 +1,11 @@
 #### Microplastics: IOP Paper ####
 ## Function: Smooth WTP by mean/variance
 ## Author: Dr Peter King (p.king1@Leeds.ac.uk)
-## Last change: 30/01/25
+## Last change: 18/02/2025
 ## Changes:
 ### - changing to new EOP figures
 ### - Figure_X_2 is the one in-text
+### - adding Figure_2B to plot eop vs mean by variance
 
 
 # *****************************
@@ -65,6 +66,7 @@ library(tidyverse)
 library(here)
 library(DCchoice)
 library(ggtext)  # Make sure to load this package
+library(magrittr)
 
 
 # *****************************
@@ -72,10 +74,13 @@ library(ggtext)  # Make sure to load this package
 # *****************************
 
 
-## Start with the latest anonymised data in one-row per one-respondent format
+## You must have run this for the data:
+# 04_Microplastics_Models_SimulateEOP.R
+
+## Change back to Microplastics_AllData_Wide_Anonymised_WithEOP.csv when solved
 Data <-
   here("Data",
-       "Microplastics_AllData_Wide_Anonymised_WithEOP.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised_WithEOP_Test1000.csv") %>%
   fread() %>%
   data.frame()
 
@@ -89,10 +94,11 @@ Data$Mean_Change <- Data$MeanExpectedCurrent + Data$MeanExpectedFuture
 Data$Variance_ConfidenceAsSD <- ifelse(Data$Variance == 1, 0, 
                                        ifelse(Data$Variance == 2, 2, 
                                               ifelse(Data$Variance == 3, 6, 10))) %>% 
-  divide_by(4)
+  magrittr::divide_by(4)
 
 
-Data$Variance_ConfidenceAsVariance <- Data$Variance_ConfidenceAsSD %>% raise_to_power(2)
+Data$Variance_ConfidenceAsVariance <- Data$Variance_ConfidenceAsSD %>% 
+  magrittr::raise_to_power(2)
 
 
 
@@ -163,17 +169,14 @@ Data$Income_Quartile <-
 
 
 # Create a custom labeller function
-custom_labeller <- function(variable, value) {
-  if (variable == "Variance") {
-    labels <- c(
+## updated with new labeller api issues
+custom_labeller <- as_labeller(
+  c(
       "0" = "**A**: Highly certain: +/- zero points (N = 151)",
       "1" = "**B**: Mostly certain: +/- one point (N = 995)",
       "3" = "**C**: Mostly uncertain: (+/- three points (N = 307)",
       "5" = "**D**: Highly uncertain: (+/- five points (N = 111)"
-    )
-    return(labels[value])
-  }
-}
+  ))
 
 
 
@@ -208,7 +211,8 @@ Figure_X_2 <- Data[, c("Mean_Change",
   geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
   
   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
-  scale_y_continuous(breaks = seq(-500, 1500, 250)) +
+  # scale_y_continuous(breaks = seq(-500, 1500, 250)) +
+  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
   
   # Colours and fills for Income Quintile
   scale_colour_manual(
@@ -251,8 +255,8 @@ Figure_X_2 <- Data[, c("Mean_Change",
     axis.title.y = TextSetup,
     legend.title = TextSetup
   ) +
-  coord_cartesian(ylim = c(-500, 1000))
-
+  # coord_cartesian(ylim = c(-500, 1000))
+  coord_cartesian(ylim = c(320, 350))
 
 
 # ***********************************************************
@@ -264,7 +268,123 @@ Figure_X_2 <- Data[, c("Mean_Change",
 ggsave(
   Figure_X_2,
   device = "png",
-  filename = here("CVOutput", "FigureX_Smooth_Income_EOP.png"),
+  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_Test1000.png"),
+  width = 25,
+  height = 15,
+  units = "cm",
+  dpi = 500
+)
+
+
+
+# *****************************
+# NEW PLOT MEAN VS INCOME BY VARIANCE ####
+# *****************************
+
+
+
+## New approach to avoid deprecation issues
+custom_labeller_2 <- as_labeller(
+  c(
+    "1" = "**A**: Quartile 1 (Lowest Income)",
+    "2" = "**B**: Quartile 2",
+    "3" = "**C**: Quartile 3",
+    "4" = "**D**: Quartile 4 (Highest Income)"
+  )
+)
+
+
+Figure_2B <- Data[, c("Mean_Change", 
+                      "Uncertainty",
+                      "EOP",
+                      "Income_Quartile")] %>%
+  
+  arrange(Uncertainty) %>% 
+  
+  mutate(Variance = factor(Uncertainty, levels = unique(Uncertainty)),
+         Income_Quartile = as.factor(Income_Quartile)) %>% 
+  
+  ggplot(aes(y = EOP, 
+             x = Mean_Change, 
+             colour = Variance, 
+             fill = Variance)) +  
+  
+  # Smooth curves with alpha for SE shading
+  stat_smooth(aes(fill = Variance, 
+                  colour = Variance), 
+              alpha = 0.25,  
+              linewidth = 1.25) +
+  
+  theme_bw() +
+  
+  facet_wrap( ~ Income_Quartile,
+              nrow = 2,
+              ncol = 2,
+              labeller = custom_labeller_2
+  ) + 
+  
+  # Axes and Labels
+  ylab("Expected option prices") +
+  
+  # Add red reference lines
+  geom_vline(xintercept = 0, linetype = 'dotted', col = 'red') +
+  geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
+  
+  scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
+  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
+  
+  # Colours and fills for Income Quintile
+  scale_colour_manual(
+    name = "Income Quartile",  # Legend title for clarity
+    values = c("black", "blue", "#008080", "skyblue"),  # Custom colours
+    labels = c(
+      "Highly certain: +/- zero points (N = 151)",
+      "Mostly certain: +/- one point (N = 995)",
+      "Mostly uncertain: (+/- three points (N = 307)",
+      "Highly uncertain: (+/- five points (N = 111)"
+    )) +
+  scale_fill_manual(
+    name = "Income Quartile",  # Ensure legend aligns with colour scale
+    values = c("black", "blue", "#008080",  "skyblue"),
+    labels = c(
+      "Highly certain: +/- zero points (N = 151)",
+      "Mostly certain: +/- one point (N = 995)",
+      "Mostly uncertain: (+/- three points (N = 307)",
+      "Highly uncertain: (+/- five points (N = 111)"
+    )) +
+  
+  guides(colour = guide_legend(title = "Income Quartile", 
+                               nrow = 2, 
+                               ncol = 2))+
+  
+  theme(
+    strip.background = element_rect(fill = "white"),
+    strip.text = element_markdown(size = TextSetup$size, 
+                                  colour = TextSetup$colour, 
+                                  family = TextSetup$family),
+    legend.position = "bottom",
+    legend.text = TextSetup,
+    legend.background = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = TextSetup,
+    axis.title.x = TextSetup,
+    ## Change text to be clearer for reader
+    axis.text.y = TextSetup,
+    axis.title.y = TextSetup,
+    legend.title = TextSetup
+  ) +
+  coord_cartesian(ylim = c(310, 360))
+
+
+
+## Export and save in the right location
+ggsave(
+  Figure_2B,
+  device = "png",
+  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_Test1000.png"),
   width = 25,
   height = 15,
   units = "cm",

@@ -16,43 +16,98 @@
 # This script performs in-text specification.
 # Session information is saved to a separate file 'session_info.txt'
 
-# R version 4.4.1 (2024-06-14 ucrt)
-# Platform: x86_64-w64-mingw32/x64
-# Running under: Windows 11 x64 (build 22631)
-# Matrix products: default
-# locale:
-#   [1] LC_COLLATE=English_United Kingdom.utf8 
-# [2] LC_CTYPE=English_United Kingdom.utf8   
-# [3] LC_MONETARY=English_United Kingdom.utf8
-# [4] LC_factor=C                           
-# [5] LC_TIME=English_United Kingdom.utf8    
+# ─ Session info ──────────────────────────────────────────────────────────
+# setting  value
+# version  R version 4.4.1 (2024-06-14 ucrt)
+# os       Windows 11 x64 (build 22631)
+# system   x86_64, mingw32
+# ui       RStudio
+# language (EN)
+# collate  English_United Kingdom.utf8
+# ctype    English_United Kingdom.utf8
+# tz       Europe/London
+# date     2025-02-18
+# rstudio  2023.06.2+561 Mountain Hydrangea (desktop)
+# pandoc   NA
 # 
-# time zone: Europe/London
-# tzcode source: internal
+# ─ Packages ──────────────────────────────────────────────────────────────
+# ! package      * version date (UTC) lib source
+# abind          1.4-5   2016-07-21 [1] CRAN (R 4.4.0)
+# AER          * 1.2-12  2024-02-03 [1] CRAN (R 4.4.0)
+# betareg      * 3.2-0   2024-07-07 [1] CRAN (R 4.4.1)
+# biglm        * 0.9-3   2024-06-12 [1] CRAN (R 4.4.2)
+# boot         * 1.3-30  2024-02-26 [1] CRAN (R 4.4.1)
+# car          * 3.1-2   2023-03-30 [1] CRAN (R 4.4.0)
+# carData      * 3.0-5   2022-01-06 [1] CRAN (R 4.4.0)
+# cli            3.6.3   2024-06-21 [1] CRAN (R 4.4.1)
+# colorspace     2.1-0   2023-01-23 [1] CRAN (R 4.4.0)
+# data.table   * 1.15.4  2024-03-30 [1] CRAN (R 4.4.0)
+# DBI          * 1.2.3   2024-06-02 [1] CRAN (R 4.4.0)
+# DCchoice     * 0.2.0   2023-07-10 [1] CRAN (R 4.4.0)
+# dplyr        * 1.1.4   2023-11-17 [1] CRAN (R 4.4.0)
+# fansi          1.0.6   2023-12-08 [1] CRAN (R 4.4.0)
+# flexmix        2.3-19  2023-03-16 [1] CRAN (R 4.4.0)
+# forcats      * 1.0.0   2023-01-29 [1] CRAN (R 4.4.0)
+# Formula        1.2-5   2023-02-24 [1] CRAN (R 4.4.0)
+# generics       0.1.3   2022-07-05 [1] CRAN (R 4.4.0)
+# ggplot2      * 3.5.1   2024-04-23 [1] CRAN (R 4.4.0)
+# ggtext       * 0.1.2   2022-09-16 [1] CRAN (R 4.4.0)
+# glue           1.7.0   2024-01-09 [1] CRAN (R 4.4.0)
+# gridtext       0.1.5   2022-09-16 [1] CRAN (R 4.4.0)
+# gtable         0.3.5   2024-04-22 [1] CRAN (R 4.4.0)
+# here         * 1.0.1   2020-12-13 [1] CRAN (R 4.4.0)
+# hms            1.1.3   2023-03-21 [1] CRAN (R 4.4.0)
+# Icens          1.72.0  2023-04-25 [1] Bioconductor
+# interval       1.1-1.0 2023-08-24 [1] CRAN (R 4.4.0)
+# janitor      * 2.2.0   2023-02-02 [1] CRAN (R 4.4.1)
+# lattice        0.22-6  2024-03-20 [1] CRAN (R 4.4.1)
+# lifecycle      1.0.4   2023-11-07 [1] CRAN (R 4.4.0)
+# lmtest       * 0.9-40  2022-03-21 [1] CRAN (R 4.4.0)
+# lubridate    * 1.9.3   2023-09-27 [1] CRAN (R 4.4.0)
+# magrittr     * 2.0.3   2022-03-30 [1] CRAN (R 4.4.0)
+# MASS         * 7.3-61  2024-06-13 [1] CRAN (R 4.4.1)
+# Matrix       * 1.7-0   2024-04-26 [1] CRAN (R 4.4.1)
+# MLEcens        0.1-7   2022-10-18 [1] CRAN (R 4.4.0)
+# modeltools     0.2-23  2020-03-05 [1] CRAN (R 4.4.0)
+# munsell        0.5.1   2024-04-01 [1] CRAN (R 4.4.0)
+# nnet           7.3-19  2023-05-03 [1] CRAN (R 4.4.1)
+# perm           1.0-0.4 2023-08-24 [1] CRAN (R 4.4.0)
+# pillar         1.9.0   2023-03-22 [1] CRAN (R 4.4.0)
+# pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.4.0)
+# purrr        * 1.0.2   2023-08-10 [1] CRAN (R 4.4.0)
+# R6             2.5.1   2021-08-19 [1] CRAN (R 4.4.0)
+# Rcpp           1.0.12  2024-01-09 [1] CRAN (R 4.4.0)
+# D RcppParallel   5.1.7   2023-02-27 [1] CRAN (R 4.4.0)
+# RcppZiggurat   0.1.6   2020-10-20 [1] CRAN (R 4.4.0)
+# readr        * 2.1.5   2024-01-10 [1] CRAN (R 4.4.0)
+# Rfast          2.1.0   2023-11-09 [1] CRAN (R 4.4.0)
+# rlang          1.1.4   2024-06-04 [1] CRAN (R 4.4.0)
+# rprojroot      2.0.4   2023-11-05 [1] CRAN (R 4.4.0)
+# rstudioapi     0.16.0  2024-03-24 [1] CRAN (R 4.4.0)
+# sandwich     * 3.1-0   2023-12-11 [1] CRAN (R 4.4.0)
+# scales         1.3.0   2023-11-28 [1] CRAN (R 4.4.0)
+# sessioninfo  * 1.2.2   2021-12-06 [1] CRAN (R 4.4.2)
+# snakecase      0.11.1  2023-08-27 [1] CRAN (R 4.4.1)
+# snow         * 0.4-4   2021-10-27 [1] CRAN (R 4.4.0)
+# speedglm     * 0.3-5   2023-05-06 [1] CRAN (R 4.4.2)
+# stringi        1.8.4   2024-05-06 [1] CRAN (R 4.4.0)
+# stringr      * 1.5.1   2023-11-14 [1] CRAN (R 4.4.0)
+# survival     * 3.7-0   2024-06-05 [1] CRAN (R 4.4.1)
+# tibble       * 3.2.1   2023-03-20 [1] CRAN (R 4.4.0)
+# tidyr        * 1.3.1   2024-01-24 [1] CRAN (R 4.4.0)
+# tidyselect     1.2.1   2024-03-11 [1] CRAN (R 4.4.0)
+# tidyverse    * 2.0.0   2023-02-22 [1] CRAN (R 4.4.0)
+# timechange     0.3.0   2024-01-18 [1] CRAN (R 4.4.0)
+# tzdb           0.4.0   2023-05-12 [1] CRAN (R 4.4.0)
+# utf8           1.2.4   2023-10-22 [1] CRAN (R 4.4.0)
+# vctrs          0.6.5   2023-12-01 [1] CRAN (R 4.4.0)
+# withr          3.0.0   2024-01-16 [1] CRAN (R 4.4.0)
+# xml2           1.3.6   2023-12-04 [1] CRAN (R 4.4.0)
+# zoo          * 1.8-12  2023-04-13 [1] CRAN (R 4.4.0)
 # 
-# attached base packages:
-#   [1] stats     graphics  grDevices utils     datasets  methods   base     
+# [1] C:/Users/earpkin/AppData/Local/Programs/R/R-4.4.1/library
 # 
-# other attached packages:
-#   [1] snow_0.4-4        AER_1.2-14        survival_3.6-4    sandwich_3.1-1   
-# [5] lmtest_0.9-40     zoo_1.8-12        car_3.1-2         carData_3.0-5    
-# [9] boot_1.3-30       betareg_3.2-1     DCchoice_0.2.0    here_1.0.1       
-# [13] lubridate_1.9.3   forcats_1.0.0     stringr_1.5.1     purrr_1.0.2      
-# [17] readr_2.1.5       tidyr_1.3.1       tibble_3.2.1      ggplot2_3.5.1    
-# [21] tidyverse_2.0.0   dplyr_1.1.4       magrittr_2.0.3    data.table_1.16.0
-# 
-# loaded via a namespace (and not attached):
-#   [1] utf8_1.2.4        generics_0.1.3    stringi_1.8.4     lattice_0.22-6   
-# [5] hms_1.1.3         grid_4.4.1        timechange_0.3.0  Matrix_1.7-0     
-# [9] rprojroot_2.0.4   nnet_7.3-19       Formula_1.2-5     Icens_1.76.0     
-# [13] fansi_1.0.6       scales_1.3.0      modeltools_0.2-23 abind_1.4-8      
-# [17] cli_3.6.3         rlang_1.1.4       munsell_0.5.1     splines_4.4.1    
-# [21] withr_3.0.1       parallel_4.4.1    tools_4.4.1       flexmix_2.3-19   
-# [25] tzdb_0.4.0        interval_1.1-1.0  colorspace_2.1-1  vctrs_0.6.5      
-# [29] R6_2.5.1          stats4_4.4.1      lifecycle_1.0.4   MASS_7.3-60.2    
-# [33] MLEcens_0.1-7.1   pkgconfig_2.0.3   pillar_1.9.0      gtable_0.3.5     
-# [37] glue_1.7.0        tidyselect_1.2.1  rstudioapi_0.16.0 perm_1.0-0.4     
-# [41] compiler_4.4.1    
+# D ── DLL MD5 mismatch, broken installation.
 
 
 # Clear environment
@@ -70,6 +125,7 @@ library(AER)
 library(snow)
 library(speedglm)
 library(sessioninfo)
+library(Rfast)
 
 # ***********************************************************
 # Section 1: Import Data ####
@@ -202,7 +258,8 @@ Simulator <- function(data,
       paste0(
         "CV ~ ",
         formula_stage_2,
-        " + I((predict(stage_1, type = 'response') + MEC) / 2) + I(0 - predict(stage_1, type = 'variance'))"
+        " + I((predict(stage_1, type = 'response') + MEC) / 2) + I(predict(stage_1, type = 'variance'))"
+        # " + I((predict(stage_1, type = 'response') + MEC) / 2) + I(0 - predict(stage_1, type = 'variance'))"
       ) %>% as.formula(),
       family = binomial(link = "probit"),
       data = d
@@ -211,7 +268,8 @@ Simulator <- function(data,
     
     B0 <- stage_2$coefficients["LogBidIncome"] %>% as.numeric()
     Delta_0 <- stage_2$coefficients['I((predict(stage_1, type = "response") + MEC)/2)'] %>% as.numeric()
-    Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
+    Delta_1 <- stage_2$coefficients['I(predict(stage_1, type = "variance"))'] %>% as.numeric()
+    # Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
     
     
     Means <- c(I((predict(stage_1, type = "response") + d$MEC)/2))
@@ -219,7 +277,8 @@ Simulator <- function(data,
     ## Define Y == gross monthly income * 12
     Y <- d$Income_Annual
     A <- ((Delta_0 * Means +
-          (Delta_1 * (0 - Variances))
+             (Delta_1 * (Variances))
+          # (Delta_1 * (0 - Variances))
       )) %>% as.numeric()
     ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
     # EOP <- (Y - (Y*exp(- A / B0))) *
@@ -241,7 +300,9 @@ Simulator <- function(data,
   
   # Extracting the results
   # l <- length(boot.results$t0)
-  results <- boot.results$t0
+  # results <- boot.results$t0
+  
+  results <- boot.results$t %>% as.matrix() %>% Rfast::colmeans()
   
   ## Here just the raw data
   results %>% return() 
@@ -253,8 +314,8 @@ Simulator <- function(data,
 # ***********************************************************
 
 # Define number of bootstrap iterations
-# R <- 100
-R <- 100000
+R <- 1000
+# R <- 100000
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
@@ -299,7 +360,7 @@ Data$EOP <- Model1_simulation
 Data %>%
   data.frame() %>%
   fwrite(sep = ",",
-         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP.csv"))
+         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP_Test1000.csv"))
 
 
 
