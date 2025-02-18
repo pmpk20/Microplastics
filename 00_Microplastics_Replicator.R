@@ -161,9 +161,12 @@ here("CVScripts/10_Microplastics_Models_Truncation.R") %>% source()
 here("OtherScripts/Tables/11_Microplastics_Table1.R") %>% source()
 here("OtherScripts/Tables/12_Microplastics_TableB1_Sample.R") %>% source()
 here("OtherScripts/Tables/13_Microplastics_TableB3.R") %>% source()
+
+## To execute 14 you need to have run 4 first
 here("OtherScripts/Figures/14_Microplastics_Figure2_EOP.R") %>% source()
 here("OtherScripts/Figures/15_Microplastics_FigureB1_Turnbull.R") %>% source()
 
-
+## Final table
+here("OtherScripts/Tables/16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
 
 # End Of Script ##############################################################
