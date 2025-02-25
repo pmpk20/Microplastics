@@ -78,9 +78,15 @@ library(magrittr)
 # 04_Microplastics_Models_SimulateEOP.R
 
 ## Change back to Microplastics_AllData_Wide_Anonymised_WithEOP.csv when solved
+# Data <-
+#   here("Data",
+#        "Microplastics_AllData_Wide_Anonymised_WithEOP_Test1000.csv") %>%
+#   fread() %>%
+#   data.frame()
+
 Data <-
   here("Data",
-       "Microplastics_AllData_Wide_Anonymised_WithEOP_Test1000.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv") %>%
   fread() %>%
   data.frame()
 
@@ -268,7 +274,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
 ggsave(
   Figure_X_2,
   device = "png",
-  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_Test1000.png"),
+  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_UpdatedA.png"),
   width = 25,
   height = 15,
   units = "cm",
@@ -384,7 +390,7 @@ Figure_2B <- Data[, c("Mean_Change",
 ggsave(
   Figure_2B,
   device = "png",
-  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_Test1000.png"),
+  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_UpdatedA.png"),
   width = 25,
   height = 15,
   units = "cm",

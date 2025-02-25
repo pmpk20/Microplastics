@@ -135,6 +135,8 @@ library(rstatix)
 #### Section One: Prepare Data For Analysis ####
 # **********************************************************************************
 
+
+## Don't need to run these every time
 here("SetupScripts", "01_Microplastics_SetupData_Order0.R") %>% source()
 here("SetupScripts", "02_Microplastics_SetupData_Order1.R") %>% source()
 here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
@@ -144,6 +146,8 @@ here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 #### Section Twp: Modelling ####
 # **********************************************************************************
 
+
+## Simulate first then estimate all kinds of specifications
 here("CVScripts", "04_Microplastics_Models_SimulateEOP.R") %>% source()
 here("CVScripts", "05_Microplastics_Models_BothStages_InText.R") %>% source()
 here("CVScripts", "06_Microplastics_Models_Alternative1_Asymmetric.R") %>% source()
@@ -158,20 +162,33 @@ here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 #### Section Three: Tables/Figures ####
 # **********************************************************************************
 
+
+## Pre-estimation results
 here("OtherScripts/Tables", "11_Microplastics_Table1.R") %>% source()
 here("OtherScripts/Tables", "12_Microplastics_TableB1_Sample.R") %>% source()
 here("OtherScripts/Tables", "13_Microplastics_TableB3.R") %>% source()
-
-## To execute 14 you need to have run 4 first
-here("OtherScripts/Figures", "14_Microplastics_Figure2_EOP.R") %>% source()
 here("OtherScripts/Figures", "15_Microplastics_FigureB1_Turnbull.R") %>% source()
 
-## Final table
+
+## To execute 14_ you need to have run 04_ first
+## Note that Fig2 may no longer be in the MS
+here("OtherScripts/Figures", "14_Microplastics_Figure2_EOP.R") %>% source()
+
+
+## Actually Table4 in the latest MS version
 here("OtherScripts/Tables", "16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
 
 
-here("OtherScripts/Figures", 
-     "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R") %>% source()
+## Just need this to plot now, no sepate file
+here("OtherScripts/Figures", "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R") %>% source()
+
+
+## Tables combing model results for convenience
+here("OtherScripts/Tables", "18_Microplastics_Table4_AlternativeSpecifications.R") %>% source()
+here("OtherScripts/Tables", "19_Microplastics_TableC2_TruncationModels.R") %>% source()
+here("OtherScripts/Tables", "20_Microplastics_TableC3_RobustnessStage1Models.R") %>% source()
+here("OtherScripts/Tables", "21_TableC4_RobustnessStage2Models.R") %>% source()
+
 
 
 # End Of Script ##############################################################

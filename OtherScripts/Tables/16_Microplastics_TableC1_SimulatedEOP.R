@@ -357,9 +357,12 @@ Simulator <- function(data,
     
     
     # Compute Stage 2 predictors
-    d$S2_Mean <- (predict(stage_1, type = "response") + d$MEC) / 2 
-    d$S2_Variance <- (I(0 - predict(stage_1, type = 'variance')))
     d$S2_Income <- d$LogBidIncome
+    d$S2_Mean <- (predict(stage_1, type = "response"))
+    d$S2_Variance <- (I(predict(stage_1, type = 'variance')))
+    # d$S2_Mean <- (predict(stage_1, type = "response") + d$MEC) / 2 
+    # d$S2_Variance <- (I(0 - predict(stage_1, type = 'variance')))
+    
     
     stage_2_formula <- as.formula("CV ~ -1 + S2_Income + S2_Mean + S2_Variance")
     
@@ -376,16 +379,20 @@ Simulator <- function(data,
     Delta_0 <- stage_2$coefficients['S2_Mean'] %>% as.numeric()
     Delta_1 <- stage_2$coefficients['S2_Variance'] %>% as.numeric()
     
+    
     ## Scale or fix MEAN EXPECTATIONS ***************************
     S2_Mean <- if (is.numeric(Mean_multiplier)) {
       # Multiply as usual if it's numeric
-      c(I((predict(stage_1, type = "response") + d$MEC)/2)) * Mean_multiplier
+      c(I((predict(stage_1, type = "response")))) * Mean_multiplier
+      # c(I((predict(stage_1, type = "response") + d$MEC)/2)) * Mean_multiplier
     } else if (is.character(Mean_multiplier) && Mean_multiplier == "mean") {
       # Perform the preplanned operation if "mean" is specified
-      c(I((predict(stage_1, type = "response") + d$MEC)/2))  %>% mean(na.rm = TRUE)
+      c(I((predict(stage_1, type = "response"))))  %>% mean(na.rm = TRUE)
+      # c(I((predict(stage_1, type = "response") + d$MEC)/2))  %>% mean(na.rm = TRUE)
     } else {
       stop("Invalid Mean_multiplier: must be numeric or 'mean'")
     }
+    
     
     ## Scale or fix VARIANCE of EXPECTATIONS ***************************
     S2_Variance <- if (is.numeric(Variance_multiplier)) {
@@ -419,7 +426,8 @@ Simulator <- function(data,
     Y <- S2_Income
     A <-
       ((Delta_0 * Means +
-          (Delta_1 * (0 - Variances))
+          (Delta_1 * (Variances))
+          # (Delta_1 * (0 - Variances))
       )) %>% as.numeric()
     ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
     EOP <- (Y - (Y*exp(- A / B0))) *
@@ -498,14 +506,17 @@ Model1_stage1_formula <- as.formula(
 # Define your formula for stage_1 and stage_2 models
 # Model1_stage2_formula <- "-1 + LogBidIncome"
 
-# Call the simulator function
-Model1_simulation <- Simulator(data = Data,
-                               formula_stage_1 = Model1_stage1_formula,
-                               Mean_multiplier = 1,
-                               Variance_multiplier = 1,
-                               Income_multiplier = 1,
-                               R = 100
-)
+
+# Call the simulator function to validate
+# Model1_simulation <- Simulator(data = Data,
+#                                formula_stage_1 = Model1_stage1_formula,
+#                                Mean_multiplier = 1,
+#                                Variance_multiplier = 1,
+#                                Income_multiplier = 1,
+#                                R = 100
+# )
+
+
 # 
 # # Model1_simulation %>% summary_function()
 # 
@@ -625,7 +636,7 @@ SummaryTable$Variable <-  c(
 SummaryTable %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("Data", "Microplastics_TableC1_SimulatedEOP.txt"))
+         here("Data", "Microplastics_TableC1_SimulatedEOP_UpdatedA.txt"))
 ## formally _1710 version which didn't have % income
 
 
