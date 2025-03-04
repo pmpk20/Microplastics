@@ -190,7 +190,8 @@ Simulator <- function(data,
       paste0(
         "CV ~ ",
         formula_stage_2,
-        " + I((predict(stage_1, type = 'response') + MEC) / 2) + I(0 - predict(stage_1, type = 'variance'))"
+        " + I((predict(stage_1, type = 'response'))) + I(predict(stage_1, type = 'variance'))"
+        # " + I((predict(stage_1, type = 'response') + MEC) / 2) + I(0 - predict(stage_1, type = 'variance'))"
       ) %>% as.formula(),
       family = binomial(link = "probit"),
       data = d
@@ -198,17 +199,22 @@ Simulator <- function(data,
     
     # Extract relevant coefficients
     B0 <- stage_2$coefficients["LogBidIncome"] %>% as.numeric()
-    Delta_0 <- stage_2$coefficients['I((predict(stage_1, type = "response") + MEC)/2)'] %>% as.numeric()
-    Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
+    Delta_0 <- stage_2$coefficients['I((predict(stage_1, type = "response")))'] %>% as.numeric()
+    Delta_1 <- stage_2$coefficients['I(predict(stage_1, type = "variance"))'] %>% as.numeric()
+    # Delta_0 <- stage_2$coefficients['I((predict(stage_1, type = "response") + MEC)/2)'] %>% as.numeric()
+    # Delta_1 <- stage_2$coefficients['I(0 - predict(stage_1, type = "variance"))'] %>% as.numeric()
+    
     
     # Calculate means and variances from stage 1
-    Means <- I((predict(stage_1, type = "response") + d$MEC) / 2) %>% as.numeric()
+    Means <- I((predict(stage_1, type = "response"))) %>% as.numeric()
+    # Means <- I((predict(stage_1, type = "response") + d$MEC) / 2) %>% as.numeric()
     Variances <- (betareg::predict(stage_1, type = "variance"))  %>% as.numeric()
     
     # Define Y as gross annual income
     Y <- d$Income_Annual %>% as.numeric()
     A <- ((Delta_0 * Means +
-             (Delta_1 * (0 - Variances))
+             (Delta_1 * (Variances))
+           # (Delta_1 * (0 - Variances))
     )) %>% as.numeric()
     # Calculate EOP
     EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))

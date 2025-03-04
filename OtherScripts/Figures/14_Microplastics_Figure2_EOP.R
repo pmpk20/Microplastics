@@ -218,7 +218,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
   
   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
   # scale_y_continuous(breaks = seq(-500, 1500, 250)) +
-  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
+  scale_y_continuous(breaks = seq(-500, 1500, 250)) +
   
   # Colours and fills for Income Quintile
   scale_colour_manual(
@@ -261,8 +261,8 @@ Figure_X_2 <- Data[, c("Mean_Change",
     axis.title.y = TextSetup,
     legend.title = TextSetup
   ) +
-  # coord_cartesian(ylim = c(-500, 1000))
-  coord_cartesian(ylim = c(320, 350))
+  coord_cartesian(ylim = c(-250, 900))
+  # coord_cartesian(ylim = c(320, 350))
 
 
 # ***********************************************************
@@ -274,7 +274,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
 ggsave(
   Figure_X_2,
   device = "png",
-  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_UpdatedA.png"),
+  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_March2025.png"),
   width = 25,
   height = 15,
   units = "cm",
@@ -337,7 +337,7 @@ Figure_2B <- Data[, c("Mean_Change",
   geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
   
   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
-  scale_y_continuous(breaks = seq(-500, 1500, 10)) +
+  scale_y_continuous(breaks = seq(-500, 1500, 100)) +
   
   # Colours and fills for Income Quintile
   scale_colour_manual(
@@ -380,17 +380,17 @@ Figure_2B <- Data[, c("Mean_Change",
     ## Change text to be clearer for reader
     axis.text.y = TextSetup,
     axis.title.y = TextSetup,
-    legend.title = TextSetup
-  ) +
-  coord_cartesian(ylim = c(310, 360))
-
+    legend.title = TextSetup)
+  # ) +
+  # coord_cartesian(ylim = c(310, 360))
+  # 
 
 
 ## Export and save in the right location
 ggsave(
   Figure_2B,
   device = "png",
-  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_UpdatedA.png"),
+  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_March2025.png"),
   width = 25,
   height = 15,
   units = "cm",

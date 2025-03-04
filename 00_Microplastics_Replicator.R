@@ -1,7 +1,7 @@
 #### Microplastics IOP: Full run through of how to replicate the paper  ###############
 # Function: To list all files in one go
 # Author: Dr Peter King (p.king1@leeds.ac.uk)
-# Last Edited: 31/01/2025
+# Last Edited: 04/03/2025
 
 
 # **********************************************************************************
@@ -156,7 +156,8 @@ here("CVScripts", "08_Microplastics_Models_RobustnessStage1.R") %>% source()
 here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
 here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 
-
+## If simulating EOP at mean income, mean mean, and mean variance
+here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
 
 # **********************************************************************************
 #### Section Three: Tables/Figures ####
@@ -168,6 +169,7 @@ here("OtherScripts/Tables", "11_Microplastics_Table1.R") %>% source()
 here("OtherScripts/Tables", "12_Microplastics_TableB1_Sample.R") %>% source()
 here("OtherScripts/Tables", "13_Microplastics_TableB3.R") %>% source()
 here("OtherScripts/Figures", "15_Microplastics_FigureB1_Turnbull.R") %>% source()
+here("OtherScripts/Figures", "22_Microplastics_FigureB2_Attitudes.R") %>% 
 
 
 ## To execute 14_ you need to have run 04_ first
@@ -179,7 +181,7 @@ here("OtherScripts/Figures", "14_Microplastics_Figure2_EOP.R") %>% source()
 here("OtherScripts/Tables", "16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
 
 
-## Just need this to plot now, no sepate file
+## Just need this to plot now, no separate file
 here("OtherScripts/Figures", "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R") %>% source()
 
 

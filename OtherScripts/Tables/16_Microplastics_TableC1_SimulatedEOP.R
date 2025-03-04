@@ -435,8 +435,8 @@ Simulator <- function(data,
     
     
     ## REMOVE WHEN DONE
-    # EOP %>% summary_function()
-    return(EOP)
+    EOP %>% summary_function()
+    # return(EOP)
     
   }
   
@@ -457,15 +457,15 @@ Simulator <- function(data,
   )
   
   # Extracting the results
-  # results <- boot.results$t0
+  results <- boot.results$t0
   # results <- boot.results$t %>% as.matrix() %>% summary_function_new()
-  results <- boot.results$t %>% as.matrix() %>% 
-    summary_function_new() %>% 
-    Rfast::colmeans() %>% 
-    round(2) %>% 
-    sprintf("%.2f", .) %>%
-    paste0("£", .)
-  names(results) <- c("2.5%", "Median", "Mean", "SD", "97.5%", "Percent")
+  # results <- boot.results$t %>% as.matrix() %>% 
+  #   summary_function_new() %>% 
+  #   Rfast::colmeans() %>% 
+  #   round(2) %>% 
+  #   sprintf("%.2f", .) %>%
+  #   paste0("£", .)
+  # names(results) <- c("2.5%", "Median", "Mean", "SD", "97.5%", "Percent")
   ## Here the summary of the data
   # results %>% return()
   results %>% return()
@@ -636,7 +636,7 @@ SummaryTable$Variable <-  c(
 SummaryTable %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("Data", "Microplastics_TableC1_SimulatedEOP_UpdatedA.txt"))
+         here("Data", "Microplastics_TableC1_SimulatedEOP_March2025.txt"))
 ## formally _1710 version which didn't have % income
 
 

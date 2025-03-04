@@ -224,15 +224,8 @@ summary_function <- function(EOP) {
     "2.5%" = EOP %>% quantile(c(0.025)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
     Median = EOP %>% median(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
     Mean = EOP %>% mean(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
-    SD = EOP %>% sd(na.rm = TRUE) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
-    "97.5%" = EOP %>% quantile(c(0.975)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
-    "Percent" = (100/Data$Income_Annual*abs(EOP)) %>% 
-      mean(na.rm = TRUE) %>% 
-      round(2) %>% 
-      sprintf("%.2f", .) %>% 
-      paste0(., "%")
-  )
-}
+    "97.5%" = EOP %>% quantile(c(0.975)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .))
+  }
 
 
 
@@ -276,21 +269,16 @@ Simulator <- function(data,
     # Means <- c(I((predict(stage_1, type = "response") + d$MEC)/2))
     Variances <- (betareg::predict(stage_1, type = "variance"))
     ## Define Y == gross monthly income * 12
-    Y <- d$Income_Annual
-    A <- ((Delta_0 * Means +
-             (Delta_1 * (Variances))
-          # (Delta_1 * (0 - Variances))
-      )) %>% as.numeric()
-    ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
-    # EOP <- (Y - (Y*exp(- A / B0))) *
-    #   exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
-    EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))
+    Y <- mean(Data_Filtered$Income_Annual)
+    A <- (Delta_0 * mean(Means) + Delta_1 * mean(Variances)) %>% as.numeric()
+    EOP <- (Y - Y * exp(-A / B0) * exp(1 / (2 * B0 ^ 2)))
+    EOP
     
     # EOP <- (d$Income_Annual - (d$Income_Annual * exp(-A / B0))) *
     #   exp(0.5 * (B0^-2))
     
     return(EOP)
-
+    
   }
   
   # Run the bootstrap
@@ -301,9 +289,9 @@ Simulator <- function(data,
   
   # Extracting the results
   # l <- length(boot.results$t0)
-  results <- boot.results$t0
+  # results <- boot.results$t0
   
-  # results <- boot.results$t %>% as.matrix() %>% Rfast::colmeans()
+  results <- boot.results$t %>% summary_function()
   
   ## Here just the raw data
   results %>% return() 
@@ -356,13 +344,13 @@ Model1_simulation <- Simulator(data = Data_Filtered,
 # Section x: Export Data ####
 # *****************************
 
-Data$EOP <- Model1_simulation
-
-Data %>%
+# Data$EOP <- Model1_simulation
+# 
+Model1_simulation %>%
   data.frame() %>%
   fwrite(sep = ",",
-         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv"))
-
+         here("Data", "EOP_AtMeans.txt"))
+# 
 
 
 
