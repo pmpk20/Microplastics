@@ -1,11 +1,12 @@
 #### Microplastics: IOP Paper ####
 ## Function: In-text specification
 ## Author: PK
-## Last change: 27/11/2024
+## Last change: 15/03/2025
 # Changes:
 # - using factor uncertainty instead
 # - new code to output the combined table
 # - new code to report median (SD) of EOP
+# - export plot data
 
 
 # *****************************
@@ -141,7 +142,7 @@ library(ggtext)
 
 Data <-
   here("Data",
-       "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
 
@@ -224,7 +225,7 @@ Simulator <- function(data,
     
     # Define your formula for stage_1 and stage_2 models
     formula_stage_1 <- as.formula(
-      MEF ~
+      AdjustedMEC ~
         -1 + ## Changing to no intercept here
         AgeDummy + 
         EthnicityDummy +
@@ -279,15 +280,18 @@ Simulator <- function(data,
 
 
 
-## Define here just once
-R <- 1000
-# R <- 100
+# Define number of bootstrap iterations
+# R <- 10
+# R <- 1000
+R <- 10000
+
 
 
 Data_Filtered <- Data %>% dplyr::select(c(
   "CV",
   "MEC",
   "MEF", 
+  "AdjustedMEC",
   "AgeDummy",
   "EthnicityDummy",
   "Gender_Dummy",  
@@ -316,14 +320,18 @@ Data$Predicted_Variances <- Model1_simulation$Variances
 Data$Predicted_Y <- Model1_simulation$Y
 
 
-# Data %>% 
-#   data.frame() %>% 
-#   fwrite(sep = ",",
-#          here("Data", "FigureZ_PlotData_1302.csv"))
+Data %>%
+  data.frame() %>%
+  fwrite(sep = ",",
+         here("Data", 
+              "FigureB4_PlotData_1503.csv"))
 
 
 ## Assign here
 PlotData <- Data
+
+
+
 
 # Data_1 <-
 #   here("Data", "FigureZ_PlotData_1212.csv") %>% 
@@ -386,8 +394,11 @@ Fig_Test_1 <-
            "Predicted_Variances",
            "Predicted_Y",
            "Uncertainty")] %>%
+  
   arrange(Uncertainty) %>%
+  
   mutate(Variance = factor(Uncertainty, levels = unique(Uncertainty))) %>% 
+  
   ggplot(aes(x = Predicted_Means %>% as.numeric(),
              y = Predicted_Variances %>% as.numeric(),
              group = Uncertainty %>% as.factor()),
@@ -395,10 +406,14 @@ Fig_Test_1 <-
          fill = Variance) +
   
   stat_smooth(aes(colour = Uncertainty %>% as.factor()),
-              linewidth = 1.25) + 
+              linewidth = 1.25,
+              method = "lm") + 
+  
   geom_point(aes(colour = Uncertainty %>% as.factor()),
-             alpha = 0.25, size = 0.75) +
+             alpha = 0.5, size = 0.75) +
+  
   theme_bw() +
+  
   facet_wrap(~ Variance,
              labeller = custom_labeller) +
   
@@ -435,6 +450,7 @@ Fig_Test_1 <-
       "Highly uncertain: +/- five points (N = 111)"
     )
   ) +
+  
   scale_fill_manual(
     name = "Variance",
     # Legend title for clarity
@@ -475,7 +491,7 @@ Fig_Test_1 <-
   ) 
 
 
-Fig_Test_1
+# Fig_Test_1
 
 
 
@@ -484,7 +500,7 @@ Fig_Test_1
 ggsave(
   Fig_Test_1,
   device = "png",
-  filename = here("CVOutput", 
+  filename = here("CVoutput", 
                   "Microplastics_FigureB4_MeanVariance_Nointercept.png"),
   width = 25,
   height = 15,

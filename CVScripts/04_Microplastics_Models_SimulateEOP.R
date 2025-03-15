@@ -142,6 +142,7 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "CV",
   "MEC",
   "MEF", 
+  "AdjustedMEC",
   "AgeDummy",
   "EthnicityDummy",
   "Gender_Dummy",  
@@ -315,12 +316,20 @@ Simulator <- function(data,
 # ***********************************************************
 
 # Define number of bootstrap iterations
-R <- 1000
-# R <- 100000
+# R <- 10
+# R <- 1000
+R <- 10000
+
+# Data_Filtered$Delta <- (Data_Filtered$MeanExpectedFuture - Data_Filtered$MeanExpectedCurrent)
+# 
+# 
+# Data$MEF <- (Data$MeanExpectedFuture + 5.001) / 10.002
+# summary(Data$MEF)
+
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -357,11 +366,13 @@ Model1_simulation <- Simulator(data = Data_Filtered,
 # *****************************
 
 Data$EOP <- Model1_simulation
+Data$EOP %>% summary_function()
+
 
 Data %>%
   data.frame() %>%
   fwrite(sep = ",",
-         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv"))
+         here("Data", "Microplastics_AllData_Wide_Anonymised_WithEOP.csv"))
 
 
 

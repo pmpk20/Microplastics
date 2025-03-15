@@ -86,7 +86,7 @@ library(magrittr)
 
 Data <-
   here("Data",
-       "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised_WithEOP.csv") %>%
   fread() %>%
   data.frame()
 
@@ -274,7 +274,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
 ggsave(
   Figure_X_2,
   device = "png",
-  filename = here("CVoutput", "FigureX_Smooth_Income_EOP_March2025.png"),
+  filename = here("CVoutput", "Figure2_Smooth_Income_EOP.png"),
   width = 25,
   height = 15,
   units = "cm",
@@ -390,7 +390,7 @@ Figure_2B <- Data[, c("Mean_Change",
 ggsave(
   Figure_2B,
   device = "png",
-  filename = here("CVOutput", "Figure_2B_Smooth_Income_EOP_March2025.png"),
+  filename = here("CVOutput", "Figure2B_Smooth_VarianceIncome_EOP.png"),
   width = 25,
   height = 15,
   units = "cm",

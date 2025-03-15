@@ -142,6 +142,9 @@ here("SetupScripts", "02_Microplastics_SetupData_Order1.R") %>% source()
 here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 
 
+
+
+
 # **********************************************************************************
 #### Section Twp: Modelling ####
 # **********************************************************************************
@@ -150,14 +153,26 @@ here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 ## Simulate first then estimate all kinds of specifications
 here("CVScripts", "04_Microplastics_Models_SimulateEOP.R") %>% source()
 here("CVScripts", "05_Microplastics_Models_BothStages_InText.R") %>% source()
+
+## These currently have the wrong names!
 here("CVScripts", "06_Microplastics_Models_Alternative1_Asymmetric.R") %>% source()
 here("CVScripts", "07_Microplastics_Models_Alternative2_NumericUncertainty.R") %>% source()
+
+
 here("CVScripts", "08_Microplastics_Models_RobustnessStage1.R") %>% source()
-here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
+
+## Removing this as challenges with conceptual validity
+# here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
 here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
+
 
 ## If simulating EOP at mean income, mean mean, and mean variance
 here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
+
+
+## Actually an appendix table but putting here
+here("OtherScripts/Tables", "16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
+
 
 # **********************************************************************************
 #### Section Three: Tables/Figures ####
@@ -175,10 +190,6 @@ here("OtherScripts/Figures", "22_Microplastics_FigureB2_Attitudes.R") %>%
 ## To execute 14_ you need to have run 04_ first
 ## Note that Fig2 may no longer be in the MS
 here("OtherScripts/Figures", "14_Microplastics_Figure2_EOP.R") %>% source()
-
-
-## Actually Table4 in the latest MS version
-here("OtherScripts/Tables", "16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
 
 
 ## Just need this to plot now, no separate file

@@ -79,12 +79,19 @@ Data <- here("Data", "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
 
+
+Data$NewMEC <- ((Data$MeanExpectedFuture + Data$MeanExpectedCurrent) + 10.001)/20.002 
+
+
+
 # Select the specified columns
 Data_Filtered <- Data %>%
   dplyr::select(
     CV,
     MEC,
     MEF,
+    NewMEC,
+    AdjustedMEC,
     AgeDummy,
     EthnicityDummy,
     Gender_Dummy,
@@ -287,12 +294,14 @@ Simulator <- function(data,
 # ***********************************************************
 
 # Define number of bootstrap iterations
-# R <- 100
-R <- 1000
+# R <- 10
+# R <- 1000
+R <- 10000
+
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
-  MEF ~
+  AdjustedMEC ~ ##UPDATED
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +

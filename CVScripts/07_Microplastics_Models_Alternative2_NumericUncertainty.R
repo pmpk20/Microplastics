@@ -79,11 +79,15 @@ Data <- here("Data", "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
 
+Data$VarianceChange <- (Data$VarianceLowerBound - Data$VarianceUpperBound)
+
 
 Data_Filtered <- Data %>% dplyr::select(c(
   "CV",
   "MEC",
   "MEF", 
+  "AdjustedMEC",
+  "VarianceChange",
   "AgeDummy",
   "EthnicityDummy",
   "Gender_Dummy",  
@@ -295,13 +299,15 @@ Simulator <- function(data,
 # ***********************************************************
 
 # Define number of bootstrap iterations
-# R <- 100
-R <- 1000
+# R <- 10
+# R <- 1000
+R <- 10000
+
 
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -316,8 +322,9 @@ Model1_stage1_formula <- as.formula(
     Q16_MicroplasticsTwentyFive + 
     Q16_MicroplasticsFifty |
     1 +  # intercept here
-    VarianceUpperBound +
-    VarianceLowerBound
+    VarianceChange  
+    # VarianceUpperBound +
+    # VarianceLowerBound
 )
 
 # Define your formula for stage_1 and stage_2 models

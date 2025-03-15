@@ -86,6 +86,12 @@ all_data_wide <-
   )
 
 
+## NewMEC
+all_data_wide$AdjustedMEC <- ((all_data_wide$MeanExpectedFuture + all_data_wide$MeanExpectedCurrent) + 10.001)/20.002 
+all_data_wide$VarianceChange <- (all_data_wide$VarianceLowerBound - all_data_wide$VarianceUpperBound)
+
+
+
 # ************************************************
 # Section 3: Merge Long Data ####
 # ************************************************
@@ -94,8 +100,10 @@ all_data_wide <-
 all_data_long <- dplyr::bind_rows(order0_long, order1_long)
 
 
-
+## Adding to long by reshaping from wide
 all_data_long$AgeDummy <- rep(x = all_data_wide$AgeDummy, each = 4)
+all_data_long$AdjustedMEC <- rep(x = all_data_wide$AdjustedMEC, each = 4)
+all_data_long$VarianceChange <- rep(x = all_data_wide$VarianceChange, each = 4)
 
 
 # ************************************************

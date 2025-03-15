@@ -84,6 +84,7 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "CV",
   "MEC",
   "MEF",
+  "AdjustedMEC",
   "AgeDummy",
   "EthnicityDummy",
   "Gender_Dummy",
@@ -298,14 +299,16 @@ Simulator <- function(data,
 
 
 # Define number of bootstrap iterations
-# R <- 100
-R <- 1000
+# R <- 10
+R <- 100
+R <- 10000
+
 
 
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_C1 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -375,13 +378,13 @@ Model_C1_Output %>%
               "Table_RobustnessStage2_ModelC1.txt"))
 
 # ********************************************
-# S4: T3 Order ####
+# S4: C2 Order ####
 # ********************************************
 
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_C2 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -445,7 +448,7 @@ Model_C2_Output %>%
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_C3 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +

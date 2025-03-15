@@ -84,6 +84,7 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "CV",
   "MEC",
   "MEF",
+  "AdjustedMEC",
   "AgeDummy",
   "EthnicityDummy",
   "Gender_Dummy",
@@ -297,17 +298,18 @@ Simulator <- function(data,
 # ********************************************
 
 
-
 # Define number of bootstrap iterations
-# R <- 100
-R <- 1000
+# R <- 10
+# R <- 1000
+R <- 10000
+
 
 
 Data_T1 <- Data_Filtered %>% dplyr::filter(Speeders_Survey_TestDummy == 1)
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_T1 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -367,7 +369,7 @@ Data_T2 <- Data_Filtered %>% dplyr::filter(PaymentVehicle_Dummy != 0)
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_T2 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -428,7 +430,7 @@ Data_T3 <- Data_Filtered %>% dplyr::filter(Order == 1)
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_T3 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -486,7 +488,7 @@ Data_T4 <- Data_Filtered %>% dplyr::filter(Consequentiality == 1)
 
 # Define your formula for stage_1 and stage_2 models
 formula_stage_1_T4 <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +

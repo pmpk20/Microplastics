@@ -93,16 +93,29 @@ create_table4 <- function(table1, table2) {
   # Define the variable order and section headings
   sections <- list(
     "Mean model" = c(
-      "X.Intercept.", "AgeDummy", "EthnicityDummy", "Gender_Dummy", "Charity", 
-      "Education_HigherEd", "Q16_ClimateCurrentEnvironment", "Q16_ClimateCurrentSelf", 
-      "Q16_MicroplasticsCurrentEnvironment", "Q16_MicroplasticsCurrentSelf", 
-      "Q16_MicroplasticsTen", "Q16_MicroplasticsTwentyFive", "Q16_MicroplasticsFifty"
+      "X.Intercept.", 
+      "AgeDummy", 
+      "Charity", 
+      "EthnicityDummy", 
+      "Gender_Dummy", 
+      "Education_HigherEd", 
+      "Q16_ClimateCurrentEnvironment", 
+      "Q16_ClimateCurrentSelf",
+      "Q16_MicroplasticsCurrentEnvironment", 
+      "Q16_MicroplasticsCurrentSelf",
+      "Q16_MicroplasticsTen", 
+      "Q16_MicroplasticsTwentyFive", 
+      "Q16_MicroplasticsFifty"
     ),
     "Dispersion model" = c(
-      "X.Intercept..1", "as.numeric.Uncertainty.", "VarianceUpperBound", "VarianceLowerBound"
+      "X.Intercept..1", 
+      "as.numeric.Uncertainty.", 
+      "VarianceChange"
     ),
     "Second stage" = c(
-      "LogBidIncome", "I..predict.stage_1..type....response....", "I.predict.stage_1..type....variance..."
+      "LogBidIncome", 
+      "I..predict.stage_1..type....response....", 
+      "I.predict.stage_1..type....variance..."
     ),
     "First stage diagnostics" = c(
       "S1_AIC", "S1_LogLik", "S1_PseudoR2"
@@ -129,8 +142,7 @@ create_table4 <- function(table1, table2) {
     "Q16_MicroplasticsFifty" = "Microplastics risk to the environment in 50 years (1-10)",
     "X.Intercept..1" = "Intercept",
     "as.numeric.Uncertainty." = "Uncertainty (0-5)",
-    "VarianceUpperBound" = "Variance: upper bound (-10/+10)",
-    "VarianceLowerBound" = "Variance: lower bound (-10/+10)",
+    "VarianceChange" = "VarianceChange: upper bound (-10/+10)",
     "LogBidIncome" = "Log-bid income relationship",
     "I..predict.stage_1..type....response...." = "Mean prediction",
     "I.predict.stage_1..type....variance..." = "Dispersion prediction",

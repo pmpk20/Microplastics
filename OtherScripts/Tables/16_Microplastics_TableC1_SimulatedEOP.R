@@ -430,8 +430,10 @@ Simulator <- function(data,
           # (Delta_1 * (0 - Variances))
       )) %>% as.numeric()
     ## Formula here: Y - Y exp(-A/B0)exp(1/2*B0^2)
-    EOP <- (Y - (Y*exp(- A / B0))) *
-      exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
+    # EOP <- (Y - (Y*exp(- A / B0))) *
+    #   exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
+    EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))
+    
     
     
     ## REMOVE WHEN DONE
@@ -484,7 +486,7 @@ Simulator <- function(data,
 
 # Define your formula for stage_1 and stage_2 models
 Model1_stage1_formula <- as.formula(
-  MEF ~
+  AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
     EthnicityDummy +
@@ -534,7 +536,11 @@ Model1_stage1_formula <- as.formula(
 # ***********************************************************
 
 
-R <- 1000
+# Define number of bootstrap iterations
+# R <- 10
+# R <- 1000
+R <- 10000
+
 
 
 SummaryTable <- 

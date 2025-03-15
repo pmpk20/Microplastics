@@ -139,7 +139,7 @@ library(ggdist)
 ## Start with the latest anonymised data in one-row per one-respondent format
 Data <-
   here("Data",
-       "Microplastics_AllData_Wide_Anonymised_WithEOP_UpdatedA.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
 
