@@ -1,7 +1,9 @@
 #### Microplastics IOP: Create Table C1 ###############
 # Function: To simulate EOP with different parameters
 # Author: Dr Peter King (p.king1@leeds.ac.uk)
-# Last Edited: 18/02/2025
+# Last Edited: 01/04/2025
+# Change: rewrote EOP summarising
+
 
 # **********************************************************************************
 #### Section 0: Replication Information ####
@@ -282,42 +284,17 @@ ModelOutput <- function(Estimates, Identifier) {
 
 
 
-# summary_function <- function(EOP) {
-#   cbind(
-#     "2.5%" = round(quantile(EOP, c(0.025)), 3),
-#     Median = round(median(EOP, na.rm = TRUE), 3),
-#     Mean = round(mean(EOP, na.rm = TRUE), 3),
-#     SD = round(sd(EOP, na.rm = TRUE), 3),
-#     "97.5%" = round(quantile(EOP, c(0.975)), 3)
-#   )
-# }
-
-
 summary_function <- function(EOP) {
   cbind(
-    "2.5%" = EOP %>% quantile(c(0.025)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
-    Median = EOP %>% median(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
-    Mean = EOP %>% mean(na.rm = TRUE) %>% round(2) %>%  sprintf("%.2f", .) %>% paste0("£", .), 
-    SD = EOP %>% sd(na.rm = TRUE) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
-    "97.5%" = EOP %>% quantile(c(0.975)) %>% round(2) %>% sprintf("%.2f", .) %>%  paste0("£", .),
-    "Percent" = ((EOP / Data$Income_Annual) * 100) %>% 
-      mean(na.rm = TRUE) %>% 
-      round(2) %>% 
-      sprintf("%.2f", .) %>% 
-      paste0(., "%")
-  )
-}
-
-
-
-summary_function_new <- function(EOP) {
-  cbind(
-    "2.5%" = EOP %>% matrixStats::colQuantiles(probs = c(0.025)),
-    Median = EOP %>% Rfast::colMedians(na.rm = TRUE) %>% round(2), 
-    Mean = EOP %>% Rfast::colmeans(), 
-    SD = EOP %>% Rfast::colVars(std = TRUE),
-    "97.5%" = EOP %>% matrixStats::colQuantiles(probs = c(0.975)),
-    "Percent" = ((EOP / Data$Income_Annual) * 100) %>% 
+    "2.5%" = EOP %>% as.matrix() %>% matrixStats::colQuantiles(probs = c(0.025)),
+    Median = EOP %>% as.matrix() %>% Rfast::colMedians(na.rm = TRUE) %>% round(2), 
+    Mean = EOP %>% as.matrix() %>% Rfast::colmeans(), 
+    SD = EOP %>% as.matrix() %>% Rfast::colVars(std = TRUE),
+    "97.5%" = EOP %>% as.matrix() %>% matrixStats::colQuantiles(probs = c(0.975)),
+    "Percent" = EOP %>% 
+      magrittr::divide_by(Data$Income_Annual) %>% 
+      magrittr::multiply_by(100) %>% 
+      as.matrix() %>% 
       Rfast::colmeans()
   ) 
 }
@@ -358,7 +335,7 @@ Simulator <- function(data,
     
     # Compute Stage 2 predictors
     d$S2_Income <- d$LogBidIncome
-    d$S2_Mean <- (predict(stage_1, type = "response"))
+    d$S2_Mean <- I(predict(stage_1, type = "response"))
     d$S2_Variance <- (I(predict(stage_1, type = 'variance')))
     # d$S2_Mean <- (predict(stage_1, type = "response") + d$MEC) / 2 
     # d$S2_Variance <- (I(0 - predict(stage_1, type = 'variance')))
@@ -383,11 +360,11 @@ Simulator <- function(data,
     ## Scale or fix MEAN EXPECTATIONS ***************************
     S2_Mean <- if (is.numeric(Mean_multiplier)) {
       # Multiply as usual if it's numeric
-      c(I((predict(stage_1, type = "response")))) * Mean_multiplier
+      c(I((betareg::predict(stage_1, type = "response")))) * Mean_multiplier
       # c(I((predict(stage_1, type = "response") + d$MEC)/2)) * Mean_multiplier
     } else if (is.character(Mean_multiplier) && Mean_multiplier == "mean") {
       # Perform the preplanned operation if "mean" is specified
-      c(I((predict(stage_1, type = "response"))))  %>% mean(na.rm = TRUE)
+      c(I((betareg::predict(stage_1, type = "response"))))  %>% mean(na.rm = TRUE)
       # c(I((predict(stage_1, type = "response") + d$MEC)/2))  %>% mean(na.rm = TRUE)
     } else {
       stop("Invalid Mean_multiplier: must be numeric or 'mean'")
@@ -397,10 +374,10 @@ Simulator <- function(data,
     ## Scale or fix VARIANCE of EXPECTATIONS ***************************
     S2_Variance <- if (is.numeric(Variance_multiplier)) {
       # Multiply as usual if it's numeric
-      (betareg::predict(stage_1, type = "variance")) * Variance_multiplier
+      c(I(betareg::predict(stage_1, type = "variance"))) * Variance_multiplier
     } else if (is.character(Variance_multiplier) && Variance_multiplier == "mean") {
       # Perform the preplanned operation if "mean" is specified
-      (betareg::predict(stage_1, type = "variance")) %>% mean(na.rm = TRUE)
+      c(I(betareg::predict(stage_1, type = "variance"))) %>% mean(na.rm = TRUE)
     } else {
       stop("Invalid Variance_multiplier: must be numeric or 'mean'")
     }
@@ -434,11 +411,8 @@ Simulator <- function(data,
     #   exp(1 %>% divide_by(B0 %>% raise_to_power(2) %>% multiply_by(2)))
     EOP <- (Y - Y * exp(-A/B0) * exp(1/ (2 * B0 ^ 2) ))
     
-    
-    
-    ## REMOVE WHEN DONE
-    EOP %>% summary_function()
-    # return(EOP)
+    ## Iteration level summaries
+    EOP %>% summary_function() %>% return()
     
   }
   
@@ -458,21 +432,23 @@ Simulator <- function(data,
     parallel = "snow" # Use "snow" if you have parallel setup
   )
   
-  # Extracting the results
-  results <- boot.results$t0
-  # results <- boot.results$t %>% as.matrix() %>% summary_function_new()
-  # results <- boot.results$t %>% as.matrix() %>% 
-  #   summary_function_new() %>% 
-  #   Rfast::colmeans() %>% 
-  #   round(2) %>% 
-  #   sprintf("%.2f", .) %>%
-  #   paste0("£", .)
-  # names(results) <- c("2.5%", "Median", "Mean", "SD", "97.5%", "Percent")
-  ## Here the summary of the data
-  # results %>% return()
-  results %>% return()
-  ## Here just the raw data
-  # results %>% return()
+  
+  ## One col per variable, one row per iteration (i.e., R many)
+  col_means <- colMeans(boot.results$t, na.rm = TRUE)
+  
+  
+  # Format results with pound symbol and combine mean with SD
+  result_names <- c("2.5%", "Median", "Mean", "SD", "97.5%", "Percent")
+  
+  
+  ## Append currency and trim digits
+  formatted_results <- paste0("£", round(col_means, 2))
+  
+  
+  names(formatted_results) <- result_names
+  
+  # Return the column mean for each moment of distribution 
+  return(formatted_results)
   
 }
 
@@ -538,8 +514,8 @@ Model1_stage1_formula <- as.formula(
 
 # Define number of bootstrap iterations
 # R <- 10
-# R <- 1000
-R <- 10000
+R <- 1000
+# R <- 10000
 
 
 

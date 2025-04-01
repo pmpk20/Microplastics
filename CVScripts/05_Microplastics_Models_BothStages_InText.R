@@ -183,7 +183,9 @@ Simulator <- function(data,
     d <- data[indices, ]
     
     # Stage 1: Beta regression of MEF on covariates
-    stage_1 <- betareg(formula_stage_1, d, type = "BC")
+    stage_1 <- betareg(formula_stage_1, 
+                       d, 
+                       type = "BC")
     
     # Stage 2: Probit model of CV on LogBidIncome, predicted MEF, predicted variance and control variables
     stage_2 <- speedglm(

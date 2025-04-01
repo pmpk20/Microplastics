@@ -152,9 +152,11 @@ here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 
 ## Simulate first then estimate all kinds of specifications
 here("CVScripts", "04_Microplastics_Models_SimulateEOP.R") %>% source()
+
+## Find table2 and table3 here 
 here("CVScripts", "05_Microplastics_Models_BothStages_InText.R") %>% source()
 
-## These currently have the wrong names!
+## These currently have the wrong suffixes!
 here("CVScripts", "06_Microplastics_Models_Alternative1_Asymmetric.R") %>% source()
 here("CVScripts", "07_Microplastics_Models_Alternative2_NumericUncertainty.R") %>% source()
 
@@ -170,8 +172,8 @@ here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
 
 
-## Actually an appendix table but putting here
-here("OtherScripts/Tables", "16_Microplastics_TableC1_SimulatedEOP.R") %>% source()
+## Was tableC1 but now labelled Table4
+here("OtherScripts/Tables", "16_Microplastics_Table4_SimulatedEOP.R") %>% source()
 
 
 # **********************************************************************************
@@ -197,7 +199,7 @@ here("OtherScripts/Figures", "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R
 
 
 ## Tables combing model results for convenience
-here("OtherScripts/Tables", "18_Microplastics_Table4_AlternativeSpecifications.R") %>% source()
+here("OtherScripts/Tables", "18_Microplastics_Table5_AlternativeSpecifications.R") %>% source()
 here("OtherScripts/Tables", "19_Microplastics_TableC2_TruncationModels.R") %>% source()
 here("OtherScripts/Tables", "20_Microplastics_TableC3_RobustnessStage1Models.R") %>% source()
 here("OtherScripts/Tables", "21_TableC4_RobustnessStage2Models.R") %>% source()
