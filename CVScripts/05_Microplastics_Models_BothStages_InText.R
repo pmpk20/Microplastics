@@ -368,21 +368,50 @@ Output_S1 %>%
 # ***********************************************************
 # Section 5B: Stage Two Outputs ####
 # ***********************************************************
-# Combine second-stage results
-Output_S2 <- rbind(
-  cbind(
-    "Variable" = c("α[((Y-OP))/Y]",
-                   "β (E[q])",
-                   "β2 (Var[q])"),
-    "Estimate" = Model1_simulation$coefficients %>%
-      ModelOutput(Identifier = 1) %>%
-      slice((n() - 2):n()) %>%
-      dplyr::select(Estimate)),
-  cbind(
-    "Variable" = names(Model1_simulation$fit_statistics[4:6]),
-    "Estimate" = Model1_simulation$fit_statistics[4:6]
+
+## OLD VERSION
+# Output_S2 <- rbind(
+#   cbind(
+#     "Variable" = c("α[((Y-OP))/Y]",
+#                    "β (E[q])",
+#                    "β2 (Var[q])"),
+#     "Estimate" = Model1_simulation$coefficients %>%
+#       ModelOutput(Identifier = 1) %>%
+#       slice((n() - 2):n()) %>%
+#       dplyr::select(Estimate)),
+#   cbind(
+#     "Variable" = names(Model1_simulation$fit_statistics[4:6]),
+#     "Estimate" = Model1_simulation$fit_statistics[4:6]
+#   )
+# )
+
+
+## This new version reports Z values for stage 2
+Output_S2 <-
+  rbind(
+    cbind(
+      "variable" = c("α[((Y-OP))/Y]",
+                     "β (E[q])",
+                     "β2 (Var[q])"),
+      (
+        Model1_simulation$coefficients %>%
+          ModelOutput_Paper(Identifier = 1) %>%
+          slice((n() - 2):n()) %>%
+          dplyr::select(-Variable)
+      )
+    ),
+    cbind(
+      "variable" = names(Model1_simulation$fit_statistics[4:6]),
+      "Estimate" = Model1_simulation$fit_statistics[4:6],
+      "Std..Error" = 0,
+      "z.value" = 0,
+      "P.values" = 0
+    )
   )
-)
+
+
+
+
 # Write results to text file in CVoutput folder
 Output_S2 %>%
   data.frame() %>%
