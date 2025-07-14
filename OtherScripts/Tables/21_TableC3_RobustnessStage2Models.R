@@ -1,10 +1,9 @@
 #### Microplastics: IOP Paper ####
-## Function: Makes Table C2
+## Function: Makes Table C3
 ## Author: PK
-## Last change: 25/02/2025
+## Last change: 14/07/2025
 # Changes:
-# - CURRENTLY NON-FUNCTIONAL DUE TO MOVING VARIABLES FROM FIRST AND SECOND STAGES
-
+# - 
 
 
 # ***********************************************************
@@ -68,92 +67,122 @@ library(snow)
 library(speedglm)
 library(sessioninfo)
 
+
 # ***********************************************************
 # Section 1: Import Data ####
 # ***********************************************************
 
 
-Robustness_C1 <- here("CVoutput/Tables", 
-                      "Table_RobustnessStage2_ModelC1.txt") %>% 
-  fread() %>% 
-  data.frame()
+# Read the data
+M1 <- here("CVoutput/Tables", 
+           "Table_RobustnessStage2_ModelC1.txt") %>% 
+  fread() %>% data.frame()
 
+M2 <- here("CVoutput/Tables", 
+           "Table_RobustnessStage2_ModelC2.txt") %>% 
+  fread() %>% data.frame()
 
-Robustness_C2 <- here("CVoutput/Tables", 
-                      "Table_RobustnessStage2_ModelC2.txt") %>% 
-  fread() %>% 
-  data.frame()
-
-
-Robustness_C3 <- here("CVoutput/Tables", 
-                      "Table_RobustnessStage2_ModelC3.txt") %>% 
-  fread() %>% 
-  data.frame()
-
+M3 <- here("CVoutput/Tables", 
+           "Table_RobustnessStage2_ModelC3.txt") %>% 
+  fread() %>% data.frame()
 
 
 # ***********************************************************
-# Section 2A: Adding missing C1 rows ####
+# Section 2: Capture variable names ####
 # ***********************************************************
 
 
-Robustness_C1_Table <- rbind(
-  Robustness_C1[1:30, ],
-  "Speeders_Survey_TestDummy" = 0,
-  "Order" = 0,
-  "PaymentVehicle_Dummy" = 0,
-  "Consequentiality" = 0,
-  "Coronavirus" = 0,
-  "Understanding" = 0,
-  Robustness_C1[33:41, ]
+# Create comparison table
+# Get all unique variables across models
+all_vars <- unique(c(M1$Variable, M2$Variable, M3$Variable))
+
+
+
+# Define the desired order
+## BE CAREFUL IF YOU CHANGE CVSCRIPTS/09*
+desired_order <- c(
+  "X.Intercept.",
+  "AgeDummy",
+  "EthnicityDummy",
+  "Gender_Dummy",
+  "Charity",
+  "Education_HigherEd",
+  "Q16_ClimateCurrentEnvironment",
+  "Q16_ClimateCurrentSelf",
+  "Q16_MicroplasticsCurrentEnvironment",
+  "Q16_MicroplasticsCurrentSelf",
+  "Q16_MicroplasticsTen",
+  "Q16_MicroplasticsTwentyFive",
+  "Q16_MicroplasticsFifty",
+  "X.Intercept..1",
+  "as.factor.Uncertainty.1",
+  "as.factor.Uncertainty.3",
+  "as.factor.Uncertainty.5",
+  "S1_AIC",
+  "S1_LogLik",
+  "S1_PseudoR2",
+  "LogBidIncome",
+  "I..predict.stage_1..type....response....",
+  "I.predict.stage_1..type....variance...",
+  "AgeDummy.1",
+  "EthnicityDummy.1",
+  "Gender_Dummy.1",
+  "Charity.1",
+  "Education_HigherEd.1",
+  "Q16_ClimateCurrentEnvironment.1",
+  "Q16_ClimateCurrentSelf.1",
+  "Q16_MicroplasticsCurrentEnvironment.1",
+  "Q16_MicroplasticsCurrentSelf.1",
+  "Q16_MicroplasticsTen.1",
+  "Q16_MicroplasticsTwentyFive.1",
+  "Q16_MicroplasticsFifty.1",
+  "Speeders_Survey_TestDummy",
+  "Order",
+  "PaymentVehicle_Dummy",
+  "Consequentiality",
+  "Coronavirus",
+  "Understanding",
+  "S2_AIC",
+  "S2_LogLik",
+  "S2_PseudoR2",
+  "S2_EOP_Mean"
 )
 
 
 # ***********************************************************
-# Section 2B: Adding missing C2 rows ####
+# Section 3: Construct table ####
 # ***********************************************************
 
 
-Robustness_C2_Table <- rbind(
-  Robustness_C2[1:23, ],
-  "Q16_ClimateCurrentEnvironment.1" = 0,
-  "Q16_ClimateCurrentSelf.1" = 0,
-  "Q16_MicroplasticsCurrentEnvironment.1" = 0,
-  "Q16_MicroplasticsCurrentSelf.1" = 0,
-  "Q16_MicroplasticsTen.1" = 0,
-  "Q16_MicroplasticsTwentyFive.1" = 0,
-  "Q16_MicroplasticsFifty.1" = 0,
-  "Speeders_Survey_TestDummy" = 0,
-  "Order" = 0,
-  "PaymentVehicle_Dummy" = 0,
-  "Consequentiality" = 0,
-  "Coronavirus" = 0,
-  "Understanding" = 0,
-  Robustness_C2[24:32, ]
-)
+# Create base data frame with all variables
+comparison_table <- data.frame(Variable = all_vars)
+
+
+# Merge estimates from each model
+comparison_table <- comparison_table %>%
+  left_join(M1 %>% dplyr::select(Variable, M1 = Estimate), by = "Variable") %>%
+  left_join(M2 %>% dplyr::select(Variable, M2 = Estimate), by = "Variable") %>%
+  left_join(M3 %>% dplyr::select(Variable, M3 = Estimate), by = "Variable")
+
+
+# Clean up - replace NA with empty string or dash
+comparison_table[is.na(comparison_table)] <- ""
+
+
+# Reorder the table
+comparison_table <- comparison_table %>%
+  mutate(Variable = factor(Variable, levels = desired_order)) %>%
+  arrange(Variable) %>%
+  mutate(Variable = as.character(Variable))
 
 
 # ***********************************************************
-# Section 3: Export Data ####
+# Section 4: Export table ####
 # ***********************************************************
 
 
-
-# Create the table
-TableC4 <- cbind(Robustness_C1_Table, 
-                 Robustness_C2_Table, 
-                 Robustness_C3)
-
-
-# ***********************************************************
-# Section 4: Export Data ####
-# ***********************************************************
-
-
-TableC4 %>% 
+comparison_table %>% 
   data.frame() %>% 
   fwrite(sep = ",",
          here("CVoutput/Tables", 
-              "TableC4_RobustnessStage2Models.txt"))
-
-
+              "Table_RobustnessStage2_AllModels.txt"))

@@ -291,23 +291,20 @@ Simulator <- function(data,
   ))
 }
 
-
 # ********************************************
-# S4: C1 All used covariates to dispersion ####
+# Section 3b: Setup estimation ####
 # ********************************************
-
 
 
 # Define number of bootstrap iterations
 # R <- 10
 R <- 100
-R <- 10000
+# R <- 10000
 
 
-
-
-# Define your formula for stage_1 and stage_2 models
-formula_stage_1_C1 <- as.formula(
+# Define your formula for stage_1 
+## This is the same specification as CVScripts/05_Microplastics_Models_BothStages_InText.R
+formula_stage_1 <- as.formula(
   AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
@@ -326,41 +323,40 @@ formula_stage_1_C1 <- as.formula(
     as.factor(Uncertainty)
 )
 
+# ********************************************
+# S4A: Just socioecon ####
+# ********************************************
 
+## ORIGINAL 
+# Model1_stage2_formula <- "-1 + LogBidIncome"
+
+
+## Here, we add all the variables from the first-stage
 formula_stage_2_C1 <- "-1 + LogBidIncome +
     AgeDummy + 
     EthnicityDummy +
     Gender_Dummy + 
     Charity +
-    Education_HigherEd +
-    Q16_ClimateCurrentEnvironment +
-    Q16_ClimateCurrentSelf +
-    Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty +
-    Consequentiality +
-    Understanding"
+    Education_HigherEd "
 
 
-# Define your formula for stage_1 and stage_2 models
-# formula_stage_2_C1 <- "-1 + LogBidIncome"
 
 # Call the simulator function
 Model_C1 <- Simulator(data = Data,
-                      formula_stage_1 = formula_stage_1_C1,
+                      formula_stage_1 = formula_stage_1,
                       formula_stage_2 = formula_stage_2_C1,
                       R = R
 )  
 
 
+## Save diagnostic measures
 Model_C1_Diagnostics <- cbind(
   "Variable" = Model_C1$fit_statistics %>% names(),
   "Estimate" = Model_C1$fit_statistics
 ) %>% data.frame()
 
 
+## Save formatted model outputs
 Model_C1_Output <- rbind(
   Model_C1$coefficients %>% 
     ModelOutput(Identifier = 1) %>% 
@@ -368,9 +364,12 @@ Model_C1_Output <- rbind(
   Model_C1_Diagnostics
 ) 
 
+
+## Print to screen
 Model_C1_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
+## Export to txt
 Model_C1_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
@@ -378,17 +377,15 @@ Model_C1_Output %>%
               "Table_RobustnessStage2_ModelC1.txt"))
 
 # ********************************************
-# S4: C2 Order ####
+# S4B: Socioecon + Attitudes ####
 # ********************************************
 
 
-# Define your formula for stage_1 and stage_2 models
-formula_stage_1_C2 <- as.formula(
-  AdjustedMEC ~
-    1 + ## intercept here
+## New formula
+formula_stage_2_C2 <- "-1 + LogBidIncome +
     AgeDummy + 
     EthnicityDummy +
-    Gender_Dummy  + 
+    Gender_Dummy + 
     Charity +
     Education_HigherEd +
     Q16_ClimateCurrentEnvironment +
@@ -397,25 +394,16 @@ formula_stage_1_C2 <- as.formula(
     Q16_MicroplasticsCurrentSelf +
     Q16_MicroplasticsTen + 
     Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
-    1 +  # intercept here
-    as.factor(Uncertainty)
-)
+    Q16_MicroplasticsFifty"
 
-
-formula_stage_2_C2 <- "-1 + LogBidIncome +
-    AgeDummy + 
-    EthnicityDummy +
-    Gender_Dummy + 
-    Charity +
-    Education_HigherEd "
 
 # Call the simulator function
 Model_C2 <- Simulator(data = Data,
-                      formula_stage_1 = formula_stage_1_C2,
+                      formula_stage_1 = formula_stage_1,
                       formula_stage_2 = formula_stage_2_C2,
                       R = R
 )  
+
 
 
 Model_C2_Diagnostics <- cbind(
@@ -431,6 +419,7 @@ Model_C2_Output <- rbind(
   Model_C2_Diagnostics
 ) 
 
+
 Model_C2_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
@@ -443,43 +432,17 @@ Model_C2_Output %>%
 
 
 # ********************************************
-# S4: C3 ####
+# S4C: Socioecon + Survey ####
 # ********************************************
 
-# Define your formula for stage_1 and stage_2 models
-formula_stage_1_C3 <- as.formula(
-  AdjustedMEC ~
-    1 + ## intercept here
-    AgeDummy + 
-    EthnicityDummy +
-    Gender_Dummy  + 
-    Charity +
-    Education_HigherEd +
-    Q16_ClimateCurrentEnvironment +
-    Q16_ClimateCurrentSelf +
-    Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
-    1 +  # intercept here
-    as.factor(Uncertainty)
-)
 
-
+## Don't worry, the first stage predictions are added in Simulator()
 formula_stage_2_C3 <- "-1 + LogBidIncome +
     AgeDummy + 
     EthnicityDummy +
     Gender_Dummy + 
     Charity +
     Education_HigherEd +
-    Q16_ClimateCurrentEnvironment +
-    Q16_ClimateCurrentSelf +
-    Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty +
     Speeders_Survey_TestDummy +
     Order +
     PaymentVehicle_Dummy +
@@ -490,7 +453,7 @@ formula_stage_2_C3 <- "-1 + LogBidIncome +
 
 # Call the simulator function
 Model_C3 <- Simulator(data = Data,
-                      formula_stage_1 = formula_stage_1_C3,
+                      formula_stage_1 = formula_stage_1,
                       formula_stage_2 = formula_stage_2_C3,
                       R = R
 )  
