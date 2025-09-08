@@ -1,21 +1,21 @@
 Variable,Estimate
-X.Intercept.,1.02*** (0.056)
-AgeDummy,0.2*** (0.05)
-EthnicityDummy,0.077 (0.073)
-Gender_Dummy,-0.192*** (0.05)
-Charity,0.312*** (0.053)
-Education_HigherEd,0.028 (0.051)
-X.Intercept..1,0.059 (0.09)
-as.factor.Uncertainty.1,1.06*** (0.096)
-as.factor.Uncertainty.3,1.491*** (0.114)
-as.factor.Uncertainty.5,1.522*** (0.149)
-LogBidIncome,86.704*** (13.032)
-I..predict.stage_1..type....response.....MEC..2.,1.673*** (0.144)
-I.0...predict.stage_1..type....variance...,8.046*** (2.14)
-S1_AIC,-2105.914
-S1_LogLik,1062.957
-S1_PseudoR2,0.034
-S2_AIC,1641.67
-S2_LogLik,-817.835
-S2_PseudoR2,0.246
-S2_EOP_Mean,£328.96 (£172.352)
+X.Intercept.,0.958*** (0.049)
+AgeDummy,0.163*** (0.044)
+EthnicityDummy,0.064 (0.065)
+Gender_Dummy,-0.136** (0.044)
+Charity,0.264*** (0.047)
+Education_HigherEd,0.039 (0.045)
+X.Intercept..1,0.154. (0.09)
+as.factor.Uncertainty.1,1.466*** (0.098)
+as.factor.Uncertainty.3,1.67*** (0.115)
+as.factor.Uncertainty.5,1.651*** (0.151)
+LogBidIncome,76.7*** (12.623)
+I..predict.stage_1..type....response....,1.235*** (0.11)
+I.predict.stage_1..type....variance...,-2.318 (1.999)
+S1_AIC,-1912.324
+S1_LogLik,966.162
+S1_PseudoR2,0.027
+S2_AIC,1692.178
+S2_LogLik,-843.089
+S2_PseudoR2,0.222
+S2_EOP_Mean,£353.617 (£171.359)

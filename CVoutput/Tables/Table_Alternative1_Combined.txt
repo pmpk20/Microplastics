@@ -1,26 +1,26 @@
 Variable,Estimate,Model
-X.Intercept.,-1.508*** (0.143),1
-AgeDummy,0.043 (0.047),1
-EthnicityDummy,0.169* (0.067),1
-Gender_Dummy,-0.048 (0.047),1
-Charity,0.114* (0.051),1
-Education_HigherEd,-0.025 (0.047),1
-Q16_ClimateCurrentEnvironment,-0.032. (0.018),1
-Q16_ClimateCurrentSelf,-0.022 (0.015),1
-Q16_MicroplasticsCurrentEnvironment,0.098*** (0.02),1
-Q16_MicroplasticsCurrentSelf,0.072*** (0.018),1
-Q16_MicroplasticsTen,0.141*** (0.026),1
-Q16_MicroplasticsTwentyFive,0.112** (0.037),1
-Q16_MicroplasticsFifty,-0.06* (0.027),1
-X.Intercept..1,1.068*** (0.053),1
-as.numeric.Uncertainty.,0.232*** (0.025),1
-LogBidIncome,88.025*** (12.903),1
-I..predict.stage_1..type....response.....MEC..2.,1.974*** (0.13),1
-I.0...predict.stage_1..type....variance...,17.597*** (2.647),1
-S1_AIC,-2526.926,0
-S1_LogLik,1278.463,0
-S1_PseudoR2,0.191,0
-S2_AIC,1583.413,0
-S2_LogLik,-788.707,0
-S2_PseudoR2,0.272,0
-S2_EOP_Mean,£329.075 (£211.995),0
+X.Intercept.,-1.473*** (0.121),1
+AgeDummy,0.016 (0.04),1
+EthnicityDummy,0.142* (0.058),1
+Gender_Dummy,-0.01 (0.04),1
+Charity,0.119** (0.043),1
+Education_HigherEd,-0.024 (0.04),1
+Q16_ClimateCurrentEnvironment,-0.071*** (0.016),1
+Q16_ClimateCurrentSelf,-0.015 (0.013),1
+Q16_MicroplasticsCurrentEnvironment,0.139*** (0.017),1
+Q16_MicroplasticsCurrentSelf,0.095*** (0.015),1
+Q16_MicroplasticsTen,0.117*** (0.022),1
+Q16_MicroplasticsTwentyFive,0.068* (0.031),1
+Q16_MicroplasticsFifty,-0.03 (0.023),1
+X.Intercept..1,1.52*** (0.053),1
+as.numeric.Uncertainty.,0.237*** (0.026),1
+LogBidIncome,85.201*** (12.796),1
+I..predict.stage_1..type....response....,1.894*** (0.128),1
+I.predict.stage_1..type....variance...,-22.546*** (3.734),1
+S1_AIC,-2427.343,0
+S1_LogLik,1228.671,0
+S1_PseudoR2,0.211,0
+S2_AIC,1594.893,0
+S2_LogLik,-794.446,0
+S2_PseudoR2,0.267,0
+S2_EOP_Mean,£336.8 (£210.74),0

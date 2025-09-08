@@ -1,10 +1,10 @@
 X2.5.,Median,Mean,SD,X97.5.,Percent,Variable
-£30.95,£317.22,£338.14,£197.06,£769.46,1.05%,All variables at normal levels
-£36.88,£321.04,£337.86,£176.45,£706.53,1.05%,Variance held at mean value
-£41.66,£364.30,£383.49,£199.14,£798.88,1.19%,"Variance held at mean value, mean increased by 10%"
-£31.68,£277.40,£292.16,£153.76,£614.47,0.91%,"Variance held at mean value, mean reduced by 10%"
-£33.97,£321.53,£339.25,£175.63,£682.11,1.05%,"Mean at mean level, all others at normal level"
-£31.36,£311.83,£327.43,£173.16,£665.54,1.01%,Mean of means and 10% increase in variance
-£35.97,£330.86,£351.07,£178.47,£697.96,1.08%,Mean of means and 10% decrease in variance
-£34.04,£348.95,£371.95,£216.76,£846.41,1.15%,"Mean and variance vary, income increased by 10%"
-£27.85,£285.50,£304.33,£177.35,£692.52,0.94%,"Mean and variance vary, income decreased by 10%"
+£29.85,£320.08,£340.47,£198.44,£773.27,£1.62,All variables at normal levels
+£37.05,£323.73,£340.1,£177.63,£713.69,£1.62,Variance held at mean value
+£42.48,£367.74,£386.38,£200.7,£807.41,£1.84,"Variance held at mean value, mean increased by 10%"
+£31.68,£280.31,£294.34,£154.85,£621.18,£1.4,"Variance held at mean value, mean reduced by 10%"
+£33.95,£323.91,£341.67,£176.85,£687.17,£1.63,"Mean at mean level, all others at normal level"
+£29.93,£314.89,£330.63,£174.76,£673,£1.58,Mean of means and 10% increase in variance
+£36.38,£333.14,£352.89,£179.53,£702.51,£1.68,Mean of means and 10% decrease in variance
+£32.72,£351.14,£373.51,£217.53,£847.91,£1.78,"Mean and variance vary, income increased by 10%"
+£26.75,£287.99,£306.35,£178.56,£695.78,£1.46,"Mean and variance vary, income decreased by 10%"

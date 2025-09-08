@@ -248,9 +248,9 @@ Simulator <- function(data,
   
   # Extracting the results
   # l <- length(boot.results$t0)
-  # results <- boot.results$t0
+  results <- boot.results$t0
   
-  results <- boot.results$t %>% as.matrix() %>% Rfast::colmeans()
+  # results <- boot.results$t %>% as.matrix() %>% Rfast::colmeans()
   
   ## Here just the raw data
   results %>% return() 
@@ -262,8 +262,8 @@ Simulator <- function(data,
 # ***********************************************************
 
 # Define number of bootstrap iterations
-# R <- 100
-R <- 1000
+R <- 10
+# R <- 1000
 
 ## WATCH OUT VERY LARGE AND LONG RUNNING
 # R <- 100000
@@ -639,6 +639,44 @@ ggsave(
   units = "cm",
   dpi = 500
 )
+
+
+# *****************************
+# BOXPLOT EOP BY MEAN + VARIANCE   ####
+# *****************************
+
+
+ggplot(Data, aes(
+  x = factor(Mean_Change),
+  y = EOP,
+  fill = factor(Variance)
+)) +
+  stat_boxplot(geom = "errorbar", width = 0.5) +
+  geom_boxplot(outliers = FALSE) +
+  facet_wrap( ~ Variance, ncol = 2) +
+  labs(title = "EOP by Mean Change, Facetted by Variance",
+       x = "Mean Change",
+       y = "EOP") +
+  theme_bw() +
+  theme(
+    strip.background = element_rect(fill = "white"),
+    strip.text = element_markdown(size = TextSetup$size, 
+                                  colour = TextSetup$colour, 
+                                  family = TextSetup$family),
+    legend.position = "none",
+    legend.text = TextSetup,
+    legend.background = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = TextSetup,
+    axis.title.x = TextSetup,
+    ## Change text to be clearer for reader
+    axis.text.y = TextSetup,
+    axis.title.y = TextSetup,
+    legend.title = TextSetup
+  )
 
 
 

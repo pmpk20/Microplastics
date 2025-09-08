@@ -482,6 +482,64 @@ Model_C3_Output %>%
               "Table_RobustnessStage2_ModelC3.txt"))
 
 
+# ********************************************
+# S4C: Socioecon + Survey + Attitudes ####
+# ********************************************
+
+
+## Don't worry, the first stage predictions are added in Simulator()
+formula_stage_2_C4 <- "-1 + LogBidIncome +
+    AgeDummy + 
+    EthnicityDummy +
+    Gender_Dummy + 
+    Charity +
+    Education_HigherEd +
+    Speeders_Survey_TestDummy +
+    Order +
+    PaymentVehicle_Dummy +
+    Consequentiality +
+    Coronavirus +
+    Understanding +
+    Q16_ClimateCurrentEnvironment +
+    Q16_ClimateCurrentSelf +
+    Q16_MicroplasticsCurrentEnvironment + 
+    Q16_MicroplasticsCurrentSelf +
+    Q16_MicroplasticsTen + 
+    Q16_MicroplasticsTwentyFive + 
+    Q16_MicroplasticsFifty"
+
+
+# Call the simulator function
+Model_C4 <- Simulator(data = Data,
+                      formula_stage_1 = formula_stage_1,
+                      formula_stage_2 = formula_stage_2_C4,
+                      R = R
+)  
+
+
+Model_C4_Diagnostics <- cbind(
+  "Variable" = Model_C4$fit_statistics %>% names(),
+  "Estimate" = Model_C4$fit_statistics
+) %>% data.frame()
+
+
+Model_C4_Output <- rbind(
+  Model_C4$coefficients %>% 
+    ModelOutput(Identifier = 1) %>% 
+    dplyr::select(-Model),
+  Model_C4_Diagnostics
+) 
+
+Model_C4_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+
+
+Model_C4_Output %>% 
+  data.frame() %>% 
+  fwrite(sep = ",",
+         here("CVoutput/Tables", 
+              "Table_RobustnessStage2_ModelC4.txt"))
+
+
 # ***********************************************************
 # Section 6: Saving Session Information ####
 # ***********************************************************

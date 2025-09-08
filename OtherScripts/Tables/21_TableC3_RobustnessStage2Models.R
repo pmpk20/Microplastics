@@ -86,6 +86,10 @@ M3 <- here("CVoutput/Tables",
            "Table_RobustnessStage2_ModelC3.txt") %>% 
   fread() %>% data.frame()
 
+M4 <- here("CVoutput/Tables", 
+           "Table_RobustnessStage2_ModelC4.txt") %>% 
+  fread() %>% data.frame()
+
 
 # ***********************************************************
 # Section 2: Capture variable names ####
@@ -162,7 +166,8 @@ comparison_table <- data.frame(Variable = all_vars)
 comparison_table <- comparison_table %>%
   left_join(M1 %>% dplyr::select(Variable, M1 = Estimate), by = "Variable") %>%
   left_join(M2 %>% dplyr::select(Variable, M2 = Estimate), by = "Variable") %>%
-  left_join(M3 %>% dplyr::select(Variable, M3 = Estimate), by = "Variable")
+  left_join(M3 %>% dplyr::select(Variable, M3 = Estimate), by = "Variable") %>% 
+  left_join(M4 %>% dplyr::select(Variable, M4 = Estimate), by = "Variable")
 
 
 # Clean up - replace NA with empty string or dash
@@ -179,6 +184,9 @@ comparison_table <- comparison_table %>%
 # ***********************************************************
 # Section 4: Export table ####
 # ***********************************************************
+
+
+comparison_table %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
 comparison_table %>% 

@@ -350,7 +350,7 @@ Model_T1_Output <- rbind(
   Model_T1_Diagnostics
 ) 
 
-# Model_T1_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+Model_T1_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
 Model_T1_Output %>% 
@@ -362,13 +362,13 @@ Model_T1_Output %>%
 
 
 # ********************************************
-# S4: T2 Payment vehicle ####
+# S4: Payment vehicle: Water bills ####
 # ********************************************
 
-Data_T2 <- Data_Filtered %>% dplyr::filter(PaymentVehicle_Dummy != 0)
+Data_T2_A <- Data_Filtered %>% dplyr::filter(PaymentVehicle_Dummy != 0)
 
 # Define your formula for stage_1 and stage_2 models
-formula_stage_1_T2 <- as.formula(
+formula_stage_1_T2_A <- as.formula(
   AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
@@ -389,47 +389,46 @@ formula_stage_1_T2 <- as.formula(
 
 
 # Define your formula for stage_1 and stage_2 models
-formula_stage_2_T2 <- "-1 + LogBidIncome"
+formula_stage_2_T2_A <- "-1 + LogBidIncome"
 
 # Call the simulator function
-Model_T2 <- Simulator(data = Data_T2,
-                      formula_stage_1 = formula_stage_1_T2,
-                      formula_stage_2 = formula_stage_2_T2,
-                      R = R
+Model_T2_A <- Simulator(data = Data_T2_A,
+                        formula_stage_1 = formula_stage_1_T2_A,
+                        formula_stage_2 = formula_stage_2_T2_A,
+                        R = R
 )  
 
 
-Model_T2_Diagnostics <- cbind(
-  "Variable" = Model_T2$fit_statistics %>% names(),
-  "Estimate" = Model_T2$fit_statistics
+Model_T2_A_Diagnostics <- cbind(
+  "Variable" = Model_T2_A$fit_statistics %>% names(),
+  "Estimate" = Model_T2_A$fit_statistics
 ) %>% data.frame()
 
 
-Model_T2_Output <- rbind(
-  Model_T2$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
-  Model_T2_Diagnostics
+Model_T2_A_Output <- rbind(
+  Model_T2_A$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
+  Model_T2_A_Diagnostics
 ) 
 
-Model_T2_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+Model_T2_A_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
 
-Model_T2_Output %>% 
+Model_T2_A_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
          here("CVoutput/Tables", 
-              "Table_Truncation_ModelT2_PV.txt"))
-
+              "Table_Truncation_ModelT2_A_PV.txt"))
 
 # ********************************************
-# S4: T3 Order ####
+# S4: Payment vehicle: council tax ####
 # ********************************************
 
 
-Data_T3 <- Data_Filtered %>% dplyr::filter(Order == 1)
+Data_T2_B <- Data_Filtered %>% dplyr::filter(PaymentVehicle_Dummy == 0)
 
 # Define your formula for stage_1 and stage_2 models
-formula_stage_1_T3 <- as.formula(
+formula_stage_1_T2_B <- as.formula(
   AdjustedMEC ~
     1 + ## intercept here
     AgeDummy + 
@@ -450,35 +449,157 @@ formula_stage_1_T3 <- as.formula(
 
 
 # Define your formula for stage_1 and stage_2 models
-formula_stage_2_T3 <- "-1 + LogBidIncome"
+formula_stage_2_T2_B <- "-1 + LogBidIncome"
 
 # Call the simulator function
-Model_T3 <- Simulator(data = Data_T3,
-                      formula_stage_1 = formula_stage_1_T3,
-                      formula_stage_2 = formula_stage_2_T3,
-                      R = R 
+Model_T2_B <- Simulator(data = Data_T2_B,
+                        formula_stage_1 = formula_stage_1_T2_B,
+                        formula_stage_2 = formula_stage_2_T2_B,
+                        R = R
 )  
 
 
-Model_T3_Diagnostics <- cbind(
-  "Variable" = Model_T3$fit_statistics %>% names(),
-  "Estimate" = Model_T3$fit_statistics
+Model_T2_B_Diagnostics <- cbind(
+  "Variable" = Model_T2_B$fit_statistics %>% names(),
+  "Estimate" = Model_T2_B$fit_statistics
 ) %>% data.frame()
 
 
-Model_T3_Output <- rbind(
-  Model_T3$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
-  Model_T3_Diagnostics
+Model_T2_B_Output <- rbind(
+  Model_T2_B$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
+  Model_T2_B_Diagnostics
 ) 
 
-Model_T3_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+Model_T2_B_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
-Model_T3_Output %>% 
+
+Model_T2_B_Output %>% 
+  data.frame() %>% 
+  fwrite(sep = ",",
+         here("CVoutput/Tables", 
+              "Table_Truncation_ModelT2_B_PV.txt"))
+
+
+# ********************************************
+# S4: T3 Order 1 ####
+# ********************************************
+
+
+Data_T3_A <- Data_Filtered %>% dplyr::filter(Order == 1)
+
+# Define your formula for stage_1 and stage_2 models
+formula_stage_1_T3_A <- as.formula(
+  AdjustedMEC ~
+    1 + ## intercept here
+    AgeDummy + 
+    EthnicityDummy +
+    Gender_Dummy  + 
+    Charity +
+    Education_HigherEd +
+    Q16_ClimateCurrentEnvironment +
+    Q16_ClimateCurrentSelf +
+    Q16_MicroplasticsCurrentEnvironment + 
+    Q16_MicroplasticsCurrentSelf +
+    Q16_MicroplasticsTen + 
+    Q16_MicroplasticsTwentyFive + 
+    Q16_MicroplasticsFifty |
+    1 +  # intercept here
+    as.factor(Uncertainty)
+)
+
+
+# Define your formula for stage_1 and stage_2 models
+formula_stage_2_T3_A <- "-1 + LogBidIncome"
+
+# Call the simulator function
+Model_T3_A <- Simulator(data = Data_T3_A,
+                        formula_stage_1 = formula_stage_1_T3_A,
+                        formula_stage_2 = formula_stage_2_T3_A,
+                        R = R 
+)  
+
+
+Model_T3_A_Diagnostics <- cbind(
+  "Variable" = Model_T3_A$fit_statistics %>% names(),
+  "Estimate" = Model_T3_A$fit_statistics
+) %>% data.frame()
+
+
+Model_T3_A_Output <- rbind(
+  Model_T3_A$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
+  Model_T3_A_Diagnostics
+) 
+
+Model_T3_A_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+
+
+Model_T3_A_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
          here("CVoutput/Tables",
-              "Table_Truncation_ModelT3_Order.txt"))
+              "Table_Truncation_ModelT3_A_Order.txt"))
+
+
+# ********************************************
+# S4: T3 Order 0 ####
+# ********************************************
+
+
+Data_T3_B <- Data_Filtered %>% dplyr::filter(Order != 1)
+
+# Define your formula for stage_1 and stage_2 models
+formula_stage_1_T3_B <- as.formula(
+  AdjustedMEC ~
+    1 + ## intercept here
+    AgeDummy + 
+    EthnicityDummy +
+    Gender_Dummy  + 
+    Charity +
+    Education_HigherEd +
+    Q16_ClimateCurrentEnvironment +
+    Q16_ClimateCurrentSelf +
+    Q16_MicroplasticsCurrentEnvironment + 
+    Q16_MicroplasticsCurrentSelf +
+    Q16_MicroplasticsTen + 
+    Q16_MicroplasticsTwentyFive + 
+    Q16_MicroplasticsFifty |
+    1 +  # intercept here
+    as.factor(Uncertainty)
+)
+
+
+# Define your formula for stage_1 and stage_2 models
+formula_stage_2_T3_B <- "-1 + LogBidIncome"
+
+# Call the simulator function
+Model_T3_B <- Simulator(data = Data_T3_B,
+                        formula_stage_1 = formula_stage_1_T3_B,
+                        formula_stage_2 = formula_stage_2_T3_B,
+                        R = R 
+)  
+
+
+Model_T3_B_Diagnostics <- cbind(
+  "Variable" = Model_T3_B$fit_statistics %>% names(),
+  "Estimate" = Model_T3_B$fit_statistics
+) %>% data.frame()
+
+
+Model_T3_B_Output <- rbind(
+  Model_T3_B$coefficients %>% ModelOutput(Identifier = 1) %>% dplyr::select(-Model),
+  Model_T3_B_Diagnostics
+) 
+
+Model_T3_B_Output %>% write.csv(quote = FALSE, row.names = FALSE)
+
+
+Model_T3_B_Output %>% 
+  data.frame() %>% 
+  fwrite(sep = ",",
+         here("CVoutput/Tables",
+              "Table_Truncation_ModelT3_B_Order.txt"))
+
 
 # ********************************************
 # S4: T4 Consequentiality ####

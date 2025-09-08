@@ -442,6 +442,8 @@ Simulator <- function(data,
   
   
   ## Append currency and trim digits
+  ## NOTE: This does not treat the percent column correctly
+  ### but just fix that in word
   formatted_results <- paste0("£", round(col_means, 2))
   
   
@@ -514,8 +516,8 @@ Model1_stage1_formula <- as.formula(
 
 # Define number of bootstrap iterations
 # R <- 10
-R <- 1000
-# R <- 10000
+# R <- 1000
+R <- 10000
 
 
 

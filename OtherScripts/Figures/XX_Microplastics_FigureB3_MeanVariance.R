@@ -144,7 +144,7 @@ library(ggdist)
 ## Start with the latest anonymised data in one-row per one-respondent format
 Data <-
   here("Data",
-       "Data_WithEOP_24_11_25.csv") %>%
+       "Data_WithEOP_24_12_01.csv") %>%
   fread() %>%
   data.frame()
 
@@ -236,6 +236,7 @@ FigureB3 <-
   )) +
   
   ggdist::stat_histinterval(outline_bars = TRUE,
+                            point_interval = "mean_qi",
                             slab_colour = "black",
                             slab_linewidth = 0.45) +
   theme_bw() +

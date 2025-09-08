@@ -1,33 +1,40 @@
 Variable,Estimate
-X.Intercept.,-1.459*** (0.143)
-AgeDummy,0.069 (0.047)
-EthnicityDummy,0.096 (0.067)
-Gender_Dummy,-0.047 (0.046)
-Charity,0.112* (0.05)
-Education_HigherEd,-0.006 (0.047)
-Q16_ClimateCurrentEnvironment,-0.028 (0.019)
-Q16_ClimateCurrentSelf,-0.017 (0.015)
-Q16_MicroplasticsCurrentEnvironment,0.092*** (0.02)
-Q16_MicroplasticsCurrentSelf,0.071*** (0.018)
-Q16_MicroplasticsTen,0.128*** (0.026)
-Q16_MicroplasticsTwentyFive,0.117** (0.036)
-Q16_MicroplasticsFifty,-0.06* (0.026)
-X.Intercept..1,0.497*** (0.093)
-as.factor.Uncertainty.1,0.98*** (0.098)
-as.factor.Uncertainty.3,1.268*** (0.116)
-as.factor.Uncertainty.5,1.422*** (0.154)
-LogBidIncome,88.654*** (13.404)
-AgeDummy.1,-0.179* (0.075)
-EthnicityDummy.1,-0.216* (0.106)
-Gender_Dummy.1,0.1 (0.073)
-Charity.1,0.365*** (0.083)
-Education_HigherEd.1,0.091 (0.074)
-I..predict.stage_1..type....response.....MEC..2.,1.783*** (0.15)
-I.0...predict.stage_1..type....variance...,16.505*** (2.552)
-S1_AIC,-2601.33
-S1_LogLik,1317.665
-S1_PseudoR2,0.19
-S2_AIC,1552.348
-S2_LogLik,-768.174
-S2_PseudoR2,0.291
-S2_EOP_Mean,£292.699 (£192.132)
+X.Intercept.,-1.361*** (0.117)
+AgeDummy,0.052 (0.039)
+EthnicityDummy,0.091 (0.057)
+Gender_Dummy,-0.007 (0.038)
+Charity,0.088* (0.042)
+Education_HigherEd,-0.001 (0.039)
+Q16_ClimateCurrentEnvironment,-0.065*** (0.015)
+Q16_ClimateCurrentSelf,-0.009 (0.013)
+Q16_MicroplasticsCurrentEnvironment,0.124*** (0.017)
+Q16_MicroplasticsCurrentSelf,0.093*** (0.015)
+Q16_MicroplasticsTen,0.108*** (0.021)
+Q16_MicroplasticsTwentyFive,0.07* (0.029)
+Q16_MicroplasticsFifty,-0.03 (0.022)
+X.Intercept..1,0.673*** (0.094)
+as.factor.Uncertainty.1,1.42*** (0.101)
+as.factor.Uncertainty.3,1.554*** (0.119)
+as.factor.Uncertainty.5,1.581*** (0.157)
+LogBidIncome,86.429*** (13.198)
+AgeDummy.1,-0.052 (0.079)
+EthnicityDummy.1,-0.076 (0.111)
+Gender_Dummy.1,0.106 (0.076)
+Charity.1,0.421*** (0.086)
+Education_HigherEd.1,0.104 (0.077)
+Q16_ClimateCurrentEnvironment.1,0.034 (0.03)
+Q16_ClimateCurrentSelf.1,-0.051* (0.026)
+Q16_MicroplasticsCurrentEnvironment.1,0.182*** (0.045)
+Q16_MicroplasticsCurrentSelf.1,0.191*** (0.034)
+Q16_MicroplasticsTen.1,0.016 (0.048)
+Q16_MicroplasticsTwentyFive.1,0.113. (0.06)
+Q16_MicroplasticsFifty.1,0.067 (0.042)
+I..predict.stage_1..type....response....,-5.334*** (1.028)
+I.predict.stage_1..type....variance...,-6.773* (3.238)
+S1_AIC,-2611.799
+S1_LogLik,1322.9
+S1_PseudoR2,0.211
+S2_AIC,1518.55
+S2_LogLik,-744.275
+S2_PseudoR2,0.313
+S2_EOP_Mean,£-1735.446 (£865.758)
