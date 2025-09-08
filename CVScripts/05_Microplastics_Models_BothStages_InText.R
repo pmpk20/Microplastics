@@ -101,9 +101,6 @@ Data_Filtered <- Data %>%
     Q16_ClimateCurrentSelf,
     Q16_MicroplasticsCurrentEnvironment,
     Q16_MicroplasticsCurrentSelf,
-    Q16_MicroplasticsTen,
-    Q16_MicroplasticsTwentyFive,
-    Q16_MicroplasticsFifty,
     Uncertainty,
     LogBidIncome,
     Income_Annual
@@ -297,8 +294,8 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 10
-# R <- 1000
-R <- 10000
+R <- 1000
+# R <- 10000
 
 
 # Define your formula for stage_1 and stage_2 models
@@ -313,10 +310,10 @@ Model1_stage1_formula <- as.formula(
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
+    Q16_MicroplasticsCurrentSelf |
+    # Q16_MicroplasticsTen + 
+    # Q16_MicroplasticsTwentyFive + 
+    # Q16_MicroplasticsFifty |
     1 +  # intercept here
     as.factor(Uncertainty)
 )
@@ -362,6 +359,15 @@ Output_S1 %>%
   fwrite(
     sep = ",",
     here("CVoutput/Tables", paste0("Table_Output_S1_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
+  )
+
+
+## Specify Table2 here for ease of reference
+Output_S1 %>%
+  data.frame() %>%
+  fwrite(
+    sep = ",",
+    here("CVoutput/Tables", "Table2_FirstStage_InText.txt")
   )
 
 
@@ -419,6 +425,20 @@ Output_S2 %>%
     sep = ",",
     here("CVoutput/Tables", paste0("Table_Output_S2_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
   )
+
+
+
+
+Output_S2 %>%
+  data.frame() %>%
+  fwrite(
+    sep = ",",
+    here("CVoutput/Tables", "Table3_SecondStage_InText.txt")
+  )
+
+
+
+
 # ***********************************************************
 # Section 5C: Combined Outputs ####
 # ***********************************************************

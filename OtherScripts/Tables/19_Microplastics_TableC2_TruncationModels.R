@@ -80,13 +80,13 @@ Truncation_T1 <- here("CVoutput/Tables",
 
 
 Truncation_T2 <- here("CVoutput/Tables", 
-                      "Table_Truncation_ModelT2_PV.txt") %>% 
+                      "Table_Truncation_ModelT2_A_PV.txt") %>% 
   fread() %>% 
   data.frame()
 
 
 Truncation_T3 <- here("CVoutput/Tables", 
-                      "Table_Truncation_ModelT3_Order.txt") %>% 
+                      "Table_Truncation_ModelT3_B_Order.txt") %>% 
   fread() %>% 
   data.frame()
 

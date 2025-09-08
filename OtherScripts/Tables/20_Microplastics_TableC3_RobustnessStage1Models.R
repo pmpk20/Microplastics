@@ -112,9 +112,6 @@ create_robustness_table <- function(B1, B2, B3, B4) {
     "Q16_ClimateCurrentSelf" = "Climate change: current risk to self (1-10)",
     "Q16_MicroplasticsCurrentEnvironment" = "MPs: current risk to humanity (1-10)",
     "Q16_MicroplasticsCurrentSelf" = "Microplastics: current risk to self (1-10)",
-    "Q16_MicroplasticsTen" = "MPs: risk to humanity in 10y (1-10)",
-    "Q16_MicroplasticsTwentyFive" = "MPs: risk to humanity in 25y (1-10)",
-    "Q16_MicroplasticsFifty" = "MPs: risk to humanity in 50y (1-10)",
     "PaymentVehicle_Dummy" = "Payment vehicle (0/1)",
     "Consequentiality" = "Consequentiality (0/1)",
     "Coronavirus" = "Coronavirus (0/1)",
@@ -150,9 +147,6 @@ create_robustness_table <- function(B1, B2, B3, B4) {
     "Climate change: current risk to self (1-10)",
     "MPs: current risk to humanity (1-10)",
     "Microplastics: current risk to self (1-10)",
-    "MPs: risk to humanity in 10y (1-10)",
-    "MPs: risk to humanity in 25y (1-10)",
-    "MPs: risk to humanity in 50y (1-10)",
     "Payment vehicle (0/1)",
     "Consequentiality (0/1)",
     "Coronavirus (0/1)",
@@ -310,6 +304,165 @@ create_robustness_table <- function(B1, B2, B3, B4) {
   
   return(final_result)
 }
+
+
+
+
+# ***********************************************************
+# Section X: New code to verify ####
+# ***********************************************************
+
+
+
+
+create_robustness_table <- function(B1, B2, B3, B4) {
+  
+  format_coefficient <- function(estimate_string) {
+    if (estimate_string == "" || is.na(estimate_string)) {
+      return("")
+    }
+    
+    if (grepl("£", estimate_string)) {
+      return(estimate_string)
+    }
+    
+    # Extract coefficient 
+    coef <- gsub("^([0-9.-]+).*", "\\1", estimate_string)
+    
+    # Extract ALL significance markers (*, .)
+    stars <- gsub(".*?([*.]+).*", "\\1", estimate_string)
+    if (!grepl("[*.]", estimate_string)) stars <- ""
+    
+    # Extract standard error
+    se <- gsub(".*\\(([0-9.-]+)\\).*", "\\1", estimate_string)
+    if (!grepl("\\(", estimate_string)) se <- ""
+    
+    coef_formatted <- sprintf("%.3f", as.numeric(coef))
+    
+    if (se != "") {
+      se_formatted <- sprintf("%.3f", as.numeric(se))
+      result <- paste0(coef_formatted, stars, " (", se_formatted, ")")
+    } else {
+      result <- paste0(coef_formatted, stars)
+    }
+    
+    return(result)
+  }
+  
+  get_estimate <- function(table, var_name) {
+    if (var_name %in% table$Variable) {
+      return(format_coefficient(table$Estimate[table$Variable == var_name]))
+    } else {
+      return("")
+    }
+  }
+  
+  # Separate dispersion variables from mean variables
+  sections <- list(
+    "First stage: Mean model" = c(
+      "X.Intercept.", "AgeDummy", "EthnicityDummy", "Gender_Dummy", "Charity",
+      "Education_HigherEd", "Speeders_Survey_TestDummy", "Order", 
+      "PaymentVehicle_Dummy", "Consequentiality", "Coronavirus", "Understanding",
+      "Q16_ClimateCurrentEnvironment", "Q16_ClimateCurrentSelf",
+      "Q16_MicroplasticsCurrentEnvironment", "Q16_MicroplasticsCurrentSelf"
+    ),
+    "First stage: Dispersion model" = c(
+      "X.Intercept..1", "as.factor.Uncertainty.1", "as.factor.Uncertainty.3", 
+      "as.factor.Uncertainty.5"
+      # Note: removed duplicate demographics - they're handled in mean model section
+    ),
+    "First stage: Diagnostics" = c("S1_AIC", "S1_LogLik", "S1_PseudoR2"),
+    "Second stage: WTP model" = c(
+      "LogBidIncome", "I..predict.stage_1..type....response....", 
+      "I.predict.stage_1..type....variance..."
+    ),
+    "Second stage: Diagnostics" = c("S2_AIC", "S2_LogLik", "S2_PseudoR2", "S2_EOP_Mean")
+  )
+  
+  # Variable name mapping
+  var_names <- c(
+    "X.Intercept." = "Intercept",
+    "AgeDummy" = "Aged older than sample median (0/1)",
+    "EthnicityDummy" = "Ethnicity: any white group (0/1)", 
+    "Gender_Dummy" = "Gender: female (0/1)",
+    "Charity" = "Charity: involved (0/1)",
+    "Education_HigherEd" = "Higher education experience (0/1)",
+    "Speeders_Survey_TestDummy" = "Survey speeder dummy (0/1)",
+    "Order" = "Survey order (0/1)",
+    "PaymentVehicle_Dummy" = "Payment vehicle (0/1)",
+    "Consequentiality" = "Consequentiality (0/1)", 
+    "Coronavirus" = "Coronavirus (0/1)",
+    "Understanding" = "Understanding (1-10)",
+    "Q16_ClimateCurrentEnvironment" = "Climate change current risk to environment (1-10)",
+    "Q16_ClimateCurrentSelf" = "Climate change current risk to self (1-10)",
+    "Q16_MicroplasticsCurrentEnvironment" = "Microplastics current risk to environment (1-10)",
+    "Q16_MicroplasticsCurrentSelf" = "Microplastics current risk to self (1-10)",
+    "X.Intercept..1" = "Intercept",
+    "as.factor.Uncertainty.1" = "Uncertainty: low (+/- 1 point)",
+    "as.factor.Uncertainty.3" = "Uncertainty: medium (+/- 3 points)",
+    "as.factor.Uncertainty.5" = "Uncertainty: high (+/- 5 points)",
+    "LogBidIncome" = "Impact of change in bid level on income",
+    "I..predict.stage_1..type....response...." = "Predicted impact of changes in expected harm",
+    "I.predict.stage_1..type....variance..." = "Predicted impact of variance in expected harm",
+    "S1_AIC" = "AIC", 
+    "S1_LogLik" = "Log-likelihood",
+    "S1_PseudoR2" = "Pseudo R2",
+    "S2_AIC" = "AIC",
+    "S2_LogLik" = "Log-likelihood", 
+    "S2_PseudoR2" = "Pseudo R2",
+    "S2_EOP_Mean" = "EOP (SD)"
+  )
+  
+  # Initialize results
+  result <- data.frame(
+    Variable = character(),
+    Model1 = character(),
+    Model2 = character(), 
+    Model3 = character(),
+    Model4 = character(),
+    stringsAsFactors = FALSE
+  )
+  
+  # Build table
+  for (section_name in names(sections)) {
+    result <- rbind(result, data.frame(
+      Variable = paste0("**", section_name, "**"),
+      Model1 = "", Model2 = "", Model3 = "", Model4 = "",
+      stringsAsFactors = FALSE
+    ))
+    
+    for (var in sections[[section_name]]) {
+      result <- rbind(result, data.frame(
+        Variable = var_names[var],
+        Model1 = get_estimate(B1, var),
+        Model2 = get_estimate(B2, var),
+        Model3 = get_estimate(B4, var), # B4 is the simple model
+        Model4 = get_estimate(B3, var),
+        stringsAsFactors = FALSE
+      ))
+    }
+  }
+  
+  # Add significance note
+  result <- rbind(result, data.frame(
+    Variable = "*** = P value < 0.01, ** = P value < 0.05, * = P value < 0.10",
+    Model1 = "", Model2 = "", Model3 = "", Model4 = "",
+    stringsAsFactors = FALSE
+  ))
+  
+  # Set column names
+  colnames(result) <- c("Variable", 
+                        "Same mean model, selected covariates in dispersion",
+                        "Same mean model, all covariates in dispersion", 
+                        "Only long-term risks in mean model",
+                        "All covariates in mean model")
+  
+  return(result)
+}
+
+# Create the table
+robustness_table <- create_robustness_table(Robustness_B1, Robustness_B2, Robustness_B3, Robustness_B4)
+
 
 # ***********************************************************
 # Section 3: Export Data ####

@@ -235,10 +235,7 @@ Simulator <- function(data,
         Q16_ClimateCurrentEnvironment +
         Q16_ClimateCurrentSelf +
         Q16_MicroplasticsCurrentEnvironment + 
-        Q16_MicroplasticsCurrentSelf +
-        Q16_MicroplasticsTen + 
-        Q16_MicroplasticsTwentyFive + 
-        Q16_MicroplasticsFifty |
+        Q16_MicroplasticsCurrentSelf  |
         1 +  # intercept here
         as.factor(Uncertainty)
     )
@@ -282,8 +279,8 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 10
-# R <- 1000
-R <- 10000
+R <- 1000
+# R <- 10000
 
 
 
@@ -301,9 +298,9 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "Q16_ClimateCurrentSelf",
   "Q16_MicroplasticsCurrentEnvironment", 
   "Q16_MicroplasticsCurrentSelf",
-  "Q16_MicroplasticsTen", 
-  "Q16_MicroplasticsTwentyFive", 
-  "Q16_MicroplasticsFifty", 
+  # "Q16_MicroplasticsTen", 
+  # "Q16_MicroplasticsTwentyFive", 
+  # "Q16_MicroplasticsFifty", 
   "Uncertainty",
   "LogBidIncome",
   "Income_Annual"

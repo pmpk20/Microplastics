@@ -161,11 +161,16 @@ here("CVScripts", "06_Microplastics_Models_Alternative1_Asymmetric.R") %>% sourc
 here("CVScripts", "07_Microplastics_Models_Alternative2_NumericUncertainty.R") %>% source()
 
 
+## Tests for specification of stage 1
 here("CVScripts", "08_Microplastics_Models_RobustnessStage1.R") %>% source()
 
 ## Removing this as challenges with conceptual validity
 here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
 here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
+
+
+## Simple probit of the second stage no first stage or bootstrapping
+here("CVScripts", "XX_NaiveProbitSecondStage.R") %>% source()
 
 
 ## If simulating EOP at mean income, mean mean, and mean variance

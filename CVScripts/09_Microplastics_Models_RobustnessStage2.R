@@ -94,9 +94,9 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "Q16_ClimateCurrentSelf",
   "Q16_MicroplasticsCurrentEnvironment",
   "Q16_MicroplasticsCurrentSelf",
-  "Q16_MicroplasticsTen",
-  "Q16_MicroplasticsTwentyFive",
-  "Q16_MicroplasticsFifty",
+  # "Q16_MicroplasticsTen",
+  # "Q16_MicroplasticsTwentyFive",
+  # "Q16_MicroplasticsFifty",
   "Uncertainty",
   "LogBidIncome",
   "Income_Annual",
@@ -298,7 +298,7 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 10
-R <- 100
+R <- 1000
 # R <- 10000
 
 
@@ -315,10 +315,10 @@ formula_stage_1 <- as.formula(
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
+    Q16_MicroplasticsCurrentSelf |
+    # Q16_MicroplasticsTen + 
+    # Q16_MicroplasticsTwentyFive + 
+    # Q16_MicroplasticsFifty |
     1 +  # intercept here
     as.factor(Uncertainty)
 )
@@ -391,10 +391,7 @@ formula_stage_2_C2 <- "-1 + LogBidIncome +
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty"
+    Q16_MicroplasticsCurrentSelf"
 
 
 # Call the simulator function
@@ -503,10 +500,7 @@ formula_stage_2_C4 <- "-1 + LogBidIncome +
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty"
+    Q16_MicroplasticsCurrentSelf"
 
 
 # Call the simulator function

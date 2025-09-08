@@ -89,7 +89,44 @@ Table_Alternative2_Combined <- here("CVoutput/Tables",
 
 
 # Function to create the table
-create_table4 <- function(table1, table2) {
+create_Table5 <- function(table1, table2) {
+  
+  # Function to extract and format coefficient
+  format_coefficient <- function(estimate_string) {
+    if (estimate_string == "" || is.na(estimate_string)) {
+      return("")
+    }
+    
+    # Special handling for EOP (contains £ symbols)
+    if (grepl("£", estimate_string)) {
+      return(estimate_string)  # Return as-is for currency values
+    }
+    
+    # Extract coefficient (everything before the first space or parenthesis)
+    coef <- gsub("^([0-9.-]+).*", "\\1", estimate_string)
+    
+    # Extract significance stars
+    stars <- gsub(".*?([*]+).*", "\\1", estimate_string)
+    if (!grepl("\\*", estimate_string)) stars <- ""
+    
+    # Extract standard error (everything between parentheses)
+    se <- gsub(".*\\(([0-9.-]+)\\).*", "\\1", estimate_string)
+    if (!grepl("\\(", estimate_string)) se <- ""
+    
+    # Format coefficient to 3 decimal places
+    coef_formatted <- sprintf("%.3f", as.numeric(coef))
+    
+    # Reconstruct the estimate string
+    if (se != "") {
+      se_formatted <- sprintf("%.3f", as.numeric(se))
+      result <- paste0(coef_formatted, stars, " (", se_formatted, ")")
+    } else {
+      result <- paste0(coef_formatted, stars)
+    }
+    
+    return(result)
+  }
+  
   # Define the variable order and section headings
   sections <- list(
     "Mean model" = c(
@@ -102,10 +139,7 @@ create_table4 <- function(table1, table2) {
       "Q16_ClimateCurrentEnvironment", 
       "Q16_ClimateCurrentSelf",
       "Q16_MicroplasticsCurrentEnvironment", 
-      "Q16_MicroplasticsCurrentSelf",
-      "Q16_MicroplasticsTen", 
-      "Q16_MicroplasticsTwentyFive", 
-      "Q16_MicroplasticsFifty"
+      "Q16_MicroplasticsCurrentSelf"
     ),
     "Dispersion model" = c(
       "X.Intercept..1", 
@@ -137,9 +171,6 @@ create_table4 <- function(table1, table2) {
     "Q16_ClimateCurrentSelf" = "Climate change current risk to the self (1-10)",
     "Q16_MicroplasticsCurrentEnvironment" = "Microplastics current risk to the environment (1-10)",
     "Q16_MicroplasticsCurrentSelf" = "Microplastics current risk to the self (1-10)",
-    "Q16_MicroplasticsTen" = "Microplastics risk to the environment in 10 years (1-10)",
-    "Q16_MicroplasticsTwentyFive" = "Microplastics risk to the environment in 25 years (1-10)",
-    "Q16_MicroplasticsFifty" = "Microplastics risk to the environment in 50 years (1-10)",
     "X.Intercept..1" = "Intercept",
     "as.numeric.Uncertainty." = "Uncertainty (0-5)",
     "VarianceChange" = "VarianceChange: upper bound (-10/+10)",
@@ -179,13 +210,15 @@ create_table4 <- function(table1, table2) {
     # Add variables for this section
     for (var in sections[[section_name]]) {
       if (var %in% table1$Variable) {
-        est1 <- table1$Estimate[table1$Variable == var]
+        est1_raw <- table1$Estimate[table1$Variable == var]
+        est1 <- format_coefficient(est1_raw)
       } else {
         est1 <- ""
       }
       
       if (var %in% table2$Variable) {
-        est2 <- table2$Estimate[table2$Variable == var]
+        est2_raw <- table2$Estimate[table2$Variable == var]
+        est2 <- format_coefficient(est2_raw)
       } else {
         est2 <- ""
       }
@@ -220,14 +253,14 @@ create_table4 <- function(table1, table2) {
 }
 
 
-
 # ***********************************************************
 # Section 3: Make table ####
 # ***********************************************************
 
 
+
 # Create the table
-table4 <- create_table4(Table_Alternative1_Combined, Table_Alternative2_Combined)
+Table5 <- create_Table5(Table_Alternative1_Combined, Table_Alternative2_Combined)
 
 
 # ***********************************************************
@@ -235,12 +268,12 @@ table4 <- create_table4(Table_Alternative1_Combined, Table_Alternative2_Combined
 # ***********************************************************
 
 # Write the final combined output
-table4 %>%
+Table5 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
     here("CVoutput/Tables", 
-         "Table4_AlternativeSpecifications.txt")
+         "Table5_AlternativeSpecifications.txt")
   )
 
 

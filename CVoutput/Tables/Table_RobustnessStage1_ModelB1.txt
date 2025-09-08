@@ -1,28 +1,25 @@
 Variable,Estimate
-X.Intercept.,-1.335*** (0.106)
-Q16_ClimateCurrentEnvironment,-0.063*** (0.015)
-Q16_ClimateCurrentSelf,-0.008 (0.012)
-Q16_MicroplasticsCurrentEnvironment,0.124*** (0.016)
-Q16_MicroplasticsCurrentSelf,0.092*** (0.014)
-Q16_MicroplasticsTen,0.107*** (0.02)
-Q16_MicroplasticsTwentyFive,0.067* (0.028)
-Q16_MicroplasticsFifty,-0.026 (0.021)
-X.Intercept..1,0.778*** (0.115)
-as.factor.Uncertainty.1,1.428*** (0.102)
-as.factor.Uncertainty.3,1.529*** (0.12)
-as.factor.Uncertainty.5,1.612*** (0.158)
-AgeDummy,-0.234*** (0.066)
-EthnicityDummy,-0.228* (0.094)
-Gender_Dummy,0.122. (0.065)
-Charity,-0.109 (0.068)
-Education_HigherEd,0.036 (0.067)
-LogBidIncome,84.706*** (12.829)
-I..predict.stage_1..type....response....,1.586*** (0.095)
-I.predict.stage_1..type....variance...,-13.077*** (2.557)
-S1_AIC,-2635.369
-S1_LogLik,1334.685
-S1_PseudoR2,0.203
-S2_AIC,1612.661
-S2_LogLik,-803.331
+X.Intercept.,-1.038*** (0.101)
+Q16_ClimateCurrentEnvironment,-0.03* (0.015)
+Q16_ClimateCurrentSelf,-0.011 (0.013)
+Q16_MicroplasticsCurrentEnvironment,0.173*** (0.016)
+Q16_MicroplasticsCurrentSelf,0.131*** (0.014)
+X.Intercept..1,0.703*** (0.115)
+as.factor.Uncertainty.1,1.451*** (0.101)
+as.factor.Uncertainty.3,1.54*** (0.119)
+as.factor.Uncertainty.5,1.682*** (0.157)
+AgeDummy,-0.244*** (0.066)
+EthnicityDummy,-0.231* (0.094)
+Gender_Dummy,0.13* (0.065)
+Charity,-0.07 (0.068)
+Education_HigherEd,-0.01 (0.067)
+LogBidIncome,85.913*** (12.872)
+I..predict.stage_1..type....response....,1.61*** (0.096)
+I.predict.stage_1..type....variance...,-12.593*** (2.365)
+S1_AIC,-2534.983
+S1_LogLik,1281.491
+S1_PseudoR2,0.183
+S2_AIC,1611.628
+S2_LogLik,-802.814
 S2_PseudoR2,0.259
-S2_EOP_Mean,£342.763 (£194.399)
+S2_EOP_Mean,£339.02 (£192.815)

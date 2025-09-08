@@ -1,12 +1,13 @@
 #### Microplastics: IOP Paper ####
 ## Function: In-text specification
 ## Author: PK
-## Last change: 18/02/25
+## Last change: 08/09/25
 # Changes:
 # - using factor uncertainty instead
 # - new code to output the combined table
 # - new code to report median (SD) of EOP
 # - replace data$MEC with d$MEC line 217
+# - drop Q16microplastics variables
 
 
 
@@ -152,9 +153,9 @@ Data_Filtered <- Data %>% dplyr::select(c(
   "Q16_ClimateCurrentSelf",
   "Q16_MicroplasticsCurrentEnvironment", 
   "Q16_MicroplasticsCurrentSelf",
-  "Q16_MicroplasticsTen", 
-  "Q16_MicroplasticsTwentyFive", 
-  "Q16_MicroplasticsFifty", 
+  # "Q16_MicroplasticsTen", 
+  # "Q16_MicroplasticsTwentyFive", 
+  # "Q16_MicroplasticsFifty", 
   "Uncertainty",
   "LogBidIncome",
   "Income_Annual"
@@ -317,8 +318,8 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 10
-# R <- 1000
-R <- 10000
+R <- 1000
+# R <- 10000
 
 # Data_Filtered$Delta <- (Data_Filtered$MeanExpectedFuture - Data_Filtered$MeanExpectedCurrent)
 # 
@@ -339,10 +340,10 @@ Model1_stage1_formula <- as.formula(
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
+    Q16_MicroplasticsCurrentSelf |
+    # Q16_MicroplasticsTen + 
+    # Q16_MicroplasticsTwentyFive + 
+    # Q16_MicroplasticsFifty |
     1 +  # intercept here
     as.factor(Uncertainty)
 )

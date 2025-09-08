@@ -7,15 +7,15 @@ Charity,0.264*** (0.047)
 Education_HigherEd,0.039 (0.045)
 X.Intercept..1,0.154. (0.09)
 as.factor.Uncertainty.1,1.466*** (0.098)
-as.factor.Uncertainty.3,1.67*** (0.115)
+as.factor.Uncertainty.3,1.67*** (0.116)
 as.factor.Uncertainty.5,1.651*** (0.151)
-LogBidIncome,76.7*** (12.623)
+LogBidIncome,76.7*** (12.655)
 I..predict.stage_1..type....response....,1.235*** (0.11)
-I.predict.stage_1..type....variance...,-2.318 (1.999)
-S1_AIC,-1912.324
-S1_LogLik,966.162
+I.predict.stage_1..type....variance...,-2.318 (1.997)
+S1_AIC,-1911.778
+S1_LogLik,965.889
 S1_PseudoR2,0.027
-S2_AIC,1692.178
-S2_LogLik,-843.089
+S2_AIC,1692.223
+S2_LogLik,-843.111
 S2_PseudoR2,0.222
-S2_EOP_Mean,£353.617 (£171.359)
+S2_EOP_Mean,£354.613 (£171.586)

@@ -474,10 +474,10 @@ Model1_stage1_formula <- as.formula(
     Q16_ClimateCurrentEnvironment +
     Q16_ClimateCurrentSelf +
     Q16_MicroplasticsCurrentEnvironment + 
-    Q16_MicroplasticsCurrentSelf +
-    Q16_MicroplasticsTen + 
-    Q16_MicroplasticsTwentyFive + 
-    Q16_MicroplasticsFifty |
+    Q16_MicroplasticsCurrentSelf |
+    # Q16_MicroplasticsTen + 
+    # Q16_MicroplasticsTwentyFive + 
+    # Q16_MicroplasticsFifty |
     1 +  # intercept here
     as.factor(Uncertainty)
 )
@@ -516,8 +516,8 @@ Model1_stage1_formula <- as.formula(
 
 # Define number of bootstrap iterations
 # R <- 10
-# R <- 1000
-R <- 10000
+R <- 1000
+# R <- 10000
 
 
 
@@ -622,6 +622,59 @@ SummaryTable %>%
   fwrite(sep = ",",
          here("Data", "Microplastics_TableC1_SimulatedEOP_March2025.txt"))
 ## formally _1710 version which didn't have % income
+
+
+
+
+
+# ***********************************************************
+# Section 5: Format Table 4 nicely  ####
+# ***********************************************************
+
+# Read and process data
+Test <- here("Data", "Microplastics_TableC1_SimulatedEOP_March2025.txt") %>% 
+  fread() %>% 
+  data.frame()
+
+# Create mapping for scenario descriptions
+scenario_mapping <- c(
+  "All variables at normal levels" = "Respondent-level mean\tRespondent-level variance",
+  "Variance held at mean value" = "Respondent-level mean\tVariance fixed at sample mean",
+  "Variance held at mean value, mean increased by 10%" = "Mean increased by 10%\tVariance fixed at sample mean",
+  "Variance held at mean value, mean reduced by 10%" = "Mean decreased by 10%\tVariance fixed at sample mean",
+  "Mean at mean level, all others at normal level" = "Mean fixed at sample mean\tRespondent-level variance",
+  "Mean of means and 10% increase in variance" = "Mean fixed at sample mean\tVariance increased by 10%",
+  "Mean of means and 10% decrease in variance" = "Mean fixed at sample mean\tVariance decreased by 10%",
+  "Mean and variance vary, income increased by 10%" = "Respondent-level mean, income increased by 10%\tRespondent-level variance",
+  "Mean and variance vary, income decreased by 10%" = "Respondent-level mean, income decreased by 10%\tRespondent-level variance"
+)
+
+# Process the data
+Table4 <- Test %>%
+  mutate(
+    # Map scenarios and split into two columns
+    scenario_mapped = scenario_mapping[Variable],
+    `Mean expectations` = sapply(strsplit(scenario_mapped, "\t"), `[`, 1),
+    `Variance in expectations` = sapply(strsplit(scenario_mapped, "\t"), `[`, 2),
+    # Format monetary values (remove £ and round)
+    EOP = paste0("£", round(as.numeric(gsub("[£,]", "", Mean)))),
+    Median = paste0("£", round(as.numeric(gsub("[£,]", "", Median)))),
+    `2.5%` = paste0("£", round(as.numeric(gsub("[£,]", "", X2.5.)))),
+    `97.5%` = paste0("£", round(as.numeric(gsub("[£,]", "", X97.5.)))),
+    # Format percentage (remove £ and add %)
+    `EOP as % of average annual household income` = paste0(round(as.numeric(gsub("[£,]", "", Percent)), 1), "%")
+  ) %>%
+  dplyr::select(`Mean expectations`, `Variance in expectations`, EOP, Median, `2.5%`, `97.5%`, 
+         `EOP as % of average annual household income`)
+
+print(Table4)
+
+
+
+Table4 %>% 
+  data.frame() %>% 
+  fwrite(sep = ",",
+         here("Data", "Microplastics_Table4_SimulatedEOP_September2025.txt"))
 
 
 

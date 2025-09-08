@@ -1,33 +1,30 @@
 Variable,Estimate
-X.Intercept.,-1.361*** (0.118)
-AgeDummy,0.052 (0.039)
-EthnicityDummy,0.091 (0.057)
-Gender_Dummy,-0.007 (0.038)
-Charity,0.088* (0.042)
-Education_HigherEd,-0.001 (0.039)
-Q16_ClimateCurrentEnvironment,-0.065*** (0.015)
-Q16_ClimateCurrentSelf,-0.009 (0.013)
-Q16_MicroplasticsCurrentEnvironment,0.124*** (0.017)
-Q16_MicroplasticsCurrentSelf,0.093*** (0.015)
-Q16_MicroplasticsTen,0.108*** (0.021)
-Q16_MicroplasticsTwentyFive,0.07* (0.03)
-Q16_MicroplasticsFifty,-0.03 (0.022)
-X.Intercept..1,0.673*** (0.094)
-as.factor.Uncertainty.1,1.42*** (0.101)
-as.factor.Uncertainty.3,1.554*** (0.12)
-as.factor.Uncertainty.5,1.581*** (0.157)
-LogBidIncome,85.777*** (13.277)
-AgeDummy.1,-0.173* (0.075)
-EthnicityDummy.1,-0.204. (0.105)
-Gender_Dummy.1,0.053 (0.071)
-Charity.1,0.408*** (0.082)
-Education_HigherEd.1,0.071 (0.074)
-I..predict.stage_1..type....response....,1.499*** (0.135)
-I.predict.stage_1..type....variance...,-13.825*** (2.82)
-S1_AIC,-2602.546
-S1_LogLik,1318.273
-S1_PseudoR2,0.209
-S2_AIC,1575.323
-S2_LogLik,-779.662
-S2_PseudoR2,0.281
-S2_EOP_Mean,£308.892 (£183.94)
+X.Intercept.,-1.037*** (0.111)
+AgeDummy,0.076. (0.04)
+EthnicityDummy,0.11. (0.058)
+Gender_Dummy,-0.057 (0.039)
+Charity,0.101* (0.042)
+Education_HigherEd,-0.001 (0.04)
+Q16_ClimateCurrentEnvironment,-0.034* (0.015)
+Q16_ClimateCurrentSelf,-0.013 (0.013)
+Q16_MicroplasticsCurrentEnvironment,0.172*** (0.016)
+Q16_MicroplasticsCurrentSelf,0.133*** (0.014)
+X.Intercept..1,0.594*** (0.093)
+as.factor.Uncertainty.1,1.436*** (0.1)
+as.factor.Uncertainty.3,1.561*** (0.118)
+as.factor.Uncertainty.5,1.636*** (0.156)
+LogBidIncome,86.949*** (13.166)
+AgeDummy.1,-0.182* (0.075)
+EthnicityDummy.1,-0.202. (0.105)
+Gender_Dummy.1,0.05 (0.072)
+Charity.1,0.404*** (0.083)
+Education_HigherEd.1,0.064 (0.074)
+I..predict.stage_1..type....response....,1.532*** (0.138)
+I.predict.stage_1..type....variance...,-13.275*** (2.575)
+S1_AIC,-2521.067
+S1_LogLik,1274.534
+S1_PseudoR2,0.191
+S2_AIC,1573.816
+S2_LogLik,-778.908
+S2_PseudoR2,0.282
+S2_EOP_Mean,£310.471 (£182.421)

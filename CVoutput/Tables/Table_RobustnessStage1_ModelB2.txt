@@ -1,34 +1,31 @@
 Variable,Estimate
-X.Intercept.,-1.282*** (0.103)
-Q16_ClimateCurrentEnvironment,-0.056*** (0.014)
-Q16_ClimateCurrentSelf,-0.01 (0.012)
-Q16_MicroplasticsCurrentEnvironment,0.12*** (0.016)
-Q16_MicroplasticsCurrentSelf,0.093*** (0.014)
-Q16_MicroplasticsTen,0.097*** (0.02)
-Q16_MicroplasticsTwentyFive,0.075** (0.028)
-Q16_MicroplasticsFifty,-0.033 (0.02)
-X.Intercept..1,1.319*** (0.345)
-as.factor.Uncertainty.1,1.47*** (0.102)
-as.factor.Uncertainty.3,1.582*** (0.12)
-as.factor.Uncertainty.5,1.641*** (0.16)
-AgeDummy,-0.233*** (0.068)
-EthnicityDummy,-0.284** (0.094)
-Gender_Dummy,0.107 (0.066)
-Charity,-0.096 (0.069)
-Education_HigherEd,0.07 (0.067)
-Speeders_Survey_TestDummy,0.38* (0.178)
-Order,-0.173* (0.072)
-PaymentVehicle_Dummy,0.038 (0.095)
-Consequentiality,0.146* (0.071)
-Coronavirus,-0.101 (0.067)
-Understanding,-0.106*** (0.027)
-LogBidIncome,84.439*** (12.896)
-I..predict.stage_1..type....response....,1.516*** (0.092)
-I.predict.stage_1..type....variance...,-10.49*** (2.349)
-S1_AIC,-2672.958
-S1_LogLik,1359.479
-S1_PseudoR2,0.203
-S2_AIC,1621.002
-S2_LogLik,-807.501
+X.Intercept.,-0.987*** (0.097)
+Q16_ClimateCurrentEnvironment,-0.026. (0.014)
+Q16_ClimateCurrentSelf,-0.012 (0.012)
+Q16_MicroplasticsCurrentEnvironment,0.164*** (0.015)
+Q16_MicroplasticsCurrentSelf,0.129*** (0.014)
+X.Intercept..1,1.564*** (0.345)
+as.factor.Uncertainty.1,1.495*** (0.101)
+as.factor.Uncertainty.3,1.603*** (0.12)
+as.factor.Uncertainty.5,1.691*** (0.159)
+AgeDummy,-0.234*** (0.068)
+EthnicityDummy,-0.305** (0.094)
+Gender_Dummy,0.114. (0.065)
+Charity,-0.055 (0.069)
+Education_HigherEd,0.024 (0.067)
+Speeders_Survey_TestDummy,0.346. (0.177)
+Order,-0.175* (0.072)
+PaymentVehicle_Dummy,0.031 (0.095)
+Consequentiality,0.17* (0.071)
+Coronavirus,-0.103 (0.066)
+Understanding,-0.138*** (0.027)
+LogBidIncome,85.462*** (12.94)
+I..predict.stage_1..type....response....,1.529*** (0.092)
+I.predict.stage_1..type....variance...,-9.88*** (2.177)
+S1_AIC,-2589.54
+S1_LogLik,1314.77
+S1_PseudoR2,0.183
+S2_AIC,1621.094
+S2_LogLik,-807.547
 S2_PseudoR2,0.255
-S2_EOP_Mean,£342.743 (£187.785)
+S2_EOP_Mean,£341.011 (£186.291)
