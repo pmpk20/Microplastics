@@ -170,6 +170,7 @@ here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 
 
 ## Simple probit of the second stage no first stage or bootstrapping
+## Now Table C5
 here("CVScripts", "XX_NaiveProbitSecondStage.R") %>% source()
 
 
@@ -205,8 +206,8 @@ here("OtherScripts/Figures", "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R
 
 ## Tables combing model results for convenience
 here("OtherScripts/Tables", "18_Microplastics_Table5_AlternativeSpecifications.R") %>% source()
-here("OtherScripts/Tables", "19_Microplastics_TableC2_TruncationModels.R") %>% source()
-here("OtherScripts/Tables", "20_Microplastics_TableC3_RobustnessStage1Models.R") %>% source()
+here("OtherScripts/Tables", "19_Microplastics_TableC2_TruncationModels.R") %>% source() ## Now Table C1
+here("OtherScripts/Tables", "20_Microplastics_TableC3_RobustnessStage1Models.R") %>% source() ## Now Table C2
 here("OtherScripts/Tables", "21_TableC3_RobustnessStage2Models.R") %>% source()
 
 

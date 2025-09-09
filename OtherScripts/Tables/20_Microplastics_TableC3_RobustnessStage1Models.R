@@ -108,34 +108,34 @@ create_robustness_table <- function(B1, B2, B3, B4) {
   # Define variable mapping dictionary
   var_mapping <- c(
     "X.Intercept." = "Intercept",
+    "AgeDummy" = "Aged older than sample median (0/1)",
+    "EthnicityDummy" = "Ethnicity: any white group (0/1)",
+    "Gender_Dummy" = "Gender: female (0/1)",
+    "Charity" = "Charity: involved (0/1)",
+    "Education_HigherEd" = "Higher education experience (0/1)",
     "Q16_ClimateCurrentEnvironment" = "Climate change: current risk to environment (1-10)",
     "Q16_ClimateCurrentSelf" = "Climate change: current risk to self (1-10)",
-    "Q16_MicroplasticsCurrentEnvironment" = "MPs: current risk to humanity (1-10)",
-    "Q16_MicroplasticsCurrentSelf" = "Microplastics: current risk to self (1-10)",
+    "Q16_MicroplasticsCurrentEnvironment" = "MPs: current risk to environment (1-10)",
+    "Q16_MicroplasticsCurrentSelf" = "MPs: current risk to self (1-10)",
+    "X.Intercept..1" = "Intercept_Disp",
+    "as.factor.Uncertainty.1" = "Uncertainty: low (+/- 1 point)",
+    "as.factor.Uncertainty.3" = "Uncertainty: medium (+/- 3 points)",
+    "as.factor.Uncertainty.5" = "Uncertainty: high (+/- 5 points)",
+    "Speeders_Survey_TestDummy" = "Survey speeder dummy (0/1)",
+    "Order" = "Survey order (0/1)",
     "PaymentVehicle_Dummy" = "Payment vehicle (0/1)",
     "Consequentiality" = "Consequentiality (0/1)",
     "Coronavirus" = "Coronavirus (0/1)",
     "Understanding" = "Understanding (1-10)",
-    "AgeDummy" = "Aged older than sample median (0/1)",
-    "EthnicityDummy" = "Ethnicity any white group (0/1)",
-    "Gender_Dummy" = "Gender: female (0/1)",
-    "Charity" = "Charity: involved (0/1)",
-    "Education_HigherEd" = "Higher education experience (0/1)",
-    "Speeders_Survey_TestDummy" = "Survey speeder dummy (0/1)",
-    "Order" = "Survey order (0/1)",
-    "X.Intercept..1" = "Intercept",
-    "as.factor.Uncertainty.1" = "Uncertainty: low (+/- 1 point)",
-    "as.factor.Uncertainty.3" = "Uncertainty: medium (+/- 3 points)",
-    "as.factor.Uncertainty.5" = "Uncertainty: high (+/- 5 points)",
     "S1_AIC" = "AIC",
     "S1_LogLik" = "Log-likelihood",
-    "S1_PseudoR2" = "Pseudo-R2",
-    "LogBidIncome" = "α (i.e., LogBidIncome)",
-    "I..predict.stage_1..type....response...." = "β (i.e., Means)",
-    "I.predict.stage_1..type....variance..." = "γ (i.e., Variance)",
-    "S2_AIC" = "AIC",
-    "S2_LogLik" = "Log-likelihood",
-    "S2_PseudoR2" = "Pseudo-R2",
+    "S1_PseudoR2" = "Pseudo R2",
+    "LogBidIncome" = "Impact of change in bid level on income",
+    "I..predict.stage_1..type....response...." = "Predicted impact of changes in expected harm",
+    "I.predict.stage_1..type....variance..." = "Predicted impact of variance in expected harm",
+    "S2_AIC" = "AIC_S2",
+    "S2_LogLik" = "Log-likelihood_S2",
+    "S2_PseudoR2" = "Pseudo R2_S2",
     "S2_EOP_Mean" = "EOP (SD)"
   )
   
@@ -143,32 +143,26 @@ create_robustness_table <- function(B1, B2, B3, B4) {
   final_vars <- c(
     # Mean model variables
     "Intercept",
-    "Climate change: current risk to environment (1-10)",
-    "Climate change: current risk to self (1-10)",
-    "MPs: current risk to humanity (1-10)",
-    "Microplastics: current risk to self (1-10)",
-    "Payment vehicle (0/1)",
-    "Consequentiality (0/1)",
-    "Coronavirus (0/1)",
-    "Understanding (1-10)",
     "Aged older than sample median (0/1)",
-    "Ethnicity any white group (0/1)",
+    "Ethnicity: any white group (0/1)",
     "Gender: female (0/1)",
     "Charity: involved (0/1)",
     "Higher education experience (0/1)",
-    "Survey speeder dummy (0/1)",
-    "Survey order (0/1)",
+    "Climate change: current risk to environment (1-10)",
+    "Climate change: current risk to self (1-10)",
+    "MPs: current risk to environment (1-10)",
+    "MPs: current risk to self (1-10)",
     
     # Dispersion model variables
-    "Intercept",
+    "Intercept_Disp",
     "Uncertainty: low (+/- 1 point)",
     "Uncertainty: medium (+/- 3 points)",
     "Uncertainty: high (+/- 5 points)",
-    "Aged older than sample median (0/1)",
-    "Ethnicity any white group (0/1)",
-    "Gender: female (0/1)",
-    "Charity: involved (0/1)",
-    "Higher education experience (0/1)",
+    "Aged older than sample median (0/1)_Disp",
+    "Ethnicity: any white group (0/1)_Disp",
+    "Gender: female (0/1)_Disp",
+    "Charity: involved (0/1)_Disp",
+    "Higher education experience (0/1)_Disp",
     "Survey speeder dummy (0/1)",
     "Survey order (0/1)",
     "Payment vehicle (0/1)",
@@ -179,17 +173,17 @@ create_robustness_table <- function(B1, B2, B3, B4) {
     # First stage diagnostics
     "AIC",
     "Log-likelihood",
-    "Pseudo-R2",
+    "Pseudo R2",
     
     # Second stage
-    "α (i.e., LogBidIncome)",
-    "β (i.e., Means)",
-    "γ (i.e., Variance)",
+    "Impact of change in bid level on income",
+    "Predicted impact of changes in expected harm",
+    "Predicted impact of variance in expected harm",
     
     # Second stage diagnostics
-    "AIC",
-    "Log-likelihood",
-    "Pseudo-R2",
+    "AIC_S2",
+    "Log-likelihood_S2",
+    "Pseudo R2_S2",
     "EOP (SD)"
   )
   
@@ -224,12 +218,28 @@ create_robustness_table <- function(B1, B2, B3, B4) {
     
     for (j in 1:nrow(model)) {
       if (!is.na(model$NiceName[j])) {
-        var_idx <- which(result$Variable == model$NiceName[j])
-        if (length(var_idx) > 0) {
-          # For dispersion model intercept, need to handle duplicate name
-          if (model$NiceName[j] == "Intercept" && model$Variable[j] == "X.Intercept..1") {
-            var_idx <- var_idx[2]  # Use the second "Intercept" in the list
+        # Handle dispersion model variables that appear in both sections
+        if (model$NiceName[j] %in% c("Aged older than sample median (0/1)", 
+                                     "Ethnicity: any white group (0/1)",
+                                     "Gender: female (0/1)",
+                                     "Charity: involved (0/1)",
+                                     "Higher education experience (0/1)") &&
+            model$Variable[j] != "X.Intercept." && 
+            model$Variable[j] != "X.Intercept..1") {
+          
+          # Check if this appears after the dispersion intercept in the original data
+          intercept_disp_row <- which(model$Variable == "X.Intercept..1")
+          if (length(intercept_disp_row) > 0 && j > intercept_disp_row[1]) {
+            search_var <- paste0(model$NiceName[j], "_Disp")
+          } else {
+            search_var <- model$NiceName[j]
           }
+        } else {
+          search_var <- model$NiceName[j]
+        }
+        
+        var_idx <- which(result$Variable == search_var)
+        if (length(var_idx) > 0) {
           result[var_idx, model_name] <- model$Estimate[j]
         }
       }
@@ -238,11 +248,11 @@ create_robustness_table <- function(B1, B2, B3, B4) {
   
   # Add section headers
   sections <- list(
-    "Mean model" = 1,
-    "Dispersion model" = 20,
-    "First stage diagnostics" = 35,
-    "Second stage" = 38,
-    "Second stage diagnostics" = 41
+    "**First stage: Mean model (λ̂)**" = 1,
+    "**First stage: Dispersion model (ψ̂)**" = 11,
+    "**First stage: Diagnostics**" = 26,
+    "**Second stage: WTP model (α̂,β̂,γ̂)**" = 29,
+    "**Second stage: Diagnostics**" = 32
   )
   
   final_result <- data.frame(
@@ -254,15 +264,18 @@ create_robustness_table <- function(B1, B2, B3, B4) {
     stringsAsFactors = FALSE
   )
   
-  current_row <- 1
-  for (section in names(sections)) {
-    section_start <- sections[[section]]
+  section_positions <- c(1, 11, 26, 29, 32, nrow(result) + 1)
+  
+  for (s in 1:length(sections)) {
+    section_name <- names(sections)[s]
+    section_start <- section_positions[s]
+    section_end <- section_positions[s + 1] - 1
     
     # Add section header
     final_result <- rbind(
       final_result,
       data.frame(
-        Variable = paste0("**", section, "**"),
+        Variable = section_name,
         B1 = "",
         B2 = "",
         B3 = "",
@@ -271,19 +284,15 @@ create_robustness_table <- function(B1, B2, B3, B4) {
       )
     )
     
-    # Determine section end
-    if (section == tail(names(sections), 1)) {
-      section_end <- nrow(result)
-    } else {
-      next_section <- which(names(sections) == section) + 1
-      section_end <- sections[[names(sections)[next_section]]] - 1
-    }
+    # Add rows for this section, cleaning up variable names
+    section_rows <- result[section_start:section_end, ]
+    section_rows$Variable <- gsub("_Disp$", "", section_rows$Variable)  # Remove _Disp suffix
+    section_rows$Variable <- gsub("Intercept_Disp", "Intercept", section_rows$Variable)  # Fix intercept
+    section_rows$Variable <- gsub("AIC_S2", "AIC", section_rows$Variable)  # Fix S2 diagnostics
+    section_rows$Variable <- gsub("Log-likelihood_S2", "Log-likelihood", section_rows$Variable)
+    section_rows$Variable <- gsub("Pseudo R2_S2", "Pseudo R2", section_rows$Variable)
     
-    # Add rows for this section
-    final_result <- rbind(
-      final_result,
-      result[section_start:section_end, ]
-    )
+    final_result <- rbind(final_result, section_rows)
   }
   
   # Add significance note
@@ -304,166 +313,6 @@ create_robustness_table <- function(B1, B2, B3, B4) {
   
   return(final_result)
 }
-
-
-
-
-# ***********************************************************
-# Section X: New code to verify ####
-# ***********************************************************
-
-
-
-
-create_robustness_table <- function(B1, B2, B3, B4) {
-  
-  format_coefficient <- function(estimate_string) {
-    if (estimate_string == "" || is.na(estimate_string)) {
-      return("")
-    }
-    
-    if (grepl("£", estimate_string)) {
-      return(estimate_string)
-    }
-    
-    # Extract coefficient 
-    coef <- gsub("^([0-9.-]+).*", "\\1", estimate_string)
-    
-    # Extract ALL significance markers (*, .)
-    stars <- gsub(".*?([*.]+).*", "\\1", estimate_string)
-    if (!grepl("[*.]", estimate_string)) stars <- ""
-    
-    # Extract standard error
-    se <- gsub(".*\\(([0-9.-]+)\\).*", "\\1", estimate_string)
-    if (!grepl("\\(", estimate_string)) se <- ""
-    
-    coef_formatted <- sprintf("%.3f", as.numeric(coef))
-    
-    if (se != "") {
-      se_formatted <- sprintf("%.3f", as.numeric(se))
-      result <- paste0(coef_formatted, stars, " (", se_formatted, ")")
-    } else {
-      result <- paste0(coef_formatted, stars)
-    }
-    
-    return(result)
-  }
-  
-  get_estimate <- function(table, var_name) {
-    if (var_name %in% table$Variable) {
-      return(format_coefficient(table$Estimate[table$Variable == var_name]))
-    } else {
-      return("")
-    }
-  }
-  
-  # Separate dispersion variables from mean variables
-  sections <- list(
-    "First stage: Mean model" = c(
-      "X.Intercept.", "AgeDummy", "EthnicityDummy", "Gender_Dummy", "Charity",
-      "Education_HigherEd", "Speeders_Survey_TestDummy", "Order", 
-      "PaymentVehicle_Dummy", "Consequentiality", "Coronavirus", "Understanding",
-      "Q16_ClimateCurrentEnvironment", "Q16_ClimateCurrentSelf",
-      "Q16_MicroplasticsCurrentEnvironment", "Q16_MicroplasticsCurrentSelf"
-    ),
-    "First stage: Dispersion model" = c(
-      "X.Intercept..1", "as.factor.Uncertainty.1", "as.factor.Uncertainty.3", 
-      "as.factor.Uncertainty.5"
-      # Note: removed duplicate demographics - they're handled in mean model section
-    ),
-    "First stage: Diagnostics" = c("S1_AIC", "S1_LogLik", "S1_PseudoR2"),
-    "Second stage: WTP model" = c(
-      "LogBidIncome", "I..predict.stage_1..type....response....", 
-      "I.predict.stage_1..type....variance..."
-    ),
-    "Second stage: Diagnostics" = c("S2_AIC", "S2_LogLik", "S2_PseudoR2", "S2_EOP_Mean")
-  )
-  
-  # Variable name mapping
-  var_names <- c(
-    "X.Intercept." = "Intercept",
-    "AgeDummy" = "Aged older than sample median (0/1)",
-    "EthnicityDummy" = "Ethnicity: any white group (0/1)", 
-    "Gender_Dummy" = "Gender: female (0/1)",
-    "Charity" = "Charity: involved (0/1)",
-    "Education_HigherEd" = "Higher education experience (0/1)",
-    "Speeders_Survey_TestDummy" = "Survey speeder dummy (0/1)",
-    "Order" = "Survey order (0/1)",
-    "PaymentVehicle_Dummy" = "Payment vehicle (0/1)",
-    "Consequentiality" = "Consequentiality (0/1)", 
-    "Coronavirus" = "Coronavirus (0/1)",
-    "Understanding" = "Understanding (1-10)",
-    "Q16_ClimateCurrentEnvironment" = "Climate change current risk to environment (1-10)",
-    "Q16_ClimateCurrentSelf" = "Climate change current risk to self (1-10)",
-    "Q16_MicroplasticsCurrentEnvironment" = "Microplastics current risk to environment (1-10)",
-    "Q16_MicroplasticsCurrentSelf" = "Microplastics current risk to self (1-10)",
-    "X.Intercept..1" = "Intercept",
-    "as.factor.Uncertainty.1" = "Uncertainty: low (+/- 1 point)",
-    "as.factor.Uncertainty.3" = "Uncertainty: medium (+/- 3 points)",
-    "as.factor.Uncertainty.5" = "Uncertainty: high (+/- 5 points)",
-    "LogBidIncome" = "Impact of change in bid level on income",
-    "I..predict.stage_1..type....response...." = "Predicted impact of changes in expected harm",
-    "I.predict.stage_1..type....variance..." = "Predicted impact of variance in expected harm",
-    "S1_AIC" = "AIC", 
-    "S1_LogLik" = "Log-likelihood",
-    "S1_PseudoR2" = "Pseudo R2",
-    "S2_AIC" = "AIC",
-    "S2_LogLik" = "Log-likelihood", 
-    "S2_PseudoR2" = "Pseudo R2",
-    "S2_EOP_Mean" = "EOP (SD)"
-  )
-  
-  # Initialize results
-  result <- data.frame(
-    Variable = character(),
-    Model1 = character(),
-    Model2 = character(), 
-    Model3 = character(),
-    Model4 = character(),
-    stringsAsFactors = FALSE
-  )
-  
-  # Build table
-  for (section_name in names(sections)) {
-    result <- rbind(result, data.frame(
-      Variable = paste0("**", section_name, "**"),
-      Model1 = "", Model2 = "", Model3 = "", Model4 = "",
-      stringsAsFactors = FALSE
-    ))
-    
-    for (var in sections[[section_name]]) {
-      result <- rbind(result, data.frame(
-        Variable = var_names[var],
-        Model1 = get_estimate(B1, var),
-        Model2 = get_estimate(B2, var),
-        Model3 = get_estimate(B4, var), # B4 is the simple model
-        Model4 = get_estimate(B3, var),
-        stringsAsFactors = FALSE
-      ))
-    }
-  }
-  
-  # Add significance note
-  result <- rbind(result, data.frame(
-    Variable = "*** = P value < 0.01, ** = P value < 0.05, * = P value < 0.10",
-    Model1 = "", Model2 = "", Model3 = "", Model4 = "",
-    stringsAsFactors = FALSE
-  ))
-  
-  # Set column names
-  colnames(result) <- c("Variable", 
-                        "Same mean model, selected covariates in dispersion",
-                        "Same mean model, all covariates in dispersion", 
-                        "Only long-term risks in mean model",
-                        "All covariates in mean model")
-  
-  return(result)
-}
-
-# Create the table
-robustness_table <- create_robustness_table(Robustness_B1, Robustness_B2, Robustness_B3, Robustness_B4)
-
-
 # ***********************************************************
 # Section 3: Export Data ####
 # ***********************************************************
@@ -472,6 +321,14 @@ robustness_table <- create_robustness_table(Robustness_B1, Robustness_B2, Robust
 
 # Create the table
 TableC3 <- create_robustness_table(Robustness_B1, Robustness_B2, Robustness_B3, Robustness_B4)
+
+
+colnames(TableC3) <- c("Variable", 
+  "Mean model: risks only Dispersion: selected covariates",	
+  "Mean model: risks only Dispersion: all covariates",
+  "Mean model: all covariates Dispersion: selected covariates",
+  "Mean model: selected covariates Dispersion: original model"
+)
 
 
 # ***********************************************************

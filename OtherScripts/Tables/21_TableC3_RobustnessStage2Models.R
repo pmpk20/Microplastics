@@ -95,62 +95,210 @@ M4 <- here("CVoutput/Tables",
 # Section 2: Capture variable names ####
 # ***********************************************************
 
-
-# Create comparison table
-# Get all unique variables across models
-all_vars <- unique(c(M1$Variable, M2$Variable, M3$Variable))
-
-
-
-# Define the desired order
-## BE CAREFUL IF YOU CHANGE CVSCRIPTS/09*
-desired_order <- c(
-  "X.Intercept.",
-  "AgeDummy",
-  "EthnicityDummy",
-  "Gender_Dummy",
-  "Charity",
-  "Education_HigherEd",
-  "Q16_ClimateCurrentEnvironment",
-  "Q16_ClimateCurrentSelf",
-  "Q16_MicroplasticsCurrentEnvironment",
-  "Q16_MicroplasticsCurrentSelf",
-  "Q16_MicroplasticsTen",
-  "Q16_MicroplasticsTwentyFive",
-  "Q16_MicroplasticsFifty",
-  "X.Intercept..1",
-  "as.factor.Uncertainty.1",
-  "as.factor.Uncertainty.3",
-  "as.factor.Uncertainty.5",
-  "S1_AIC",
-  "S1_LogLik",
-  "S1_PseudoR2",
-  "LogBidIncome",
-  "I..predict.stage_1..type....response....",
-  "I.predict.stage_1..type....variance...",
-  "AgeDummy.1",
-  "EthnicityDummy.1",
-  "Gender_Dummy.1",
-  "Charity.1",
-  "Education_HigherEd.1",
-  "Q16_ClimateCurrentEnvironment.1",
-  "Q16_ClimateCurrentSelf.1",
-  "Q16_MicroplasticsCurrentEnvironment.1",
-  "Q16_MicroplasticsCurrentSelf.1",
-  "Q16_MicroplasticsTen.1",
-  "Q16_MicroplasticsTwentyFive.1",
-  "Q16_MicroplasticsFifty.1",
-  "Speeders_Survey_TestDummy",
-  "Order",
-  "PaymentVehicle_Dummy",
-  "Consequentiality",
-  "Coronavirus",
-  "Understanding",
-  "S2_AIC",
-  "S2_LogLik",
-  "S2_PseudoR2",
-  "S2_EOP_Mean"
-)
+create_robustness_table <- function(M1, M2, M3, M4) {
+  # Define variable mapping dictionary
+  var_mapping <- c(
+    "X.Intercept." = "Intercept",
+    "AgeDummy" = "Aged older than sample median (0/1)",
+    "EthnicityDummy" = "Ethnicity: any white group (0/1)",
+    "Gender_Dummy" = "Gender: female (0/1)",
+    "Charity" = "Charity: involved (0/1)",
+    "Education_HigherEd" = "Higher education experience (0/1)",
+    "Q16_ClimateCurrentEnvironment" = "Climate change: current risk to environment (1-10)",
+    "Q16_ClimateCurrentSelf" = "Climate change: current risk to self (1-10)",
+    "Q16_MicroplasticsCurrentEnvironment" = "MPs: current risk to environment (1-10)",
+    "Q16_MicroplasticsCurrentSelf" = "MPs: current risk to self (1-10)",
+    "X.Intercept..1" = "Intercept_Disp",
+    "as.factor.Uncertainty.1" = "Uncertainty: low (+/- 1 point)",
+    "as.factor.Uncertainty.3" = "Uncertainty: medium (+/- 3 points)",
+    "as.factor.Uncertainty.5" = "Uncertainty: high (+/- 5 points)",
+    "S1_AIC" = "AIC",
+    "S1_LogLik" = "Log-likelihood",
+    "S1_PseudoR2" = "Pseudo R2",
+    "LogBidIncome" = "Impact of change in bid level on income",
+    "I..predict.stage_1..type....response...." = "Predicted impact of changes in expected harm",
+    "I.predict.stage_1..type....variance..." = "Predicted impact of variance in expected harm",
+    # Second stage variables with .1 suffix
+    "AgeDummy.1" = "Aged older than sample median (0/1)_S2",
+    "EthnicityDummy.1" = "Ethnicity: any white group (0/1)_S2",
+    "Gender_Dummy.1" = "Gender: female (0/1)_S2",
+    "Charity.1" = "Charity: involved (0/1)_S2",
+    "Education_HigherEd.1" = "Higher education experience (0/1)_S2",
+    "Q16_ClimateCurrentEnvironment.1" = "Climate change: current risk to environment (1-10)_S2",
+    "Q16_ClimateCurrentSelf.1" = "Climate change: current risk to self (1-10)_S2",
+    "Q16_MicroplasticsCurrentEnvironment.1" = "MPs: current risk to humanity (1-10)",
+    "Q16_MicroplasticsCurrentSelf.1" = "MPs: current risk to self (1-10)_S2",
+    "Speeders_Survey_TestDummy" = "Survey speeder dummy (0/1)",
+    "Order" = "Survey order (0/1)",
+    "PaymentVehicle_Dummy" = "Payment vehicle (0/1)",
+    "Consequentiality" = "Consequentiality (0/1)",
+    "Coronavirus" = "Coronavirus (0/1)",
+    "Understanding" = "Understanding (1-10)",
+    "S2_AIC" = "AIC_S2",
+    "S2_LogLik" = "Log-likelihood_S2",
+    "S2_PseudoR2" = "Pseudo R2_S2",
+    "S2_EOP_Mean" = "EOP (SD)"
+  )
+  
+  # Define the final variable order
+  final_vars <- c(
+    # Mean model variables
+    "Intercept",
+    "Aged older than sample median (0/1)",
+    "Ethnicity: any white group (0/1)",
+    "Gender: female (0/1)",
+    "Charity: involved (0/1)",
+    "Higher education experience (0/1)",
+    "Climate change: current risk to environment (1-10)",
+    "Climate change: current risk to self (1-10)",
+    "MPs: current risk to environment (1-10)",
+    "MPs: current risk to self (1-10)",
+    
+    # Dispersion model variables
+    "Intercept_Disp",
+    "Uncertainty: low (+/- 1 point)",
+    "Uncertainty: medium (+/- 3 points)",
+    "Uncertainty: high (+/- 5 points)",
+    
+    # First stage diagnostics
+    "AIC",
+    "Log-likelihood",
+    "Pseudo R2",
+    
+    # Second stage WTP model
+    "Impact of change in bid level on income",
+    "Predicted impact of changes in expected harm",
+    "Predicted impact of variance in expected harm",
+    "Aged older than sample median (0/1)_S2",
+    "Ethnicity: any white group (0/1)_S2",
+    "Gender: female (0/1)_S2",
+    "Charity: involved (0/1)_S2",
+    "Higher education experience (0/1)_S2",
+    "Climate change: current risk to environment (1-10)_S2",
+    "Climate change: current risk to self (1-10)_S2",
+    "MPs: current risk to humanity (1-10)",
+    "MPs: current risk to self (1-10)_S2",
+    "Survey speeder dummy (0/1)",
+    "Survey order (0/1)",
+    "Payment vehicle (0/1)",
+    "Consequentiality (0/1)",
+    "Coronavirus (0/1)",
+    "Understanding (1-10)",
+    
+    # Second stage diagnostics
+    "AIC_S2",
+    "Log-likelihood_S2",
+    "Pseudo R2_S2",
+    "EOP (SD)"
+  )
+  
+  # Map variables to their nice names in each dataset
+  models <- list(M1, M2, M3, M4)
+  for (i in 1:length(models)) {
+    model <- models[[i]]
+    model$NiceName <- sapply(model$Variable, function(x) {
+      if (x %in% names(var_mapping)) {
+        return(var_mapping[x])
+      } else {
+        return(NA)
+      }
+    })
+    models[[i]] <- model
+  }
+  
+  # Create empty dataframe with desired structure
+  result <- data.frame(
+    Variable = final_vars,
+    M1 = rep("", length(final_vars)),
+    M2 = rep("", length(final_vars)),
+    M3 = rep("", length(final_vars)),
+    M4 = rep("", length(final_vars)),
+    stringsAsFactors = FALSE
+  )
+  
+  # Fill in values from each model
+  for (i in 1:length(models)) {
+    model_name <- paste0("M", i)
+    model <- models[[i]]
+    
+    for (j in 1:nrow(model)) {
+      if (!is.na(model$NiceName[j])) {
+        var_idx <- which(result$Variable == model$NiceName[j])
+        if (length(var_idx) > 0) {
+          result[var_idx, model_name] <- model$Estimate[j]
+        }
+      }
+    }
+  }
+  
+  # Add section headers
+  sections <- list(
+    "**First stage: Mean model (λ̂)**" = 1,
+    "**First stage: Dispersion model (ψ̂)**" = 11,
+    "**First stage: Diagnostics**" = 15,
+    "**Second stage: WTP model (α̂,β̂,γ̂)**" = 18,
+    "**Second stage: Diagnostics**" = 36
+  )
+  
+  final_result <- data.frame(
+    Variable = character(),
+    M1 = character(),
+    M2 = character(),
+    M3 = character(),
+    M4 = character(),
+    stringsAsFactors = FALSE
+  )
+  
+  section_positions <- c(1, 11, 15, 18, 36, nrow(result) + 1)
+  
+  for (s in 1:length(sections)) {
+    section_name <- names(sections)[s]
+    section_start <- section_positions[s]
+    section_end <- section_positions[s + 1] - 1
+    
+    # Add section header
+    final_result <- rbind(
+      final_result,
+      data.frame(
+        Variable = section_name,
+        M1 = "",
+        M2 = "",
+        M3 = "",
+        M4 = "",
+        stringsAsFactors = FALSE
+      )
+    )
+    
+    # Add rows for this section, cleaning up variable names
+    section_rows <- result[section_start:section_end, ]
+    section_rows$Variable <- gsub("_S2$", "", section_rows$Variable)  # Remove _S2 suffix
+    section_rows$Variable <- gsub("_Disp$", "", section_rows$Variable)  # Remove _Disp suffix
+    section_rows$Variable <- gsub("Intercept_Disp", "Intercept", section_rows$Variable)  # Fix intercept
+    section_rows$Variable <- gsub("AIC_S2", "AIC", section_rows$Variable)  # Fix S2 diagnostics
+    section_rows$Variable <- gsub("Log-likelihood_S2", "Log-likelihood", section_rows$Variable)
+    section_rows$Variable <- gsub("Pseudo R2_S2", "Pseudo R2", section_rows$Variable)
+    
+    final_result <- rbind(final_result, section_rows)
+  }
+  
+  # Add significance note
+  final_result <- rbind(
+    final_result,
+    data.frame(
+      Variable = "*** = P value < 0.01, ** = P value < 0.05, * = P value < 0.10",
+      M1 = "",
+      M2 = "",
+      M3 = "",
+      M4 = "",
+      stringsAsFactors = FALSE
+    )
+  )
+  
+  # Rename columns
+  colnames(final_result) <- c("Variable", "Model M1", "Model M2", "Model M3", "Model M4")
+  
+  return(final_result)
+}
 
 
 # ***********************************************************
@@ -158,27 +306,7 @@ desired_order <- c(
 # ***********************************************************
 
 
-# Create base data frame with all variables
-comparison_table <- data.frame(Variable = all_vars)
-
-
-# Merge estimates from each model
-comparison_table <- comparison_table %>%
-  left_join(M1 %>% dplyr::select(Variable, M1 = Estimate), by = "Variable") %>%
-  left_join(M2 %>% dplyr::select(Variable, M2 = Estimate), by = "Variable") %>%
-  left_join(M3 %>% dplyr::select(Variable, M3 = Estimate), by = "Variable") %>% 
-  left_join(M4 %>% dplyr::select(Variable, M4 = Estimate), by = "Variable")
-
-
-# Clean up - replace NA with empty string or dash
-comparison_table[is.na(comparison_table)] <- ""
-
-
-# Reorder the table
-comparison_table <- comparison_table %>%
-  mutate(Variable = factor(Variable, levels = desired_order)) %>%
-  arrange(Variable) %>%
-  mutate(Variable = as.character(Variable))
+TableC3 <- create_robustness_table(M1, M2, M3, M4)
 
 
 # ***********************************************************
@@ -186,10 +314,10 @@ comparison_table <- comparison_table %>%
 # ***********************************************************
 
 
-comparison_table %>% write.csv(quote = FALSE, row.names = FALSE)
+TableC3 %>% write.csv(quote = FALSE, row.names = FALSE)
 
 
-comparison_table %>% 
+TableC3 %>% 
   data.frame() %>% 
   fwrite(sep = ",",
          here("CVoutput/Tables", 
