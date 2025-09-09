@@ -174,6 +174,10 @@ here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 here("CVScripts", "XX_NaiveProbitSecondStage.R") %>% source()
 
 
+## Experimenting with heteroskedastic probit with scale depending on
+# the payment vehicle. No bootstrapping yet
+here("CVScripts", "XX_HeteroskedasticProbitTrial.R.R") %>% source()
+
 ## If simulating EOP at mean income, mean mean, and mean variance
 here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
 
