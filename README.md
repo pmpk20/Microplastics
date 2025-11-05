@@ -3,9 +3,10 @@
 Details:
 - All data, code, and outputs for the microplastics paper: ``Individual Option Prices for Mitigating Microplastic Pollution``
 - Preprint available here: <https://dx.doi.org/10.2139/ssrn.5258504>
+- Inspired by <https://doi.org/10.1016/j.jpubeco.2004.01.005>
 - Co-authors: Dr Alistair Hunt (University of Bath), Dr Stavros Georgiou (HSE), Dr Christoph Rheinberger (ECHA)
 - Repo Author: Dr Peter King (p.king1@leeds.ac.uk)
-- Last Change: 05/08/2025
+- Last Change: 05/11/2025
 
 
 Description: 
