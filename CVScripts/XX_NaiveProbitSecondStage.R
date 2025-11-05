@@ -78,8 +78,11 @@ Data <- here("Data", "Microplastics_AllData_Wide_Anonymised.csv") %>%
   data.frame()
 
 
+## Rescale
 Data$NewMEC <- ((Data$MeanExpectedFuture + Data$MeanExpectedCurrent) + 10.001)/20.002 
 
+## Shift scale to positive
+Data$MeanExpectations <- (Data$MeanExpectedFuture + Data$MeanExpectedCurrent) + 6
 
 
 # Select the specified columns
@@ -90,6 +93,7 @@ Data_Filtered <- Data %>%
     MEF,
     NewMEC,
     AdjustedMEC,
+    MeanExpectations, 
     AgeDummy,
     EthnicityDummy,
     Gender_Dummy,
@@ -113,6 +117,7 @@ PvalueConverter <- function(ZValues) {
   2 * (1 - pnorm(abs(ZValues)))
 }
 
+
 # Function to add significance stars to an estimate based on p-value
 PvalueLabeller <- function(estimate, p_values) {
   estimate_rounded <- round(estimate, 3)
@@ -125,6 +130,7 @@ PvalueLabeller <- function(estimate, p_values) {
   )
 }
 
+
 # Function to format p-values for paper
 PvalueLabeller_Paper <- function(p_values) {
   case_when(
@@ -135,6 +141,7 @@ PvalueLabeller_Paper <- function(p_values) {
     TRUE ~ sprintf("%.3f", p_values)
   )
 }
+
 
 # Function to format model output for printing
 ModelOutput <- function(Estimates, Identifier) {
@@ -147,6 +154,7 @@ ModelOutput <- function(Estimates, Identifier) {
     ) %>%
     dplyr::select(Variable, Estimate, Model)
 }
+
 
 # Function to format model output for paper
 ModelOutput_Paper <- function(Estimates, Identifier) {
@@ -171,7 +179,7 @@ ModelOutput_Paper <- function(Estimates, Identifier) {
 # Stage 2: Probit model of CV on LogBidIncome, predicted MEF, predicted variance and control variables
 stage_2 <- speedglm(
   paste0(
-    "CV ~ -1 + LogBidIncome + AdjustedMEC + Uncertainty") %>% 
+    "CV ~ -1 + LogBidIncome + MeanExpectations + Uncertainty") %>% 
     as.formula(),
   family = binomial(link = "probit"),
   data = Data_Filtered
@@ -181,14 +189,14 @@ stage_2 <- speedglm(
 # Extract relevant coefficients
 B0 <- stage_2$coefficients["LogBidIncome"] %>% as.numeric()
 Delta_0 <-
-  stage_2$coefficients['AdjustedMEC'] %>% as.numeric()
+  stage_2$coefficients['MeanExpectations'] %>% as.numeric()
 Delta_1 <-
   stage_2$coefficients['Uncertainty'] %>% as.numeric()
 
 
 # Calculate means and variances from stage 1
 Means <-
-  Data_Filtered$AdjustedMEC %>% as.numeric()
+  Data_Filtered$MeanExpectations %>% as.numeric()
 Variances <-
   Data_Filtered$Uncertainty %>% as.numeric()
 

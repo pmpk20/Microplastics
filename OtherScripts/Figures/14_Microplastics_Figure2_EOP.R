@@ -186,20 +186,26 @@ custom_labeller <- as_labeller(
 
 
 
-Figure_X_2 <- Data[, c("Mean_Change", 
+Figure_X_2 <- Data[, c("AdjustedMEC", ## Using the actual measure we use in our models 
                        "Uncertainty",
                        "EOP",
                        "Income_Quartile")] %>%
+  
   arrange(Uncertainty) %>% 
+  
   mutate(Variance = factor(Uncertainty, levels = unique(Uncertainty)),
          Income_Quartile = as.factor(Income_Quartile)) %>% 
+  
   ggplot(aes(y = EOP, 
-             x = Mean_Change, 
+             x = AdjustedMEC, 
              colour = Income_Quartile, 
              fill = Income_Quartile)) +  
   
   # Smooth curves with alpha for SE shading
-  stat_smooth(aes(fill = Income_Quartile, colour = Income_Quartile), alpha = 0.25,  linewidth = 1.25) +
+  stat_smooth(aes(fill = Income_Quartile, 
+                  colour = Income_Quartile), 
+              alpha = 0.25,  
+              linewidth = 1.25) +
   
   theme_bw() +
   
@@ -213,10 +219,17 @@ Figure_X_2 <- Data[, c("Mean_Change",
   ylab("Expected option prices") +
   
   # Add red reference lines
-  geom_vline(xintercept = 0, linetype = 'dotted', col = 'red') +
-  geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
+  geom_vline(xintercept = 0,
+             linetype = 'dotted',
+             col = 'red') +
   
-  scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
+  geom_hline(yintercept = 0,
+             linetype = 'dotted',
+             col = 'red')+
+  
+  scale_x_continuous(name = "Transformed mean expected harmfulness\n[Better (0), Worse (1)]",
+                     limits = c(0, 1)) + 
+  
   # scale_y_continuous(breaks = seq(-500, 1500, 250)) +
   scale_y_continuous(breaks = seq(-500, 1500, 250)) +
   
@@ -230,6 +243,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
       "Q3",
       "Q4 (Highest Income)"
     )) +
+  
   scale_fill_manual(
     name = "Income Quartile",  # Ensure legend aligns with colour scale
     values = c("black", "blue", "#008080",  "skyblue"),
@@ -261,7 +275,7 @@ Figure_X_2 <- Data[, c("Mean_Change",
     axis.title.y = TextSetup,
     legend.title = TextSetup
   ) +
-  coord_cartesian(ylim = c(-250, 900))
+  coord_cartesian(ylim = c(-200, 800))
   # coord_cartesian(ylim = c(320, 350))
 
 
@@ -290,112 +304,112 @@ ggsave(
 
 
 ## New approach to avoid deprecation issues
-custom_labeller_2 <- as_labeller(
-  c(
-    "1" = "**A**: Quartile 1 (Lowest Income)",
-    "2" = "**B**: Quartile 2",
-    "3" = "**C**: Quartile 3",
-    "4" = "**D**: Quartile 4 (Highest Income)"
-  )
-)
+# custom_labeller_2 <- as_labeller(
+#   c(
+#     "1" = "**A**: Quartile 1 (Lowest Income)",
+#     "2" = "**B**: Quartile 2",
+#     "3" = "**C**: Quartile 3",
+#     "4" = "**D**: Quartile 4 (Highest Income)"
+#   )
+# )
 
 
-Figure_2B <- Data[, c("Mean_Change", 
-                      "Uncertainty",
-                      "EOP",
-                      "Income_Quartile")] %>%
-  
-  arrange(Uncertainty) %>% 
-  
-  mutate(Variance = factor(Uncertainty, levels = unique(Uncertainty)),
-         Income_Quartile = as.factor(Income_Quartile)) %>% 
-  
-  ggplot(aes(y = EOP, 
-             x = Mean_Change, 
-             colour = Variance, 
-             fill = Variance)) +  
-  
-  # Smooth curves with alpha for SE shading
-  stat_smooth(aes(fill = Variance, 
-                  colour = Variance), 
-              alpha = 0.25,  
-              linewidth = 1.25) +
-  
-  theme_bw() +
-  
-  facet_wrap( ~ Income_Quartile,
-              nrow = 2,
-              ncol = 2,
-              labeller = custom_labeller_2
-  ) + 
-  
-  # Axes and Labels
-  ylab("Expected option prices") +
-  
-  # Add red reference lines
-  geom_vline(xintercept = 0, linetype = 'dotted', col = 'red') +
-  geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
-  
-  scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
-  scale_y_continuous(breaks = seq(-500, 1500, 100)) +
-  
-  # Colours and fills for Income Quintile
-  scale_colour_manual(
-    name = "Income Quartile",  # Legend title for clarity
-    values = c("black", "blue", "#008080", "skyblue"),  # Custom colours
-    labels = c(
-      "Highly certain: +/- zero points (N = 151)",
-      "Mostly certain: +/- one point (N = 995)",
-      "Mostly uncertain: (+/- three points (N = 307)",
-      "Highly uncertain: (+/- five points (N = 111)"
-    )) +
-  scale_fill_manual(
-    name = "Income Quartile",  # Ensure legend aligns with colour scale
-    values = c("black", "blue", "#008080",  "skyblue"),
-    labels = c(
-      "Highly certain: +/- zero points (N = 151)",
-      "Mostly certain: +/- one point (N = 995)",
-      "Mostly uncertain: (+/- three points (N = 307)",
-      "Highly uncertain: (+/- five points (N = 111)"
-    )) +
-  
-  guides(colour = guide_legend(title = "Income Quartile", 
-                               nrow = 2, 
-                               ncol = 2))+
-  
-  theme(
-    strip.background = element_rect(fill = "white"),
-    strip.text = element_markdown(size = TextSetup$size, 
-                                  colour = TextSetup$colour, 
-                                  family = TextSetup$family),
-    legend.position = "bottom",
-    legend.text = TextSetup,
-    legend.background = element_blank(),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor.y = element_blank(),
-    axis.text.x = TextSetup,
-    axis.title.x = TextSetup,
-    ## Change text to be clearer for reader
-    axis.text.y = TextSetup,
-    axis.title.y = TextSetup,
-    legend.title = TextSetup)
-  # ) +
-  # coord_cartesian(ylim = c(310, 360))
+# Figure_2B <- Data[, c("Mean_Change", 
+#                       "Uncertainty",
+#                       "EOP",
+#                       "Income_Quartile")] %>%
+#   
+#   arrange(Uncertainty) %>% 
+#   
+#   mutate(Variance = factor(Uncertainty, levels = unique(Uncertainty)),
+#          Income_Quartile = as.factor(Income_Quartile)) %>% 
+#   
+#   ggplot(aes(y = EOP, 
+#              x = Mean_Change, 
+#              colour = Variance, 
+#              fill = Variance)) +  
+#   
+#   # Smooth curves with alpha for SE shading
+#   stat_smooth(aes(fill = Variance, 
+#                   colour = Variance), 
+#               alpha = 0.25,  
+#               linewidth = 1.25) +
+#   
+#   theme_bw() +
+#   
+#   facet_wrap( ~ Income_Quartile,
+#               nrow = 2,
+#               ncol = 2,
+#               labeller = custom_labeller_2
+#   ) + 
+#   
+#   # Axes and Labels
+#   ylab("Expected option prices") +
+#   
+#   # Add red reference lines
+#   geom_vline(xintercept = 0, linetype = 'dotted', col = 'red') +
+#   geom_hline(yintercept = 0, linetype = 'dotted', col = 'red') +
+#   
+#   scale_x_continuous(name = "Mean expected harmfulness\n[Better (-10), Worse (+10)]", limits = c(-10, 10)) + 
+#   scale_y_continuous(breaks = seq(-500, 1500, 100)) +
+#   
+#   # Colours and fills for Income Quintile
+#   scale_colour_manual(
+#     name = "Income Quartile",  # Legend title for clarity
+#     values = c("black", "blue", "#008080", "skyblue"),  # Custom colours
+#     labels = c(
+#       "Highly certain: +/- zero points (N = 151)",
+#       "Mostly certain: +/- one point (N = 995)",
+#       "Mostly uncertain: (+/- three points (N = 307)",
+#       "Highly uncertain: (+/- five points (N = 111)"
+#     )) +
+#   scale_fill_manual(
+#     name = "Income Quartile",  # Ensure legend aligns with colour scale
+#     values = c("black", "blue", "#008080",  "skyblue"),
+#     labels = c(
+#       "Highly certain: +/- zero points (N = 151)",
+#       "Mostly certain: +/- one point (N = 995)",
+#       "Mostly uncertain: (+/- three points (N = 307)",
+#       "Highly uncertain: (+/- five points (N = 111)"
+#     )) +
+#   
+#   guides(colour = guide_legend(title = "Income Quartile", 
+#                                nrow = 2, 
+#                                ncol = 2))+
+#   
+#   theme(
+#     strip.background = element_rect(fill = "white"),
+#     strip.text = element_markdown(size = TextSetup$size, 
+#                                   colour = TextSetup$colour, 
+#                                   family = TextSetup$family),
+#     legend.position = "bottom",
+#     legend.text = TextSetup,
+#     legend.background = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.y = element_blank(),
+#     panel.grid.minor.y = element_blank(),
+#     axis.text.x = TextSetup,
+#     axis.title.x = TextSetup,
+#     ## Change text to be clearer for reader
+#     axis.text.y = TextSetup,
+#     axis.title.y = TextSetup,
+#     legend.title = TextSetup
+#   ) +
+#   coord_cartesian(xlim = c(-5, 5))
   # 
 
 
 ## Export and save in the right location
-ggsave(
-  Figure_2B,
-  device = "png",
-  filename = here("CVOutput", "Figure2B_Smooth_VarianceIncome_EOP.png"),
-  width = 25,
-  height = 15,
-  units = "cm",
-  dpi = 500
-)
+# ggsave(
+#   Figure_2B,
+#   device = "png",
+#   filename = here("CVOutput", "Figure2B_Smooth_VarianceIncome_EOP.png"),
+#   width = 25,
+#   height = 15,
+#   units = "cm",
+#   dpi = 500
+# )
 
 
 # ***********************************************************

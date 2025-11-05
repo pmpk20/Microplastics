@@ -142,9 +142,6 @@ here("SetupScripts", "02_Microplastics_SetupData_Order1.R") %>% source()
 here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 
 
-
-
-
 # **********************************************************************************
 #### Section Twp: Modelling ####
 # **********************************************************************************
@@ -177,6 +174,7 @@ here("CVScripts", "XX_NaiveProbitSecondStage.R") %>% source()
 ## Experimenting with heteroskedastic probit with scale depending on
 # the payment vehicle. No bootstrapping yet
 here("CVScripts", "XX_HeteroskedasticProbitTrial.R.R") %>% source()
+
 
 ## If simulating EOP at mean income, mean mean, and mean variance
 here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()

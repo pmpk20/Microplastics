@@ -253,10 +253,10 @@ Simulator <- function(data,
     d <- data[indices, ]
     
     # Stage 1: Beta regression of MEF on covariates
-    stage_1 <- betareg(formula_stage_1, d, type = "BC")
+    stage_1 <- betareg::betareg(formula_stage_1, d, type = "BC")
     
     # Stage 2: Probit model of CV on LogBidIncome, predicted MEF, predicted variance and control variables
-    stage_2 <- speedglm(
+    stage_2 <- speedglm::speedglm(
       paste0(
         "CV ~ ",
         formula_stage_2,
@@ -299,7 +299,8 @@ Simulator <- function(data,
   boot.results <- boot(data = data,
                        statistic = boot.function,
                        R = R,
-                       parallel = "snow")
+                       parallel = "multicore", 
+		       ncpus = 20)
   
   # Extracting the results
   # l <- length(boot.results$t0)
@@ -318,8 +319,8 @@ Simulator <- function(data,
 
 # Define number of bootstrap iterations
 # R <- 10
-R <- 1000
-# R <- 10000
+# R <- 1000
+R <- 10000
 
 # Data_Filtered$Delta <- (Data_Filtered$MeanExpectedFuture - Data_Filtered$MeanExpectedCurrent)
 # 
