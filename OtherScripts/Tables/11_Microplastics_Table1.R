@@ -1,9 +1,9 @@
 #### Microplastics: IOP Paper ####
 ## Function: Table B3 
 ## Author: PK
-## Last change: 30/01/25
+## Last change: 16/02/2026
 # Comment:
-## - Thank you claude for tidying this code
+## - Thank you Claude for tidying this code
 
 
 # *****************************
@@ -53,9 +53,7 @@
 # [91] Brobdingnag_1.2-9    dplyr_1.1.4          V8_4.4.0             gtable_0.3.4         digest_0.6.33       
 # [96] TH.data_1.1-2        brms_2.20.4          htmlwidgets_1.6.3    farver_2.1.1         htmltools_0.5.7     
 # [101] lifecycle_1.0.4      mime_0.12            shinythemes_1.2.0    MASS_7.3-60   
-
 rm(list=ls())
-
 ## Useful for all scripts:
 library(data.table)
 library(magrittr)
@@ -64,9 +62,6 @@ library(tidyverse)
 library(here)
 library(DCchoice)
 library(janitor)
-
-
-
 # ***********************************************************
 # Section 1: Import Data ####
 # ***********************************************************
@@ -104,9 +99,6 @@ Table1A <- cbind(
     tabyl(Bid, CV) %>%
     dplyr::select("1")
 )
-
-
-
 Table1B <- cbind(
   Data %>%
     tabyl(Bid, CV) %>%
@@ -140,14 +132,13 @@ Table1B <- cbind(
 )
 
 
-
 # ***********************************************************
 # Section 3: Add columns and rows ####
 # ***********************************************************
 
 
-colnames(Table1A) <- c("Bid", "All", "Certain", "MostlyCertain", "MostlyUnertain", "Uncertain")
-colnames(Table1B) <- c("Bid", "All", "Certain", "MostlyCertain", "MostlyUnertain", "Uncertain")
+colnames(Table1A) <- c("Bid", "All", "Certain", "MostlyCertain", "MostlyUncertain", "Uncertain")
+colnames(Table1B) <- c("Bid", "All", "Certain", "MostlyCertain", "MostlyUncertain", "Uncertain")
 
 
 bids <- c(
@@ -172,23 +163,22 @@ Table1 <- data.frame(
   Table1B$Certain,
   Table1A$MostlyCertain,
   Table1B$MostlyCertain,
-  Table1A$MostlyUnertain,
-  Table1B$MostlyUnertain,
+  Table1A$MostlyUncertain,
+  Table1B$MostlyUncertain,
   Table1A$Uncertain,
   Table1B$Uncertain
 )
 
-Row1 <- c("Bid", "N = YES",	"% YES",	"N", "%","N", "%","N", "%","N", "%")
-Row2 <- c("Bid", "All", "", "Highly Certain", "", "Mostly Certain", "", "Mostly Uncertain", "", "Uncertain")
-
+Row1 <- c("Bid", "N = YES", "% YES", "N", "%", "N", "%", "N", "%", "N", "%")
+Row2 <- c("Bid", "All", "", "Highly Certain", "", "Mostly Certain", "", "Mostly Uncertain", "", "Uncertain", "")
 
 
 # ***********************************************************
 # Section 4: Create final table ####
 # ***********************************************************
 
-Table1 <- rbind(Row2, Row1, Table1)
 
+Table1 <- rbind(Row2, Row1, Table1)
 
 
 # ***********************************************************
@@ -202,8 +192,7 @@ Table1 %>%
          here("CVoutput/Tables", 
               "Table1_V2.csv"))
 
+
 ## Print to screen
 # Table1 %>% write.csv(quote = FALSE, row.names = FALSE)
-
-
 # End Of Script ***********************************************************
