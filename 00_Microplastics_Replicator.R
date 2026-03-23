@@ -151,7 +151,7 @@ here("SetupScripts", "03_Microplastics_MergeSamples.R") %>% source()
 ## Simulate first then estimate all kinds of specifications
 here("CVScripts", "04_Microplastics_Models_SimulateEOP.R") %>% source()
 
-## Find table2 and table3 here 
+## Find table 2 and table 3 here 
 here("CVScripts", "05_Microplastics_Models_BothStages_InText.R") %>% source()
 
 ## These currently have the wrong suffixes!
