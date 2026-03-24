@@ -126,6 +126,7 @@ library(snow)
 library(speedglm)
 library(ggtext)
 
+set.seed(2024) # for bootstrap reproducibility
 
 # ***********************************************************
 # Section 1: Import Data ####

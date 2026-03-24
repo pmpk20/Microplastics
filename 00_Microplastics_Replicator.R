@@ -166,9 +166,6 @@ here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
 ## This goes with script /10
 here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 
-## Not currently used in manuscript
-# here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
-
 
 # **********************************************************************************
 #### Section Three: Tables/Figures ####

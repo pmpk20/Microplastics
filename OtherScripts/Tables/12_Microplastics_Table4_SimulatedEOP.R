@@ -133,6 +133,7 @@ library(ggtext)
 library(rstatix)
 library(Rfast)
 
+set.seed(2024) # for bootstrap reproducibility
 
 # ***********************************************************
 # Section 1: Import Data ####

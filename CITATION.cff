@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+type: software
+title: "Replication code for: Individual Option Prices for Mitigating Microplastic Pollution"
+authors:
+  - family-names: King
+    given-names: Peter
+    email: p.king1@leeds.ac.uk
+    affiliation: University of Leeds
+  - family-names: Hunt
+    given-names: Alistair
+    affiliation: University of Bath
+  - family-names: Georgiou
+    given-names: Stavros
+    affiliation: Health and Safety Executive
+  - family-names: Rheinberger
+    given-names: Christoph
+    affiliation: European Chemicals Agency
+preferred-citation:
+  type: article
+  title: "Individual Option Prices for Mitigating Microplastic Pollution"
+  authors:
+    - family-names: King
+      given-names: Peter
+    - family-names: Hunt
+      given-names: Alistair
+    - family-names: Georgiou
+      given-names: Stavros
+    - family-names: Rheinberger
+      given-names: Christoph
+  url: "https://dx.doi.org/10.2139/ssrn.5258504"
+repository-code: "https://github.com/pmpk20/Microplastics"
+license: MIT

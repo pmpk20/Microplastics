@@ -70,6 +70,8 @@ library(snow)
 library(speedglm)
 library(sessioninfo)
 
+set.seed(2024) # for bootstrap reproducibility
+
 # ***********************************************************
 # Section 1: Import Data ####
 # ***********************************************************
