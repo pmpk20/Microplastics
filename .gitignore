@@ -1,9 +1,8 @@
 .Rhistory
+*.Rhistory
 .RData
 *.rds
 .Rproj.user
 CEoutput/
-CVoutput/*
-!CVoutput/Tables/
-!CVoutput/Tables/**
+CVoutput/
 desktop.ini
