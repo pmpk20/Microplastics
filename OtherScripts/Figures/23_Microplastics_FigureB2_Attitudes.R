@@ -324,7 +324,7 @@ FigureB2_Attitudes <-
 ggsave(
   FigureB2_Attitudes,
   device = "png",
-  filename = here("CVOutput", "FigureB2_Attitudes.png"),
+  filename = here("Figures", "FigureB2_Attitudes.png"),
   width = 25,
   height = 15,
   units = "cm",

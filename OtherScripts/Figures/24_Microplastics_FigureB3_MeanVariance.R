@@ -144,9 +144,10 @@ library(ggdist)
 ## Start with the latest anonymised data in one-row per one-respondent format
 Data <-
   here("Data",
-       "Data_WithEOP_24_12_01.csv") %>%
+       "Microplastics_AllData_Wide_Anonymised.csv") %>%
   fread() %>%
   data.frame()
+
 
 
 # *****************************
@@ -294,7 +295,7 @@ FigureB3 <-
 ggsave(
   FigureB3,
   device = "png",
-  filename = here("CVOutput", "FigureB3_MeanByVariance.png"),
+  filename = here("Figures", "FigureB3_MeanByVariance.png"),
   width = 25,
   height = 15,
   units = "cm",

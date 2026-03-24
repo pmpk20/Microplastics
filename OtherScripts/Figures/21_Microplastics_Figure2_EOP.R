@@ -1,10 +1,10 @@
 #### Microplastics: IOP Paper ####
 ## Function: Smooth WTP by mean/variance
 ## Author: Dr Peter King (p.king1@Leeds.ac.uk)
-## Last change: 18/02/2025
+## Last change: 24/03/2026
 ## Changes:
 ### - changing to new EOP figures
-### - Figure_X_2 is the one in-text
+### - Figure_2 is the one in-text
 ### - adding Figure_2B to plot eop vs mean by variance
 
 
@@ -186,7 +186,7 @@ custom_labeller <- as_labeller(
 
 
 
-Figure_X_2 <- Data[, c("AdjustedMEC", ## Using the actual measure we use in our models 
+Figure_2 <- Data[, c("AdjustedMEC", ## Using the actual measure we use in our models 
                        "Uncertainty",
                        "EOP",
                        "Income_Quartile")] %>%
@@ -286,9 +286,9 @@ Figure_X_2 <- Data[, c("AdjustedMEC", ## Using the actual measure we use in our 
 
 ## Export and save in the right location
 ggsave(
-  Figure_X_2,
+  Figure_2,
   device = "png",
-  filename = here("CVoutput", "Figure2_Smooth_Income_EOP.png"),
+  filename = here("Figures", "Figure2_EOPByMeanVarianceIncome.png"),
   width = 25,
   height = 15,
   units = "cm",

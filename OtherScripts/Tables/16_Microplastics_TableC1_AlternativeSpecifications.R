@@ -273,7 +273,7 @@ Table5 %>%
   fwrite(
     sep = ",",
     here("CVoutput/Tables", 
-         "Table5_AlternativeSpecifications.txt")
+         "TableC1_AlternativeSpecifications.txt")
   )
 
 

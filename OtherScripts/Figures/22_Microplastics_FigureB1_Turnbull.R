@@ -190,7 +190,7 @@ Plot_Turnbull <- all_fits %>%
 
 ggsave(
   Plot_Turnbull,
-  filename = here("CVOutput", "Figure_Plot_Turnbull.png"),
+  filename = here("Figures", "FigureB1_KMTurnbull.png"),
   device   = "png",
   width    = 40,
   height = 30,

@@ -132,14 +132,6 @@ library(ggtext)
 # ***********************************************************
 
 
-# This version fixes some coding errors
-# Data <-
-#   here("Data",
-#        "Data_WithEOP_24_12_01.csv") %>%
-#   fread() %>%
-#   data.frame()
-
-
 Data <-
   here("Data",
        "Microplastics_AllData_Wide_Anonymised.csv") %>%
@@ -324,6 +316,11 @@ Data %>%
               "FigureB4_PlotData_1503.csv"))
 
 
+## Import if already made
+PlotData <- here("Data", 
+                 "FigureB4_PlotData_1503.csv") %>% fread()
+
+
 ## Assign here
 PlotData <- Data
 
@@ -497,8 +494,8 @@ Fig_Test_1 <-
 ggsave(
   Fig_Test_1,
   device = "png",
-  filename = here("CVoutput", 
-                  "Microplastics_FigureB4_MeanVariance_Nointercept.png"),
+  filename = here("Figures", 
+                  "FigureB4_MeanVariance_Nointercept.png"),
   width = 25,
   height = 15,
   units = "cm",

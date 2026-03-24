@@ -154,64 +154,67 @@ here("CVScripts", "04_Microplastics_Models_SimulateEOP.R") %>% source()
 ## Find table 2 and table 3 here 
 here("CVScripts", "05_Microplastics_Models_BothStages_InText.R") %>% source()
 
-## These currently have the wrong suffixes!
 here("CVScripts", "06_Microplastics_Models_Alternative1_Asymmetric.R") %>% source()
 here("CVScripts", "07_Microplastics_Models_Alternative2_NumericUncertainty.R") %>% source()
-
 
 ## Tests for specification of stage 1
 here("CVScripts", "08_Microplastics_Models_RobustnessStage1.R") %>% source()
 
 ## Removing this as challenges with conceptual validity
 here("CVScripts", "09_Microplastics_Models_RobustnessStage2.R") %>% source()
+
+## This goes with script /10
 here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 
-
-## Simple probit of the second stage no first stage or bootstrapping
-## Now Table C5
-here("CVScripts", "XX_NaiveProbitSecondStage.R") %>% source()
-
-
-## Experimenting with heteroskedastic probit with scale depending on
-# the payment vehicle. No bootstrapping yet
-here("CVScripts", "XX_HeteroskedasticProbitTrial.R.R") %>% source()
-
-
-## If simulating EOP at mean income, mean mean, and mean variance
-here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
-
-
-## Was tableC1 but now labelled Table4
-here("OtherScripts/Tables", "16_Microplastics_Table4_SimulatedEOP.R") %>% source()
+## Not currently used in manuscript
+# here("CVScripts", "XX_Microplastics_EOPAtMeans_Bootstrap.R") %>% source()
 
 
 # **********************************************************************************
 #### Section Three: Tables/Figures ####
+## Output tables are written to /CVoutput/Tables/
+## Output figures are written to /Figures/
 # **********************************************************************************
 
 
 ## Pre-estimation results
-here("OtherScripts/Tables", "11_Microplastics_Table1.R") %>% source()
-here("OtherScripts/Tables", "12_Microplastics_TableB1_Sample.R") %>% source()
-here("OtherScripts/Tables", "13_Microplastics_TableB3.R") %>% source()
-here("OtherScripts/Figures", "15_Microplastics_FigureB1_Turnbull.R") %>% source()
-here("OtherScripts/Figures", "22_Microplastics_FigureB2_Attitudes.R") %>% 
+here("OtherScripts/Tables", "11_Microplastics_Table1_SampleSummary.R") %>% source()
+## Table 2 + Table 3 are in /05/
+
+## Table 4
+here("OtherScripts/Tables", "12_Microplastics_Table4_SimulatedEOP.R") %>% source()
+
+here("OtherScripts/Tables", "13_Microplastics_TableB1_SampleTest.R") %>% source()
+here("OtherScripts/Tables", "14_Microplastics_TableB2_Summary.R") %>% source()
+here("OtherScripts/Tables", "15_Microplastics_TableB3_ExpectationSummary.R") %>% source()
+
+## Tables combining model results for convenience
+here("OtherScripts/Tables", "16_Microplastics_TableC1_AlternativeSpecifications.R") %>% source()
+here("OtherScripts/Tables", "17_Microplastics_TableC2_TruncationModels.R") %>% source()
+here("OtherScripts/Tables", "18_Microplastics_TableC3_RobustnessStage1.R") %>% source()
+here("OtherScripts/Tables", "19_Microplastics_TableC4_RobustnessStage2.R") %>% source()
+
+## Simple probit of the second stage - Table C5
+here("CVScripts", "20_Microplastics_TableC5_NaiveProbit.R") %>% source()
 
 
-## To execute 14_ you need to have run 04_ first
-## Note that Fig2 may no longer be in the MS
-here("OtherScripts/Figures", "14_Microplastics_Figure2_EOP.R") %>% source()
+
+## Figure 1: produced externally (survey scale screenshot)
+## File: here("Figures", "Figure1_ExampleScale.jpg")
+
+## To execute 21_ you need to have run 04_ first
+here("OtherScripts/Figures", "21_Microplastics_Figure2_EOP.R") %>% source()
+
+here("OtherScripts/Figures", "22_Microplastics_FigureB1_Turnbull.R") %>% source()
+here("OtherScripts/Figures", "23_Microplastics_FigureB2_Attitudes.R") %>% source()
+here("OtherScripts/Figures", "24_Microplastics_FigureB3_MeanVariance.R") %>% source()
+here("OtherScripts/Figures", "25_Microplastics_FigureB4_MeanVariance.R") %>% source()
 
 
-## Just need this to plot now, no separate file
-here("OtherScripts/Figures", "17_Microplastics_FigureB4_MeanVariance_PlotSetup.R") %>% source()
 
 
-## Tables combing model results for convenience
-here("OtherScripts/Tables", "18_Microplastics_Table5_AlternativeSpecifications.R") %>% source()
-here("OtherScripts/Tables", "19_Microplastics_TableC2_TruncationModels.R") %>% source() ## Now Table C1
-here("OtherScripts/Tables", "20_Microplastics_TableC3_RobustnessStage1Models.R") %>% source() ## Now Table C2
-here("OtherScripts/Tables", "21_TableC3_RobustnessStage2Models.R") %>% source()
+
+
 
 
 
