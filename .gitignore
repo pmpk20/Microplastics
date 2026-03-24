@@ -1,8 +1,9 @@
-.Rproj.user
 .Rhistory
 .RData
-.Ruserdata
 *.rds
-*.Rproj.user
+.Rproj.user
 CEoutput/
+CVoutput/*
+!CVoutput/Tables/
+!CVoutput/Tables/**
 desktop.ini

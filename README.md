@@ -6,7 +6,7 @@ Details:
 - Inspired by <https://doi.org/10.1016/j.jpubeco.2004.01.005>
 - Co-authors: Dr Alistair Hunt (University of Bath), Dr Stavros Georgiou (HSE), Dr Christoph Rheinberger (ECHA)
 - Repo Author: Dr Peter King (p.king1@leeds.ac.uk)
-- Last Change: 05/11/2025
+- Last Change: 24/03/2026
 
 
 Description: 
