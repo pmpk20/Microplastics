@@ -73,12 +73,12 @@ library(sessioninfo)
 # ***********************************************************
 
 
-Table_Alternative1_Combined <- here("CVoutput/Tables", 
+Table_Alternative1_Combined <- here("Tables", 
          "Table_Alternative1_Combined.txt") %>% fread() %>% 
   data.frame()
 
 
-Table_Alternative2_Combined <- here("CVoutput/Tables", 
+Table_Alternative2_Combined <- here("Tables", 
                                     "Table_Alternative2_Combined.txt") %>% fread() %>% 
   data.frame()
 
@@ -272,7 +272,7 @@ Table5 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", 
+    here("Tables", 
          "TableC1_AlternativeSpecifications.txt")
   )
 

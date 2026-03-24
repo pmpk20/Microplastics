@@ -352,7 +352,7 @@ TableX %>% write.csv(quote = FALSE, row.names = FALSE)
 ## Output to a discrete file if that's helpful
 TableX %>% fwrite(
   sep = ",",
-  here("CVoutput/Tables", "TableB1_SampleTest.txt"),
+  here("Tables", "TableB1_SampleTest.txt"),
   row.names = TRUE,
   quote = FALSE
 )

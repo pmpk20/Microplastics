@@ -363,7 +363,7 @@ Output_S1 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", 
+    here("Tables", 
          "Table_Alternative1_Stage1.txt")
   )
 
@@ -391,7 +391,7 @@ Output_S2 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", 
+    here("Tables", 
          "Table_Alternative1_Stage2.txt")
   )
 
@@ -421,7 +421,7 @@ Output_S3 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", 
+    here("Tables", 
          "Table_Alternative1_Combined.txt")
   )
 

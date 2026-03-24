@@ -373,7 +373,7 @@ Model_C1_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_C1_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_RobustnessStage2_ModelC1.txt"))
 
 # ********************************************
@@ -423,7 +423,7 @@ Model_C2_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_C2_Output %>% 
   data.frame()  %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_RobustnessStage2_ModelC2.txt"))
 
 
@@ -475,7 +475,7 @@ Model_C3_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_C3_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_RobustnessStage2_ModelC3.txt"))
 
 
@@ -530,7 +530,7 @@ Model_C4_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_C4_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_RobustnessStage2_ModelC4.txt"))
 
 

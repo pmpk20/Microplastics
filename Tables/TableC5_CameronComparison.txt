@@ -1,0 +1,8 @@
+Variable,Uncertainty as continuous predictor,Two-stage without bootstrapping,Two-stage bootstrapped (Table 3)
+Changes in household income (α),83.908*** (12.819),86.365*** (12.560),86.365*** (12.777)
+Changes in expected harm (β),1.256*** (0.074),1.641*** (0.099),1.641*** (0.099)
+Changes in variance of expected harm (γ),-0.031 (0.024),-13.833*** (2.507),-13.833*** (2.518)
+AIC,1639.072,1608.510,1606.812
+Log-likelihood,-816.536,-801.255,-800.406
+Pseudo-R²,0.247,0.261,0.262
+EOP (SD),£339 (£181),£335 (£195),£340 (£198)

@@ -356,7 +356,7 @@ Model_T1_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T1_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_Truncation_ModelT1_Speed.txt"))
 
 
@@ -417,7 +417,7 @@ Model_T2_A_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T2_A_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_Truncation_ModelT2_A_PV.txt"))
 
 # ********************************************
@@ -477,7 +477,7 @@ Model_T2_B_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T2_B_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_Truncation_ModelT2_B_PV.txt"))
 
 
@@ -537,7 +537,7 @@ Model_T3_A_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T3_A_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables",
+         here("Tables",
               "Table_Truncation_ModelT3_A_Order.txt"))
 
 
@@ -597,7 +597,7 @@ Model_T3_B_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T3_B_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables",
+         here("Tables",
               "Table_Truncation_ModelT3_B_Order.txt"))
 
 
@@ -657,7 +657,7 @@ Model_T4_Output %>% write.csv(quote = FALSE, row.names = FALSE)
 Model_T4_Output %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_Truncation_ModelT4_Cons.txt"))
 
 

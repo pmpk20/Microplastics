@@ -172,7 +172,7 @@ here("CVScripts", "10_Microplastics_Models_Truncation.R") %>% source()
 
 # **********************************************************************************
 #### Section Three: Tables/Figures ####
-## Output tables are written to /CVoutput/Tables/
+## Output tables are written to /Tables/
 ## Output figures are written to /Figures/
 # **********************************************************************************
 
@@ -209,11 +209,6 @@ here("OtherScripts/Figures", "22_Microplastics_FigureB1_Turnbull.R") %>% source(
 here("OtherScripts/Figures", "23_Microplastics_FigureB2_Attitudes.R") %>% source()
 here("OtherScripts/Figures", "24_Microplastics_FigureB3_MeanVariance.R") %>% source()
 here("OtherScripts/Figures", "25_Microplastics_FigureB4_MeanVariance.R") %>% source()
-
-
-
-
-
 
 
 

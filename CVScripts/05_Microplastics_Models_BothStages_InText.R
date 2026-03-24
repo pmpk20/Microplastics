@@ -358,7 +358,7 @@ Output_S1 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S1_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
+    here("Tables", paste0("Table_Output_S1_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
   )
 
 
@@ -367,7 +367,7 @@ Output_S1 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", "Table2_FirstStage_InText.txt")
+    here("Tables", "Table2_FirstStage_InText.txt")
   )
 
 
@@ -423,7 +423,7 @@ Output_S2 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S2_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
+    here("Tables", paste0("Table_Output_S2_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
   )
 
 
@@ -433,7 +433,7 @@ Output_S2 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", "Table3_SecondStage_InText.txt")
+    here("Tables", "Table3_SecondStage_InText.txt")
   )
 
 
@@ -464,7 +464,7 @@ Output_S3 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_S3_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
+    here("Tables", paste0("Table_Output_S3_factorUncertainty_UpdatedA_", date_suffix, ".txt"))
   )
 
 

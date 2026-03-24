@@ -325,7 +325,7 @@ print(results)
 results %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", "TableC5_NaiveProbit.txt")
+    here("Tables", "TableC5_NaiveProbit.txt")
   )
 
 # ***********************************************************

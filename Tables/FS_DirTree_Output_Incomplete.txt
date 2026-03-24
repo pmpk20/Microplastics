@@ -1,0 +1,201 @@
+> fs::dir_tree()
+├── 00_Microplastics_Replicator.R
+├── CVoutput
+│   ├── Figure2_Smooth_Income_EOP.png
+│   ├── FigureB2_Attitudes.png
+│   ├── FigureB3_MeanByVariance.png
+│   ├── Figure_MeanByVariance.png
+│   ├── Figure_Plot_Turnbull.png
+│   ├── Microplastics_FigureB4_MeanVariance_Nointercept.png
+│   └── Tables
+│       ├── Betareg_Bootstrapping_Comparisons.docx
+│       ├── Table1_V2.csv
+│       ├── Table2_FirstStage_InText.txt
+│       ├── Table2_Stage1_UpdatedA.txt
+│       ├── Table3_SecondStage_InText.txt
+│       ├── Table4_AlternativeSpecifications.txt
+│       ├── Table5_AlternativeSpecifications.txt
+│       ├── TableB1_SampleTest.txt
+│       ├── TableB3_V2.csv
+│       ├── TableC2_TruncationModels.txt
+│       ├── TableC3_RobustnessStage1Models.txt
+│       ├── TableC4_RobustnessStage2Models.txt
+│       ├── TableX_CVModel.txt
+│       ├── TableX_ModelOutputs.txt
+│       ├── TableX_ModelOutputs_Updated.txt
+│       ├── TableX_SampleTest.txt
+│       ├── TableX_SimulatedWTP.txt
+│       ├── TableX_Summaries.txt
+│       ├── Table_Alternative1_Combined.txt
+│       ├── Table_Alternative1_Stage1.txt
+│       ├── Table_Alternative1_Stage2.txt
+│       ├── Table_Alternative2_Combined.txt
+│       ├── Table_Alternative2_Stage1.txt
+│       ├── Table_Alternative2_Stage2.txt
+│       ├── Table_Model_B1_Output.txt
+│       ├── Table_Model_B2_Output.txt
+│       ├── Table_Model_B3_Output.txt
+│       ├── Table_Model_B4_Output.txt
+│       ├── Table_Model_C1_Output.txt
+│       ├── Table_Model_C2_Output.txt
+│       ├── Table_Model_C3_Output.txt
+│       ├── Table_Model_T1_Output.txt
+│       ├── Table_Model_T2_Output.txt
+│       ├── Table_Model_T3_Output.txt
+│       ├── Table_Model_T4_Output.txt
+│       ├── Table_Output_A0_factorUncertainty_2025_01_31.txt
+│       ├── Table_Output_S1_AsymetricBounds.txt
+│       ├── Table_Output_S1_factorUncertainty.txt
+│       ├── Table_Output_S1_factorUncertainty_2025_01_30.txt
+│       ├── Table_Output_S1_factorUncertainty_2025_01_31.txt
+│       ├── Table_Output_S1_factorUncertainty_UpdatedA_2025_02_25.txt
+│       ├── Table_Output_S1_factorUncertainty_UpdatedA_2025_03_14.txt
+│       ├── Table_Output_S1_factorUncertainty_UpdatedA_2025_09_08.txt
+│       ├── Table_Output_S1_NumericUncertainty.txt
+│       ├── Table_Output_S1_TEST_factorUncertainty_2025_02_14.txt
+│       ├── Table_Output_S2_AsymetricBounds.txt
+│       ├── Table_Output_S2_factorUncertainty.txt
+│       ├── Table_Output_S2_factorUncertainty_2025_01_30.txt
+│       ├── Table_Output_S2_factorUncertainty_2025_01_31.txt
+│       ├── Table_Output_S2_factorUncertainty_UpdatedA_2025_02_25.txt
+│       ├── Table_Output_S2_factorUncertainty_UpdatedA_2025_03_14.txt
+│       ├── Table_Output_S2_factorUncertainty_UpdatedA_2025_09_08.txt
+│       ├── Table_Output_S2_NumericUncertainty.txt
+│       ├── Table_Output_S2_TEST_factorUncertainty_2025_02_14.txt
+│       ├── Table_Output_S3_AsymetricBounds.txt
+│       ├── Table_Output_S3_factorUncertainty.txt
+│       ├── Table_Output_S3_factorUncertainty_2025_01_30.txt
+│       ├── Table_Output_S3_factorUncertainty_2025_01_31.txt
+│       ├── Table_Output_S3_factorUncertainty_UpdatedA_2025_02_25.txt
+│       ├── Table_Output_S3_factorUncertainty_UpdatedA_2025_03_14.txt
+│       ├── Table_Output_S3_factorUncertainty_UpdatedA_2025_09_08.txt
+│       ├── Table_Output_S3_NumericUncertainty.txt
+│       ├── Table_Output_S3_TEST_factorUncertainty_2025_02_14.txt
+│       ├── Table_RobustnessStage1_ModelB1.txt
+│       ├── Table_RobustnessStage1_ModelB2.txt
+│       ├── Table_RobustnessStage1_ModelB3.txt
+│       ├── Table_RobustnessStage1_ModelB4.txt
+│       ├── Table_RobustnessStage2_AllModels.txt
+│       ├── Table_RobustnessStage2_ModelC1.txt
+│       ├── Table_RobustnessStage2_ModelC2.txt
+│       ├── Table_RobustnessStage2_ModelC3.txt
+│       ├── Table_RobustnessStage2_ModelC4.txt
+│       ├── Table_Truncation_ModelT1_Speed.txt
+│       ├── Table_Truncation_ModelT2_A_PV.txt
+│       ├── Table_Truncation_ModelT2_B_PV.txt
+│       ├── Table_Truncation_ModelT2_PV.txt
+│       ├── Table_Truncation_ModelT3_A_Order.txt
+│       ├── Table_Truncation_ModelT3_B_Order.txt
+│       ├── Table_Truncation_ModelT3_Order.txt
+│       ├── Table_Truncation_ModelT4_Cons.txt
+│       ├── Table_X_HetglmProbitSecondStage.txt
+│       └── Table_X_NaiveProbitSecondStage.txt
+├── CVScripts
+│   ├── 04_Microplastics_Models_SimulateEOP.R
+│   ├── 05_Microplastics_Models_BothStages_InText.R
+│   ├── 06_Microplastics_Models_Alternative1_Asymmetric.R
+│   ├── 07_Microplastics_Models_Alternative2_NumericUncertainty.R
+│   ├── 08_Microplastics_Models_RobustnessStage1.R
+│   ├── 09_Microplastics_Models_RobustnessStage2.R
+│   ├── 10_Microplastics_Models_Truncation.R
+│   ├── Microplastics_BidOnlyModel.R
+│   ├── Microplastics_bootstrapSE_EOP.R
+│   ├── Microplastics_bootstrapSE_PK.R
+│   ├── Microplastics_EOP_Simulator_1610.R
+│   ├── Microplastics_EOP_Simulator_1710.R
+│   ├── Microplastics_EOP_Simulator_2511.R
+│   ├── Microplastics_EOP_Simulator_GeneratePlotData_0511.R
+│   ├── Microplastics_EOP_Simulator_NoBC.R
+│   ├── Microplastics_FullModel.R
+│   ├── Microplastics_Modelling_0511Version.R
+│   ├── Microplastics_Modelling_1010Version.R
+│   ├── Microplastics_Modelling_1610Version-UOL-9F7TDS3.R
+│   ├── Microplastics_Modelling_1610Version.R
+│   ├── Microplastics_Modelling_2711Version_AsymetricBounds.R
+│   ├── Microplastics_Modelling_2711Version_InText.R
+│   ├── Microplastics_Modelling_2711Version_NumericUncertainty.R
+│   ├── Microplastics_Modelling_2711_NoUncertainty.R
+│   ├── Microplastics_Modelling_2711_Robustness_FirstStage.R
+│   ├── Microplastics_Modelling_2711_Robustness_SecondStage.R
+│   ├── Microplastics_Modelling_2711_Truncation.R
+│   ├── Microplastics_OutputWTP.R
+│   ├── Microplastics_SEOrder1_CV_2022_06_18.R
+│   ├── Microplastics_SpecificationTesting.R
+│   ├── Microplastics_SpecificationTesting_Appendix.R
+│   ├── Microplastics_SurveyEngine_CV_2022_06_16.R
+│   ├── Microplastics_UpdatedModels_231117.R
+│   ├── Microplastics_WTP_Simulator.R
+│   ├── XX_HeteroskedasticProbitTrial.R
+│   ├── XX_Microplastics_EOPAtMeans.R
+│   ├── XX_Microplastics_EOPAtMeans_Bootstrap.R
+│   ├── XX_Microplastics_Models_A0.R
+│   ├── XX_Microplastics_SignTest.R
+│   └── XX_NaiveProbitSecondStage.R
+├── Data
+│   ├── EOP_AtMeans.txt
+│   ├── Microplastics_AllData_Long_Anonymised.csv
+│   ├── Microplastics_AllData_Long_Anonymised_2022_06_19.csv
+│   ├── Microplastics_AllData_Wide_Anonymised.csv
+│   ├── Microplastics_AllData_Wide_Anonymised_2022_06_19.csv
+│   ├── Microplastics_AllData_Wide_Anonymised_WithEOP.csv
+│   ├── Microplastics_Order0_LongFormat_Anonymised_2022_06_18.csv
+│   ├── Microplastics_Order0_Long_anonymised_V2.csv
+│   ├── Microplastics_Order0_WideFormat_Anonymised_2022_06_18.csv
+│   ├── Microplastics_Order0_Wide_anonymised_V2.csv
+│   ├── Microplastics_Order1_LongFormat_Anonymised_2022_06_18.csv
+│   ├── Microplastics_Order1_Long_anonymised_V2.csv
+│   ├── Microplastics_Order1_Wide_2022_06_18.csv
+│   ├── Microplastics_Order1_Wide_anonymised_V2.csv
+│   ├── Microplastics_SEOrder1_DataWithAllWTP_2022_06_18.csv
+│   ├── Microplastics_Table4_SimulatedEOP_September2025.txt
+│   ├── Microplastics_TableC1_SimulatedEOP_March2025.txt
+│   ├── Outputs
+│   │   ├── AllData_TimesTests_2022_07_27.csv
+│   │   ├── AllPilots_2022_05_13.csv
+│   │   ├── FilteredTextResponses.xlsx
+│   │   ├── Microplastics_MXL_PooledSample_AllCovariates_estimates.csv
+│   │   ├── Microplastics_MXL_PooledSample_AllCovariates_WTP.csv
+│   │   ├── Microplastics_MXL_PooledSample_estimates.csv
+│   │   ├── Microplastics_MXL_PooledSample_FixedCost_estimates.csv
+│   │   ├── Microplastics_MXL_PooledSample_FixedCost_WTP.csv
+│   │   ├── Microplastics_MXL_PooledSample_WTP.csv
+│   │   ├── Microplastics_SEOrder1_MXL_2022_06_18_estimates.csv
+│   │   ├── Microplastics_SEOrder1_MXL_2022_06_18_WTP.csv
+│   │   ├── Microplastics_SurveyEngine_MXL_2022_06_16_estimates.csv
+│   │   ├── Microplastics_SurveyEngine_MXL_2022_06_16_WTP.csv
+│   │   ├── Test.csv
+│   │   └── Test_WTPOutput.csv
+│   ├── RawData
+│   │   ├── kent_eapmicro_Order0_covariates_anonymised.csv
+│   │   ├── kent_eapmicro_Order0_dce_anonymised.csv
+│   │   ├── KENT_EAPMICRO_Order0_pages_anonymised.csv
+│   │   ├── kent_eapmicro_Order1_covariates_anonymised.csv
+│   │   ├── kent_eapmicro_Order1_dce_anonymised.csv
+│   │   ├── KENT_EAPMICRO_Order1_pages_anonymised.csv
+│   ├── session_info_2025_09_08.txt
+├── Microplastics.Rproj
+├── OtherScripts
+│   ├── Figures
+│   │   ├── 14_Microplastics_Figure2_EOP.R
+│   │   ├── 15_Microplastics_FigureB1_Turnbull.R
+│   │   ├── 17_Microplastics_FigureB4_MeanVariance_PlotSetup.R
+│   │   ├── 22_Microplastics_FigureB2_Attitudes.R
+│   │   ├── XX_Microplastics_FigureB3_MeanVariance.R
+│   │   └── XX_Microplastics_FigureB4_MeanVariance.R
+│   └── Tables
+│       ├── 11_Microplastics_Table1.R
+│       ├── 12_Microplastics_TableB1_Sample.R
+│       ├── 13_Microplastics_TableB3.R
+│       ├── 16_Microplastics_Table4_SimulatedEOP.R
+│       ├── 18_Microplastics_Table5_AlternativeSpecifications.R
+│       ├── 19_Microplastics_TableC2_TruncationModels.R
+│       ├── 20_Microplastics_TableC3_RobustnessStage1Models.R
+│       ├── 21_TableC3_RobustnessStage2Models.R
+├── README.md
+├── Robustness_Table.txt
+├── SetupScripts
+│   ├── 01_Microplastics_SetupData_Order0.R
+│   ├── 02_Microplastics_SetupData_Order1.R
+│   ├── 03_Microplastics_MergeSamples.R
+├── SurveyPrint_2022_04_08.pdf
+└── SurveyPrint_FromSE.pdf

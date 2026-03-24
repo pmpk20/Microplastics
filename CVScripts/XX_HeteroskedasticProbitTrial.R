@@ -327,7 +327,7 @@ final_table %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", 
+    here("Tables", 
          paste0("Table_X_HetglmProbitSecondStage.txt"))
   )
 

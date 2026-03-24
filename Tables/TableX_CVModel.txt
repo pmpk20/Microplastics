@@ -1,0 +1,16 @@
+Variable,Estimates,SD,P
+(Intercept),-0.551,0.319,0.084*
+AgeDummy,-0.078,0.076,0.304 
+Gender,-0.074,0.07,0.292 
+EthnicityDummy,-0.209,0.106,0.049**
+MeanExpectedFuture,0.171,0.025,0***
+Variance,0.051,0.054,0.343 
+IncomeDummy,0.443,0.076,0***
+Charity,0.488,0.083,0***
+Consequentiality,0.214,0.079,0.007***
+Order,0.061,0.083,0.461 
+Understanding,0.094,0.028,0.001***
+BID,-0.013,0.001,0***
+AIC,1523.833,BIC,1588.093
+Log-Likelihood,-749.917,Adjusted R2,0.127
+Mean WTP,96.22,Median WTP,99.619

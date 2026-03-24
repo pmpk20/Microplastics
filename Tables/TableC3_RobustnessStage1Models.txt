@@ -1,0 +1,42 @@
+Variable,Mean.model..risks.only.Dispersion..selected.covariates,Mean.model..risks.only.Dispersion..all.covariates,Mean.model..all.covariates.Dispersion..selected.covariates,Mean.model..selected.covariates.Dispersion..original.model
+**First stage: Mean model (λ̂)**,"","","",""
+Intercept,-1.038*** (0.101),-0.987*** (0.097),-1.434*** (0.201),0.958*** (0.049)
+Aged older than sample median (0/1),"","",0.066 (0.041),0.163*** (0.044)
+Ethnicity: any white group (0/1),"","",0.131* (0.058),0.064 (0.065)
+Gender: female (0/1),"","",-0.054 (0.039),-0.136** (0.044)
+Charity: involved (0/1),"","",0.093* (0.042),0.264*** (0.047)
+Higher education experience (0/1),"","",0.003 (0.04),0.039 (0.045)
+Climate change: current risk to environment (1-10),-0.03* (0.015),-0.026. (0.014),-0.038* (0.015),""
+Climate change: current risk to self (1-10),-0.011 (0.013),-0.012 (0.012),-0.01 (0.013),""
+MPs: current risk to environment (1-10),0.173*** (0.016),0.164*** (0.015),0.168*** (0.016),""
+MPs: current risk to self (1-10),0.131*** (0.014),0.129*** (0.014),0.13*** (0.014),""
+**First stage: Dispersion model (ψ̂)**,"","","",""
+Intercept,0.703*** (0.115),1.564*** (0.345),0.604*** (0.093),0.154. (0.09)
+Uncertainty: low (+/- 1 point),1.451*** (0.101),1.495*** (0.101),1.441*** (0.1),1.466*** (0.098)
+Uncertainty: medium (+/- 3 points),1.54*** (0.119),1.603*** (0.12),1.539*** (0.118),1.67*** (0.116)
+Uncertainty: high (+/- 5 points),1.682*** (0.157),1.691*** (0.159),1.651*** (0.156),1.651*** (0.151)
+Aged older than sample median (0/1),-0.244*** (0.066),-0.234*** (0.068),"",""
+Ethnicity: any white group (0/1),-0.231* (0.094),-0.305** (0.094),"",""
+Gender: female (0/1),0.13* (0.065),0.114. (0.065),"",""
+Charity: involved (0/1),-0.07 (0.068),-0.055 (0.069),"",""
+Higher education experience (0/1),-0.01 (0.067),0.024 (0.067),"",""
+Survey speeder dummy (0/1),"",0.346. (0.177),-0.126 (0.109),""
+Survey order (0/1),"",-0.175* (0.072),0.008 (0.043),""
+Payment vehicle (0/1),"",0.031 (0.095),0.02 (0.055),""
+Consequentiality (0/1),"",0.17* (0.071),-0.037 (0.042),""
+Coronavirus (0/1),"",-0.103 (0.066),-0.008 (0.039),""
+Understanding (1-10),"",-0.138*** (0.027),0.066*** (0.015),""
+**First stage: Diagnostics**,"","","",""
+AIC,-2534.983,-2589.54,-2545.187,-1911.778
+Log-likelihood,1281.491,1314.77,1292.593,965.889
+Pseudo R2,0.183,0.183,0.2,0.027
+"**Second stage: WTP model (α̂,β̂,γ̂)**","","","",""
+Impact of change in bid level on income,85.913*** (12.872),85.462*** (12.94),86.503*** (12.856),76.7*** (12.655)
+Predicted impact of changes in expected harm,1.61*** (0.096),1.529*** (0.092),1.648*** (0.098),1.235*** (0.11)
+Predicted impact of variance in expected harm,-12.593*** (2.365),-9.88*** (2.177),-14.11*** (2.527),-2.318 (1.997)
+**Second stage: Diagnostics**,"","","",""
+AIC,1611.628,1621.094,1602.351,1692.223
+Log-likelihood,-802.814,-807.547,-798.175,-843.111
+Pseudo R2,0.259,0.255,0.264,0.222
+EOP (SD),£339.02 (£192.815),£341.011 (£186.291),£337.555 (£197.264),£354.613 (£171.586)
+"*** = P value < 0.01, ** = P value < 0.05, * = P value < 0.10, . = P value < 0.15","","","",""

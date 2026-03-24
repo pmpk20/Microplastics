@@ -74,19 +74,19 @@ library(sessioninfo)
 
 
 # Read the data
-M1 <- here("CVoutput/Tables", 
+M1 <- here("Tables", 
            "Table_RobustnessStage2_ModelC1.txt") %>% 
   fread() %>% data.frame()
 
-M2 <- here("CVoutput/Tables", 
+M2 <- here("Tables", 
            "Table_RobustnessStage2_ModelC2.txt") %>% 
   fread() %>% data.frame()
 
-M3 <- here("CVoutput/Tables", 
+M3 <- here("Tables", 
            "Table_RobustnessStage2_ModelC3.txt") %>% 
   fread() %>% data.frame()
 
-M4 <- here("CVoutput/Tables", 
+M4 <- here("Tables", 
            "Table_RobustnessStage2_ModelC4.txt") %>% 
   fread() %>% data.frame()
 
@@ -320,5 +320,5 @@ TableC3 %>% write.csv(quote = FALSE, row.names = FALSE)
 TableC3 %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "Table_RobustnessStage2_AllModels.txt"))

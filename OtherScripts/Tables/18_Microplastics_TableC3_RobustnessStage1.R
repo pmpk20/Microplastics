@@ -73,26 +73,26 @@ library(sessioninfo)
 # ***********************************************************
 
 
-Robustness_B1 <- here("CVoutput/Tables", 
+Robustness_B1 <- here("Tables", 
                       "Table_RobustnessStage1_ModelB1.txt") %>% 
   fread() %>% 
   data.frame()
 
 
-Robustness_B2 <- here("CVoutput/Tables", 
+Robustness_B2 <- here("Tables", 
                       "Table_RobustnessStage1_ModelB2.txt") %>% 
   fread() %>% 
   data.frame()
 
 
 ## CALLED B3 BUT ACTUALLY FOURTH TABLE COLUMN
-Robustness_B3 <- here("CVoutput/Tables", 
+Robustness_B3 <- here("Tables", 
                       "Table_RobustnessStage1_ModelB3.txt") %>% 
   fread() %>% 
   data.frame()
 
 
-Robustness_B4 <- here("CVoutput/Tables", 
+Robustness_B4 <- here("Tables", 
                       "Table_RobustnessStage1_ModelB4.txt") %>% 
   fread() %>% 
   data.frame()
@@ -339,7 +339,7 @@ colnames(TableC3) <- c("Variable",
 TableC3 %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "TableC3_RobustnessStage1Models.txt"))
 
 

@@ -1,0 +1,25 @@
+Variable,Estimate
+X.Intercept.,-1.402*** (0.299)
+AgeDummy,-0.082 (0.108)
+EthnicityDummy,0.218 (0.134)
+Gender_Dummy,-0.033 (0.097)
+Charity,-0.101 (0.103)
+Education_HigherEd,0.059 (0.096)
+Q16_ClimateCurrentEnvironment,-0.016 (0.035)
+Q16_ClimateCurrentSelf,-0.018 (0.029)
+Q16_MicroplasticsCurrentEnvironment,0.183*** (0.037)
+Q16_MicroplasticsCurrentSelf,0.157*** (0.033)
+X.Intercept..1,0.732** (0.279)
+as.factor.Uncertainty.1,1.476*** (0.299)
+as.factor.Uncertainty.3,1.113*** (0.329)
+as.factor.Uncertainty.5,1.657*** (0.39)
+LogBidIncome,41.3. (24.313)
+I..predict.stage_1..type....response....,1.322*** (0.25)
+I.predict.stage_1..type....variance...,-7.844 (7.139)
+S1_AIC,-362.136
+S1_LogLik,195.068
+S1_PseudoR2,0.246
+S2_AIC,249.434
+S2_LogLik,-121.717
+S2_PseudoR2,0.23
+S2_EOP_Mean,£-1.89598710812281e+174 (£Inf)

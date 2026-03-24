@@ -1,0 +1,11 @@
+Variable,Coefficient,Std.Error,z.value,P.value
+Impact of changes in bid level on income,85.900,12.808,6.707,<0.001***
+Predicted impact of changes in expected harm,2.274,0.257,8.840,<0.001***
+Predicted impact of variance in expected harm,-1.038,0.239,-4.337,<0.001***
+Impact of changes in bid level on income,-0.814,0.195,-4.184,<0.001***
+Predicted impact of changes in expected harm,-0.685,0.194,-3.522,<0.001***
+Predicted impact of variance in expected harm,-0.884,0.199,-4.445,<0.001***
+AIC,1622.316,"","",""
+Log-likelihood,-805.158,"","",""
+Pseudo-R²,0.257,"","",""
+EOP (SD),£NA (£NA),"","",""

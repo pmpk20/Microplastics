@@ -345,7 +345,7 @@ Output_S3 %>%
   data.frame() %>%
   fwrite(
     sep = ",",
-    here("CVoutput/Tables", paste0("Table_Output_A0_factorUncertainty_", date_suffix, ".txt"))
+    here("Tables", paste0("Table_Output_A0_factorUncertainty_", date_suffix, ".txt"))
   )
 
 

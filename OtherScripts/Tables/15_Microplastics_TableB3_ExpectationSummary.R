@@ -111,7 +111,7 @@ TableB3 <- bind_rows(
 TableB3 %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "TableB3_V2.csv"))
 
 

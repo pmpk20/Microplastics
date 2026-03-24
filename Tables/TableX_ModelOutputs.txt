@@ -1,0 +1,31 @@
+Variable,Estimate,Variable,Estimate,Variable,Estimate,Variable,Estimate
+(Intercept),0.145 (0.316),(Intercept),-0.855** (0.42),(Intercept),-2.515*** (0.549),(Intercept),-1.913*** (0.438)
+LogBidIncome,39.25*** (13.015),LogBidIncome,42.152*** (13.576),LogBidIncome,45.613*** (13.73),LogBidIncome,46.014*** (13.694)
+BID,-0.012*** (0.002),BID,-0.012*** (0.002),BID,-0.012*** (0.002),BID,-0.012*** (0.002)
+Means,Means,Means,Means,Means,Means,Means,Means
+MeanExpectedFuture,0.17*** (0.025),MeanExpectedFuture,0.154*** (0.026),MeanExpectedFuture,0.131 (0.08),0,0
+Mean_Square,-0.022** (0.009),Mean_Square,-0.025*** (0.009),Mean_Square,-0.027*** (0.009),Mean_Log,0.121 (0.189)
+0,0,0,0,0,0,Mean_Square,-0.029*** (0.009)
+Variances,Variances,Variances,Variances,Variances,Variances,Variances,Variances
+Variance,0.598** (0.245),Variance,0.56** (0.252),Variance,0.753** (0.324),Variance_Log,0.477* (0.261)
+Variance_Square,-0.113** (0.047),Variance_Square,-0.1** (0.049),Variance_Square,-0.119** (0.056),Variance_Square,-0.03 (0.023)
+0,0,0,0,Mean_Int_Var,-0.042 (0.033),0,0
+Covariates,Covariates,Covariates,Covariates,Covariates,Covariates,Covariates,Covariates
+0,0,Gender,-0.104 (0.07),Gender,-0.136* (0.072),Gender,-0.135* (0.072)
+0,0,Charity,0.5*** (0.083),Charity,0.396*** (0.086),Charity,0.399*** (0.086)
+0,0,EthnicityDummy,-0.156 (0.107),EthnicityDummy,-0.119 (0.11),EthnicityDummy,-0.11 (0.11)
+0,0,AgeDummy,-0.085 (0.076),AgeDummy,-0.123 (0.079),AgeDummy,-0.118 (0.079)
+0,0,Consequentiality,0.23*** (0.078),Consequentiality,0.221*** (0.081),Consequentiality,0.217*** (0.081)
+0,0,Coronavirus,0.092 (0.075),Coronavirus,0.064 (0.077),Coronavirus,0.063 (0.077)
+0,0,Understanding,0.09*** (0.028),Understanding,0.059** (0.029),Understanding,0.061** (0.029)
+0,0,Order,0.056 (0.083),Order,0.05 (0.085),Order,0.05 (0.085)
+0,0,0,0,Q16_MicroplasticsCurrentEnvironment,0.103*** (0.031),Q16_MicroplasticsCurrentEnvironment,0.105*** (0.031)
+0,0,0,0,Q16_MicroplasticsCurrentSelf,0.064*** (0.025),Q16_MicroplasticsCurrentSelf,0.064*** (0.024)
+0,0,0,0,Q16_MicroplasticsTen,-0.102** (0.044),Q16_MicroplasticsTen,-0.095** (0.044)
+0,0,0,0,Q16_MicroplasticsTwentyFive,0.06 (0.058),Q16_MicroplasticsTwentyFive,0.062 (0.058)
+0,0,0,0,Q16_MicroplasticsFifty,0.102** (0.042),Q16_MicroplasticsFifty,0.1** (0.042)
+Diagnostics,Diagnostics,Diagnostics,Diagnostics,Diagnostics,Diagnostics,Diagnostics,Diagnostics
+AIC,1588.854,AIC,1539.517,AIC,1463.832,AIC,1464.859
+LogLik,-787.427,LogLik,-754.759,LogLik,-710.916,LogLik,-712.43
+R2,0.09,R2,0.118,R2,0.161,R2,0.161
+Mean WTP,107.213,Mean WTP,109.109,Mean WTP,108.341,Mean WTP,108.572

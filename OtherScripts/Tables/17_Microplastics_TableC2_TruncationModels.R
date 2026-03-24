@@ -73,25 +73,25 @@ library(sessioninfo)
 # ***********************************************************
 
 
-Truncation_T1 <- here("CVoutput/Tables", 
+Truncation_T1 <- here("Tables", 
                       "Table_Truncation_ModelT1_Speed.txt") %>% 
   fread() %>% 
   data.frame()
 
 
-Truncation_T2 <- here("CVoutput/Tables", 
+Truncation_T2 <- here("Tables", 
                       "Table_Truncation_ModelT2_A_PV.txt") %>% 
   fread() %>% 
   data.frame()
 
 
-Truncation_T3 <- here("CVoutput/Tables", 
+Truncation_T3 <- here("Tables", 
                       "Table_Truncation_ModelT3_B_Order.txt") %>% 
   fread() %>% 
   data.frame()
 
 
-Truncation_T4 <- here("CVoutput/Tables", 
+Truncation_T4 <- here("Tables", 
      "Table_Truncation_ModelT4_Cons.txt") %>% 
   fread() %>% 
   data.frame()
@@ -121,7 +121,7 @@ TableC2 <- cbind(
 TableC2 %>% 
   data.frame() %>% 
   fwrite(sep = ",",
-         here("CVoutput/Tables", 
+         here("Tables", 
               "TableC2_TruncationModels.txt"))
 
 

@@ -1,0 +1,40 @@
+Variable,Estimate
+X.Intercept.,-1.037*** (0.111)
+AgeDummy,0.076. (0.039)
+EthnicityDummy,0.11. (0.058)
+Gender_Dummy,-0.057 (0.039)
+Charity,0.101* (0.042)
+Education_HigherEd,-0.001 (0.039)
+Q16_ClimateCurrentEnvironment,-0.034* (0.015)
+Q16_ClimateCurrentSelf,-0.013 (0.013)
+Q16_MicroplasticsCurrentEnvironment,0.172*** (0.016)
+Q16_MicroplasticsCurrentSelf,0.133*** (0.014)
+X.Intercept..1,0.594*** (0.093)
+as.factor.Uncertainty.1,1.436*** (0.1)
+as.factor.Uncertainty.3,1.561*** (0.118)
+as.factor.Uncertainty.5,1.636*** (0.156)
+LogBidIncome,86.423*** (13.518)
+AgeDummy.1,-0.008 (0.083)
+EthnicityDummy.1,-0.096 (0.113)
+Gender_Dummy.1,0.077 (0.076)
+Charity.1,0.423*** (0.088)
+Education_HigherEd.1,0.116 (0.078)
+Speeders_Survey_TestDummy,-0.131 (0.216)
+Order,0.044 (0.084)
+PaymentVehicle_Dummy,-0.033 (0.108)
+Consequentiality,0.229** (0.081)
+Coronavirus,0.049 (0.076)
+Understanding,0.033 (0.028)
+Q16_ClimateCurrentEnvironment.1,0.089** (0.03)
+Q16_ClimateCurrentSelf.1,-0.066* (0.026)
+Q16_MicroplasticsCurrentEnvironment.1,0.227*** (0.056)
+Q16_MicroplasticsCurrentSelf.1,0.21*** (0.041)
+I..predict.stage_1..type....response....,-4.658*** (1.209)
+I.predict.stage_1..type....variance...,-6.573* (3.049)
+S1_AIC,-2517.154
+S1_LogLik,1272.577
+S1_PseudoR2,0.192
+S2_AIC,1519.469
+S2_LogLik,-741.734
+S2_PseudoR2,0.316
+S2_EOP_Mean,£-1397.532 (£694.647)
